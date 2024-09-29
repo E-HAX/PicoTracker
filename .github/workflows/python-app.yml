@@ -1,4 +1,4 @@
-name: SeeAyiii
+name: CI
 
 on:
   push:
@@ -19,11 +19,21 @@ jobs:
       with:
         python-version: '3.9'
 
-    - name: Set up ChromeDriver
-      uses: nanasess/setup-chromedriver@v2.2.2
-      with:
-        # Optional: Specify a version for ChromeDriver
-        chromedriver-version: 'latest'  # Or specify a specific version if needed
+    - name: Install Chrome
+      run: |
+        wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+        echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
+
+    - name: Install ChromeDriver
+      run: |
+        CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
+        CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION}" || echo "chromedriver not found")
+        wget -N "https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
+        unzip chromedriver_linux64.zip
+        sudo mv chromedriver /usr/local/bin/chromedriver
+        sudo chmod +x /usr/local/bin/chromedriver
 
     - name: Install dependencies
       run: |
