@@ -1,51 +1,36 @@
-name: Python Selenium Scraper
+name: SeeAyiii
 
-# Controls when the workflow will run
 on:
   push:
-    branches: [ main ]  # Trigger on push to the main branch
-  workflow_dispatch:  # Allows manual triggering of the workflow
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Check out the repository
-    - name: Check out repository
-      uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-    # Step 2: Set up Python 3.9 environment
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v4
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
         python-version: '3.9'
 
-    # Step 3: Install dependencies from requirements.txt
+    - name: Set up ChromeDriver
+      uses: nanasess/setup-chromedriver@v2.2.2
+      with:
+        # Optional: Specify a version for ChromeDriver
+        chromedriver-version: 'latest'  # Or specify a specific version if needed
+
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # Step 4: Download and set up ChromeDriver for Selenium
-    - name: Set up ChromeDriver
-      uses: browser-actions/setup-chromedriver@v1
-      with:
-        chromedriver-version: 'latest'
-
-    # Step 5: Install Google Chrome (required for headless Selenium)
-    - name: Install Google Chrome
-      uses: browser-actions/setup-chrome@v1
-      with:
-        chrome-version: 'latest'
-
-    # Step 6: Set the GOOGLE_SHEETS_CREDENTIALS environment variable from the secret
-    - name: Set Google Sheets Credentials
-      run: echo "GOOGLE_SHEETS_CREDENTIALS=$GOOGLE_SHEETS_CREDENTIALS" >> $GITHUB_ENV
-      env:
-        GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
-
-    # Step 7: Run the Python script
-    - name: Run Python script
+    - name: Run script
       run: |
         python main.py
+      env:
+        GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
