@@ -1,5 +1,4 @@
-gspread
-oauth2client
-requests
-beautifulsoup4
-undetected-chromedriver
+gspread==6.1.2
+oauth2client==4.1.3
+random_user_agent==1.0.1
+selenium==4.25.0
