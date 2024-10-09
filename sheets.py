@@ -28,6 +28,10 @@ def fetch_usernames(start_row, end_row):
 
 def update_sheet(username, easy_data, medium_data, hard_data):
     try:
+        if easy_data == 0 and medium_data == 0 and hard_data == 0:
+            print(f"Scraped data is all zeros for {username}, skipping update.")
+            return
+        
         sheet = setup_google_sheets().get_worksheet(0)
         existing_users = sheet.col_values(1)
 
