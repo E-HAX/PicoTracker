@@ -1,4 +1,4 @@
-name: CI
+name: Systum
 
 on:
   push:
