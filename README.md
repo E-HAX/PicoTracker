@@ -8,8 +8,8 @@ A high-performance, secure, static cybersecurity leaderboard and automated track
 
 - **Weighted Fair Scoring System**:
   - `EASY` = 1 PT
-  - `MEDIUM` = 2 PTS
-  - `HARD` = 3 PTS
+  - `MEDIUM` = 3 PTS
+  - `HARD` = 6 PTS
 - **3D Perspective Scene**:
   - Interactive WebGL/Canvas wireframe globe with orbital rings and mouse parallax.
   - Perspective floor grid and geometric tesseract visuals.

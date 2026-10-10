@@ -126,7 +126,7 @@ def main():
         result = fetch_user_stats(username)
         if result:
             easy, medium, hard = result
-            total_points = (easy * 1) + (medium * 2) + (hard * 3)
+            total_points = (easy * 1) + (medium * 3) + (hard * 6)
             leaderboard.append({
                 "username": username,
                 "easy": easy,

@@ -479,10 +479,10 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("drawer-easy-pts").textContent = `${user.easy * 1} pts`;
 
     document.getElementById("drawer-med-count").textContent = `${user.medium} flags`;
-    document.getElementById("drawer-med-pts").textContent = `${user.medium * 2} pts`;
+    document.getElementById("drawer-med-pts").textContent = `${user.medium * 3} pts`;
 
     document.getElementById("drawer-hard-count").textContent = `${user.hard} flags`;
-    document.getElementById("drawer-hard-pts").textContent = `${user.hard * 3} pts`;
+    document.getElementById("drawer-hard-pts").textContent = `${user.hard * 6} pts`;
 
     // Ratio Bars
     const eW = totalSolved ? ((user.easy / totalSolved) * 100).toFixed(1) : 0;
@@ -618,13 +618,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const sanitized = data.leaderboard
         .filter(u => u && typeof u.username === "string" && u.username.length <= 64)
-        .map(u => ({
-          username: String(u.username).trim(),
-          easy: Math.max(0, parseInt(u.easy, 10) || 0),
-          medium: Math.max(0, parseInt(u.medium, 10) || 0),
-          hard: Math.max(0, parseInt(u.hard, 10) || 0),
-          total: Math.max(0, parseInt(u.total, 10) || 0)
-        }));
+        .map(u => {
+          const easy = Math.max(0, parseInt(u.easy, 10) || 0);
+          const medium = Math.max(0, parseInt(u.medium, 10) || 0);
+          const hard = Math.max(0, parseInt(u.hard, 10) || 0);
+          const total = (easy * 1) + (medium * 3) + (hard * 6);
+          return {
+            username: String(u.username).trim(),
+            easy,
+            medium,
+            hard,
+            total
+          };
+        });
 
       const sorted = sanitized.sort((a, b) => 
         b.total - a.total || b.hard - a.hard || b.medium - a.medium || b.easy - a.easy
