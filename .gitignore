@@ -1,0 +1,5 @@
+*.json
+!package.json
+__pycache__/
+chrome-linux64/
+.commandcode/

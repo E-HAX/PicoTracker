@@ -14,7 +14,7 @@ def setup_google_sheets():
 
     client = gspread.authorize(creds)
 
-    sheet_id = '1s9sGp8t9SieFUGzdjxeC_c30BbnDO-912DUhMvUZfUk'
+    sheet_id = '1mGFL1nzCJ315z9Uakj_vlny9W752I1J99a0KRr6JSD8'
     return client.open_by_key(sheet_id)
 
 def fetch_usernames(start_row, end_row):
@@ -26,27 +26,31 @@ def fetch_usernames(start_row, end_row):
         print(f"An error occurred while fetching usernames: {e}")
         return []
 
+def ensure_blank_row(username):
+    try:
+        sheet = setup_google_sheets().get_worksheet(0)
+        if username not in sheet.col_values(1):
+            sheet.append_row([username, "", "", ""])
+            print(f"No data available for {username}; added placeholder row.")
+    except Exception as e:
+        print(f"An error occurred while updating Google Sheets: {e}")
+
 def update_sheet(username, easy_data, medium_data, hard_data):
     try:
-        if easy_data == 0 and medium_data == 0 and hard_data == 0:
-            print(f"Scraped data is all zeros for {username}, skipping update.")
-            return
-        
         sheet = setup_google_sheets().get_worksheet(0)
         existing_users = sheet.col_values(1)
 
         if username in existing_users:
             row_index = existing_users.index(username) + 1
             current_data = sheet.row_values(row_index)[1:4]
-            current_data = [
-                int(val) if val.strip().isdigit() else 0 
+            new_is_zero = easy_data == 0 and medium_data == 0 and hard_data == 0
+            old_has_data = any(
+                val.strip().isdigit() and int(val.strip()) > 0
                 for val in current_data
-            ]
-
-            if all(val == 0 for val in current_data):
-                print(f"Existing data is all zeros for {username}, skipping update.")
+            )
+            if new_is_zero and old_has_data:
+                print(f"Fetch returned zeros for {username}, keeping existing data.")
                 return
-
             sheet.update_cell(row_index, 2, easy_data)
             sheet.update_cell(row_index, 3, medium_data)
             sheet.update_cell(row_index, 4, hard_data)
