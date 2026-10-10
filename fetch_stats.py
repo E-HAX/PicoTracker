@@ -8,6 +8,8 @@ from datetime import datetime
 
 BASE_URL = os.getenv("CYLAB_API_BASE", "https://learn.cylabacademy.org")
 HEADERS = {"Accept": "application/json", "User-Agent": "CylabLeaderboard/1.0"}
+if os.getenv("SESSION_ID"):
+    HEADERS["Cookie"] = f"session={os.getenv('SESSION_ID')}"
 USERNAME_PATTERN = re.compile(r'^[a-zA-Z0-9_\-\.]{1,50}$')
 
 def is_valid_username(name):
@@ -70,7 +72,7 @@ def setup_google_sheets():
         "https://www.googleapis.com/auth/drive.file"
     ]
     
-    creds_json = os.getenv('GOOGLE_SHEETS_CREDENTIALS')
+    creds_json = os.getenv('GOOGLE_SHEETS_CREDENTIALS') or os.getenv('GCP_CREDENTIALS')
     if not creds_json:
         return None
         
