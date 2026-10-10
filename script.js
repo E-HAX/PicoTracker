@@ -140,10 +140,22 @@ document.addEventListener("DOMContentLoaded", () => {
         this.tx = ((e.clientX - rect.left) / Math.max(rect.width, 1)) * 2 - 1;
         this.ty = Math.min(((e.clientY - rect.top) / Math.max(rect.height, 1)) * 2 - 1, 1);
       });
+      window.addEventListener("touchmove", (e) => {
+        if (e.touches && e.touches[0]) {
+          const t = e.touches[0];
+          const rect = this.hero.getBoundingClientRect();
+          this.tx = ((t.clientX - rect.left) / Math.max(rect.width, 1)) * 2 - 1;
+          this.ty = Math.min(((t.clientY - rect.top) / Math.max(rect.height, 1)) * 2 - 1, 1);
+        }
+      }, { passive: true });
       window.addEventListener("mouseleave", () => {
         this.tx = 0;
         this.ty = 0;
       });
+      window.addEventListener("touchend", () => {
+        this.tx = 0;
+        this.ty = 0;
+      }, { passive: true });
 
       if ("IntersectionObserver" in window) {
         const io = new IntersectionObserver((entries) => {
@@ -408,7 +420,10 @@ document.addEventListener("DOMContentLoaded", () => {
   class TiltEffect {
     constructor() {
       this.elements = document.querySelectorAll("[data-tilt]");
-      this.init();
+      const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+      if (!isTouch) {
+        this.init();
+      }
     }
     init() {
       this.elements.forEach((el) => {
@@ -483,6 +498,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     drawer.classList.add("active");
     drawerOverlay.classList.add("active");
+    document.body.style.overflow = "hidden";
   }
 
   function closeDrawer() {
@@ -490,6 +506,7 @@ document.addEventListener("DOMContentLoaded", () => {
     sfx.click();
     drawer.classList.remove("active");
     drawerOverlay.classList.remove("active");
+    document.body.style.overflow = "";
   }
 
   if (drawerCloseBtn) drawerCloseBtn.addEventListener("click", closeDrawer);
@@ -505,7 +522,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==========================================
   const searchInput = document.getElementById("operator-search");
   const clearBtn = document.getElementById("search-clear");
-  const boardCount = document.getElementById("board-count");
   const tbody = document.getElementById("board-body");
 
   let allUsers = [];
@@ -525,11 +541,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const dataset = allUsers;
     const matched = q ? dataset.filter(u => u.username.toLowerCase().includes(q)) : dataset;
 
-    if (boardCount) {
-      boardCount.textContent = q 
-        ? `Found ${matched.length} of ${allUsers.length} operators`
-        : `Showing all ${matched.length} operators`;
-    }
 
     if (matched.length === 0) {
       tbody.innerHTML = `
@@ -559,7 +570,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       html += `
         <tr class="operator-row" data-username="${escapeHtml(u.username)}">
-          <td class="c-rank ${rankClass}">${u.rank.toString().padStart(2, '0')}</td>
+          <td class="c-rank ${rankClass}">#${u.rank.toString().padStart(2, '0')}</td>
           <td class="c-name">
             <div class="name-cell">
               <span class="name-text">${escapeHtml(u.username)}</span>
@@ -568,11 +579,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 <span class="m-seg seg-m" style="width: ${mP}%"></span>
                 <span class="m-seg seg-h" style="width: ${hP}%"></span>
               </div>
+              <div class="mobile-solves" aria-label="Solves: ${u.easy} easy, ${u.medium} medium, ${u.hard} hard">
+                <span class="m-badge m-easy">${u.easy}E</span>
+                <span class="m-badge m-med">${u.medium}M</span>
+                <span class="m-badge m-hard">${u.hard}H</span>
+              </div>
             </div>
           </td>
-          <td class="c-num">${u.easy}</td>
-          <td class="c-num">${u.medium}</td>
-          <td class="c-num">${u.hard}</td>
+          <td class="c-num col-easy">${u.easy}</td>
+          <td class="c-num col-med">${u.medium}</td>
+          <td class="c-num col-hard">${u.hard}</td>
           <td class="c-tot">
             <span class="pts-badge">${u.total} <span class="pts-unit">PTS</span></span>
           </td>

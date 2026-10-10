@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>EHAX - Leaderboard | CyLab</title>
     <meta name="theme-color" content="#0a0a09">
     <meta name="referrer" content="no-referrer">
@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=2.1">
 </head>
 <body>
 
@@ -483,40 +483,42 @@
                     </div>
                 </div>
 
-                <div class="hero-scene" id="heroScene" aria-hidden="true">
-                    <div class="scene-glow"></div>
-                    <canvas id="globeCanvas" class="scene-canvas" width="640" height="640"></canvas>
-                    <div class="orbits">
-                        <div class="orbit orbit-1">
-                            <div class="planet planet-1"></div>
-                            <div class="planet planet-3"></div>
+                <div class="hero-scene-stage">
+                    <div class="hero-scene" id="heroScene" aria-hidden="true">
+                        <div class="scene-glow"></div>
+                        <canvas id="globeCanvas" class="scene-canvas" width="640" height="640"></canvas>
+                        <div class="orbits">
+                            <div class="orbit orbit-1">
+                                <div class="planet planet-1"></div>
+                                <div class="planet planet-3"></div>
+                            </div>
+                            <div class="orbit orbit-2">
+                                <div class="planet planet-2"></div>
+                            </div>
+                            <div class="orbit orbit-3">
+                                <div class="planet planet-4"></div>
+                            </div>
                         </div>
-                        <div class="orbit orbit-2">
-                            <div class="planet planet-2"></div>
+                        <div class="tess">
+                            <div class="cube cube-out">
+                                <div class="face f1"></div>
+                                <div class="face f2"></div>
+                                <div class="face f3"></div>
+                                <div class="face f4"></div>
+                                <div class="face f5"></div>
+                                <div class="face f6"></div>
+                            </div>
+                            <div class="cube cube-in">
+                                <div class="face f1"></div>
+                                <div class="face f2"></div>
+                                <div class="face f3"></div>
+                                <div class="face f4"></div>
+                                <div class="face f5"></div>
+                                <div class="face f6"></div>
+                            </div>
                         </div>
-                        <div class="orbit orbit-3">
-                            <div class="planet planet-4"></div>
-                        </div>
+                        <img src="./ehax-wordmark.png" alt="" class="hero-mark">
                     </div>
-                    <div class="tess">
-                        <div class="cube cube-out">
-                            <div class="face f1"></div>
-                            <div class="face f2"></div>
-                            <div class="face f3"></div>
-                            <div class="face f4"></div>
-                            <div class="face f5"></div>
-                            <div class="face f6"></div>
-                        </div>
-                        <div class="cube cube-in">
-                            <div class="face f1"></div>
-                            <div class="face f2"></div>
-                            <div class="face f3"></div>
-                            <div class="face f4"></div>
-                            <div class="face f5"></div>
-                            <div class="face f6"></div>
-                        </div>
-                    </div>
-                    <img src="./ehax-wordmark.png" alt="" class="hero-mark">
                 </div>
             </div>
         </section>
@@ -525,9 +527,7 @@
         <section class="board wrap">
             <div class="board-header">
                 <div class="board-title-group">
-                    <h3 class="board-heading">STANDINGS
-                    </h3>
-                    <span class="board-subtext" id="board-count">Showing operators</span>
+                    <h3 class="board-heading">STANDINGS</h3>
                 </div>
                 <div class="search-box">
                     <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -543,10 +543,10 @@
                     <thead>
                         <tr>
                             <th class="c-rank">RANK</th>
-                            <th class="c-name">USERNAME</th>
-                            <th class="c-num" title="Easy (1pt)">EASY</th>
-                            <th class="c-num" title="Medium (2pts)">MEDIUM</th>
-                            <th class="c-num" title="Hard (3pts)">HARD</th>
+                            <th class="c-name">OPERATOR</th>
+                            <th class="c-num col-easy" title="Easy (1pt)">EASY</th>
+                            <th class="c-num col-med" title="Medium (2pts)">MEDIUM</th>
+                            <th class="c-num col-hard" title="Hard (3pts)">HARD</th>
                             <th class="c-tot" title="Total Points">POINTS</th>
                         </tr>
                     </thead>
