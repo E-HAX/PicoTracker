@@ -19,7 +19,7 @@ def setup_google_sheets():
 
 def fetch_usernames(start_row, end_row):
     try:
-        sheet = setup_google_sheets().get_worksheet(1)
+        sheet = setup_google_sheets().get_worksheet(2)
         usernames = sheet.col_values(1)[start_row-1:end_row]
         return usernames
     except Exception as e:
@@ -28,7 +28,7 @@ def fetch_usernames(start_row, end_row):
 
 def ensure_blank_row(username):
     try:
-        sheet = setup_google_sheets().get_worksheet(0)
+        sheet = setup_google_sheets().get_worksheet(1)
         if username not in sheet.col_values(1):
             sheet.append_row([username, "", "", ""])
             print(f"No data available for {username}; added placeholder row.")
@@ -37,7 +37,7 @@ def ensure_blank_row(username):
 
 def update_sheet(username, easy_data, medium_data, hard_data):
     try:
-        sheet = setup_google_sheets().get_worksheet(0)
+        sheet = setup_google_sheets().get_worksheet(1)
         existing_users = sheet.col_values(1)
 
         if username in existing_users:

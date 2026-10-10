@@ -1,7 +1,7 @@
 from scraping import fetch_user_stats
 from sheets import fetch_usernames, update_sheet, ensure_blank_row
 
-# Fetch usernames from Sheet 2 (all non-empty rows starting at row 2)
+# Fetch usernames from Sheet 3 (all non-empty rows starting at row 2)
 usernames = [u for u in fetch_usernames(start_row=2, end_row=500) if u.strip()]
 
 for username in usernames:
