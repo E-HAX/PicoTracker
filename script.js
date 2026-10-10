@@ -1,0 +1,672 @@
+document.addEventListener("DOMContentLoaded", () => {
+  // --- 1. Touch Responsive Glow ---
+  const glow = document.getElementById("cursor-glow");
+  document.addEventListener("mousemove", (e) => {
+    glow.style.left = e.clientX + "px";
+    glow.style.top = e.clientY + "px";
+  });
+
+  // --- 3. EHAX Particle System ---
+  class ParticleSystem {
+    constructor(canvas) {
+      this.canvas = canvas;
+      this.ctx = canvas.getContext("2d");
+      this.particles = [];
+      this.mouse = { x: 0, y: 0 };
+      this.resize();
+      this.init();
+      this.animate();
+
+      window.addEventListener("resize", () => this.resize());
+      window.addEventListener("mousemove", (e) => {
+        this.mouse.x = e.clientX;
+        this.mouse.y = e.clientY;
+      });
+    }
+    resize() {
+      this.canvas.width = window.innerWidth;
+      this.canvas.height = window.innerHeight;
+    }
+    init() {
+      const count = Math.min(60, Math.floor(window.innerWidth / 20));
+      for (let i = 0; i < count; i++) {
+        this.particles.push({
+          x: Math.random() * this.canvas.width,
+          y: Math.random() * this.canvas.height,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          size: Math.random() * 1.5 + 0.5,
+          opacity: Math.random() * 0.3 + 0.1,
+        });
+      }
+    }
+    animate() {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.particles.forEach((p) => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = this.canvas.width;
+        if (p.x > this.canvas.width) p.x = 0;
+        if (p.y < 0) p.y = this.canvas.height;
+        if (p.y > this.canvas.height) p.y = 0;
+
+        const dx = this.mouse.x - p.x;
+        const dy = this.mouse.y - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 150) {
+          p.x -= dx * 0.01;
+          p.y -= dy * 0.01;
+        }
+        this.ctx.beginPath();
+        this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        this.ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+        this.ctx.fill();
+      });
+
+      for (let i = 0; i < this.particles.length; i++) {
+        for (let j = i + 1; j < this.particles.length; j++) {
+          const dx = this.particles[i].x - this.particles[j].x;
+          const dy = this.particles[i].y - this.particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
+            this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
+            this.ctx.strokeStyle = `rgba(255, 255, 255, ${0.05 * (1 - dist / 120)})`;
+            this.ctx.lineWidth = 0.5;
+            this.ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(() => this.animate());
+    }
+  }
+  const canvas = document.getElementById("particleCanvas");
+  if (canvas) new ParticleSystem(canvas);
+
+  // --- 3b. Wire Globe with Parallax ---
+  class WireGlobe {
+    constructor(canvas, hero) {
+      this.canvas = canvas;
+      this.hero = hero;
+      this.ctx = canvas.getContext("2d");
+      this.size = 640;
+      this.count = 380;
+      this.buckets = 7;
+      this.points = [];
+      this.edges = [];
+      this.projected = [];
+      this.tx = 0; this.ty = 0;
+      this.mx = 0; this.my = 0;
+      this.raf = 0;
+      this.t0 = null;
+      this.visible = true;
+      this.reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      this.setup();
+      this.buildMesh();
+      this.bind();
+      this.start();
+    }
+
+    setup() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      this.canvas.width = this.size * dpr;
+      this.canvas.height = this.size * dpr;
+      this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    buildMesh() {
+      const golden = Math.PI * (3 - Math.sqrt(5));
+      for (let i = 0; i < this.count; i++) {
+        const y = 1 - (i / (this.count - 1)) * 2;
+        const r = Math.sqrt(1 - y * y);
+        const theta = golden * i;
+        this.points.push([Math.cos(theta) * r, y, Math.sin(theta) * r]);
+      }
+      for (let a = 0; a < this.count; a++) {
+        for (let b = a + 1; b < this.count; b++) {
+          const dx = this.points[a][0] - this.points[b][0];
+          const dy = this.points[a][1] - this.points[b][1];
+          const dz = this.points[a][2] - this.points[b][2];
+          if (dx * dx + dy * dy + dz * dz < 0.085) this.edges.push([a, b]);
+        }
+      }
+      this.projected = new Array(this.count);
+    }
+
+    bind() {
+      window.addEventListener("mousemove", (e) => {
+        const rect = this.hero.getBoundingClientRect();
+        this.tx = ((e.clientX - rect.left) / Math.max(rect.width, 1)) * 2 - 1;
+        this.ty = Math.min(((e.clientY - rect.top) / Math.max(rect.height, 1)) * 2 - 1, 1);
+      });
+      window.addEventListener("mouseleave", () => {
+        this.tx = 0;
+        this.ty = 0;
+      });
+
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            this.visible = entry.isIntersecting;
+            if (this.visible && !this.raf && !this.reduced) this.start();
+          });
+        }, { threshold: 0.05 });
+        io.observe(this.hero);
+      }
+    }
+
+    draw(t) {
+      const ctx = this.ctx;
+      const W = this.size, H = this.size;
+      const N = this.count;
+
+      this.mx += (this.tx - this.mx) * 0.06;
+      this.my += (this.ty - this.my) * 0.06;
+      this.hero.style.setProperty("--mx", this.mx.toFixed(3));
+      this.hero.style.setProperty("--my", this.my.toFixed(3));
+
+      const ay = t * 0.22 + this.mx * 0.7;
+      const ax = -0.42 + this.my * 0.35;
+      const cy = Math.cos(ay), sy = Math.sin(ay), cx = Math.cos(ax), sx = Math.sin(ax);
+      const R = 236, F = 3.4, ox = W / 2, oy = H / 2;
+
+      for (let i = 0; i < N; i++) {
+        const p = this.points[i];
+        const x1 = p[0] * cy + p[2] * sy;
+        const z1 = -p[0] * sy + p[2] * cy;
+        const y2 = p[1] * cx - z1 * sx;
+        const z2 = p[1] * sx + z1 * cx;
+        const s = F / (F - z2);
+        this.projected[i] = [ox + x1 * R * s, oy + y2 * R * s, z2];
+      }
+
+      ctx.clearRect(0, 0, W, H);
+
+      for (let k = 0; k < this.buckets; k++) {
+        const lo = -1 + (2 * k) / this.buckets;
+        const hi = -1 + (2 * (k + 1)) / this.buckets;
+        const depth = ((lo + hi) / 2 + 1) / 2;
+        ctx.strokeStyle = `rgba(255, 255, 255, ${(0.035 + depth * 0.30).toFixed(3)})`;
+        ctx.lineWidth = 0.5 + depth * 0.7;
+        ctx.beginPath();
+        for (let e = 0; e < this.edges.length; e++) {
+          const A = this.projected[this.edges[e][0]];
+          const B = this.projected[this.edges[e][1]];
+          const z = (A[2] + B[2]) / 2;
+          if (z < lo || z >= hi) continue;
+          ctx.moveTo(A[0], A[1]);
+          ctx.lineTo(B[0], B[1]);
+        }
+        ctx.stroke();
+      }
+
+      for (let k = 0; k < this.buckets; k++) {
+        const lo = -1 + (2 * k) / this.buckets;
+        const hi = -1 + (2 * (k + 1)) / this.buckets;
+        const depth = ((lo + hi) / 2 + 1) / 2;
+        const size = 0.8 + depth * 1.5;
+        ctx.fillStyle = `rgba(255, 255, 255, ${(0.12 + depth * 0.75).toFixed(3)})`;
+        ctx.beginPath();
+        for (let i = 0; i < N; i++) {
+          const q = this.projected[i];
+          if (q[2] < lo || q[2] >= hi) continue;
+          ctx.moveTo(q[0] + size, q[1]);
+          ctx.arc(q[0], q[1], size, 0, Math.PI * 2);
+        }
+        ctx.fill();
+      }
+    }
+
+    start() {
+      const frame = (now) => {
+        if (this.t0 === null) this.t0 = now;
+        this.draw((now - this.t0) / 1000);
+        if (this.reduced || !this.visible) {
+          this.raf = 0;
+          return;
+        }
+        this.raf = requestAnimationFrame(frame);
+      };
+      this.raf = requestAnimationFrame(frame);
+    }
+  }
+
+  const globeCanvas = document.getElementById("globeCanvas");
+  const heroSection = document.getElementById("hero") || document.getElementById("heroScene");
+  if (globeCanvas && heroSection) new WireGlobe(globeCanvas, heroSection);
+
+  // ==========================================
+  // 1. TACTILE WEB AUDIO SFX (SYNTHESIZED)
+  // ==========================================
+  class SoundFX {
+    constructor() {
+      this.enabled = true;
+      this.ctx = null;
+    }
+    ensureCtx() {
+      if (!this.ctx) {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtx) this.ctx = new AudioCtx();
+      }
+      if (this.ctx && this.ctx.state === "suspended") {
+        this.ctx.resume();
+      }
+    }
+    playTone(freq = 600, duration = 0.05, type = "sine", gainVal = 0.09) {
+      if (!this.enabled) return;
+      this.ensureCtx();
+      if (!this.ctx) return;
+      const fire = () => {
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          gain.gain.setValueAtTime(gainVal, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + duration);
+        } catch (_) {}
+      };
+      if (this.ctx.state === "suspended") {
+        this.ctx.resume().then(fire);
+      } else {
+        fire();
+      }
+    }
+    toggleOn() {
+      this.ensureCtx();
+      if (!this.ctx) return;
+      const fire = () => {
+        try {
+          const t = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(520, t);
+          osc.frequency.exponentialRampToValueAtTime(980, t + 0.12);
+          gain.gain.setValueAtTime(0.12, t);
+          gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.14);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(t);
+          osc.stop(t + 0.14);
+        } catch (_) {}
+      };
+      if (this.ctx.state === "suspended") {
+        this.ctx.resume().then(fire);
+      } else {
+        fire();
+      }
+    }
+    toggleOff() {
+      this.ensureCtx();
+      if (!this.ctx) return;
+      const fire = () => {
+        try {
+          const t = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(700, t);
+          osc.frequency.exponentialRampToValueAtTime(320, t + 0.12);
+          gain.gain.setValueAtTime(0.08, t);
+          gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.14);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(t);
+          osc.stop(t + 0.14);
+        } catch (_) {}
+      };
+      if (this.ctx.state === "suspended") {
+        this.ctx.resume().then(fire);
+      } else {
+        fire();
+      }
+    }
+    hover() { this.playTone(540, 0.025, "sine", 0.04); }
+    click() { this.playTone(1100, 0.04, "triangle", 0.08); }
+    drawer() { this.playTone(820, 0.09, "sawtooth", 0.06); }
+    key() { this.playTone(580 + Math.random() * 150, 0.02, "triangle", 0.05); }
+  }
+  const sfx = new SoundFX();
+
+  // Unlock audio context on first interaction per browser autoplay policy
+  const unlockAudio = () => {
+    if (sfx.enabled) sfx.ensureCtx();
+    window.removeEventListener("pointerdown", unlockAudio);
+    window.removeEventListener("keydown", unlockAudio);
+  };
+  window.addEventListener("pointerdown", unlockAudio, { once: true });
+  window.addEventListener("keydown", unlockAudio, { once: true });
+
+  const audioBtn = document.getElementById("audio-toggle");
+  const audioLabel = document.getElementById("audio-label");
+  if (audioBtn) {
+    audioBtn.addEventListener("click", () => {
+      sfx.enabled = !sfx.enabled;
+      audioBtn.classList.toggle("active", sfx.enabled);
+      if (audioLabel) audioLabel.textContent = sfx.enabled ? "AUDIO: ON" : "AUDIO: OFF";
+      if (sfx.enabled) {
+        sfx.toggleOn();
+      } else {
+        sfx.toggleOff();
+      }
+    });
+  }
+
+  // ==========================================
+  // 2. ASCII TEXT SCRAMBLE DECRYPT EFFECT
+  // ==========================================
+  class TextScrambler {
+    constructor() {
+      this.chars = '!<>-_\\/[]{}—=+*^?#________';
+    }
+    scramble(el, text = null, duration = 500) {
+      if (!el) return;
+      const target = text !== null ? text : (el.getAttribute("data-original") || el.textContent);
+      if (!el.getAttribute("data-original")) el.setAttribute("data-original", target);
+      let frame = 0;
+      const totalFrames = Math.max(10, Math.floor(duration / 30));
+      clearInterval(el._scrambleTimer);
+      el._scrambleTimer = setInterval(() => {
+        let output = '';
+        const progress = frame / totalFrames;
+        for (let i = 0; i < target.length; i++) {
+          if (target[i] === ' ' || target[i] === '\n') {
+            output += target[i];
+          } else if (i < target.length * progress) {
+            output += target[i];
+          } else {
+            output += this.chars[Math.floor(Math.random() * this.chars.length)];
+          }
+        }
+        el.textContent = output;
+        frame++;
+        if (frame > totalFrames) {
+          clearInterval(el._scrambleTimer);
+          el.textContent = target;
+        }
+      }, 30);
+    }
+  }
+  const scrambler = new TextScrambler();
+
+  // Scramble main title on load
+  const heroTitle = document.querySelector(".hero-title");
+  if (heroTitle) {
+    const orig = heroTitle.textContent;
+    heroTitle.addEventListener("mouseenter", () => scrambler.scramble(heroTitle, orig, 450));
+  }
+
+  // ==========================================
+  // 3. 3D TILT EFFECT ON PODIUM
+  // ==========================================
+  class TiltEffect {
+    constructor() {
+      this.elements = document.querySelectorAll("[data-tilt]");
+      this.init();
+    }
+    init() {
+      this.elements.forEach((el) => {
+        el.addEventListener("mousemove", (e) => this.handleMove(e, el));
+        el.addEventListener("mouseleave", (e) => this.handleLeave(e, el));
+      });
+    }
+    handleMove(e, el) {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * -10;
+      const rotateY = ((x - centerX) / centerX) * 10;
+      el.style.transform = `perspective(800px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-4px) scale3d(1.02, 1.02, 1.02)`;
+      el.style.transition = "transform 0.08s ease";
+    }
+    handleLeave(e, el) {
+      el.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0) scale3d(1, 1, 1)";
+      el.style.transition = "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)";
+    }
+  }
+  new TiltEffect();
+
+  // ==========================================
+  // 4. OPERATOR INSPECT DRAWER
+  // ==========================================
+  const drawer = document.getElementById("operator-drawer");
+  const drawerOverlay = document.getElementById("drawer-overlay");
+  const drawerCloseBtn = document.getElementById("drawer-close");
+
+  function openDrawer(user) {
+    if (!drawer || !user) return;
+    sfx.drawer();
+
+    // Populate Drawer Elements
+    document.getElementById("drawer-username").textContent = user.username;
+    document.getElementById("drawer-rank").textContent = `#${user.rank.toString().padStart(2, '0')}`;
+    document.getElementById("drawer-score").textContent = `${user.total} PTS`;
+
+    const totalSolved = user.easy + user.medium + user.hard;
+    document.getElementById("drawer-flags").textContent = totalSolved.toString();
+
+    const pct = Math.max(1, Math.round((user.rank / allUsers.length) * 100));
+    document.getElementById("drawer-percentile").textContent = `TOP ${pct}%`;
+
+    const avatarChar = user.username ? user.username.charAt(0).toUpperCase() : ">";
+    document.getElementById("drawer-avatar-icon").textContent = avatarChar;
+
+    // Counts & Points
+    document.getElementById("drawer-easy-count").textContent = `${user.easy} flags`;
+    document.getElementById("drawer-easy-pts").textContent = `${user.easy * 1} pts`;
+
+    document.getElementById("drawer-med-count").textContent = `${user.medium} flags`;
+    document.getElementById("drawer-med-pts").textContent = `${user.medium * 2} pts`;
+
+    document.getElementById("drawer-hard-count").textContent = `${user.hard} flags`;
+    document.getElementById("drawer-hard-pts").textContent = `${user.hard * 3} pts`;
+
+    // Ratio Bars
+    const eW = totalSolved ? ((user.easy / totalSolved) * 100).toFixed(1) : 0;
+    const mW = totalSolved ? ((user.medium / totalSolved) * 100).toFixed(1) : 0;
+    const hW = totalSolved ? ((user.hard / totalSolved) * 100).toFixed(1) : 0;
+
+    const bE = document.getElementById("dr-bar-easy");
+    const bM = document.getElementById("dr-bar-med");
+    const bH = document.getElementById("dr-bar-hard");
+    if (bE) bE.style.width = `${eW}%`;
+    if (bM) bM.style.width = `${mW}%`;
+    if (bH) bH.style.width = `${hW}%`;
+
+    drawer.classList.add("active");
+    drawerOverlay.classList.add("active");
+  }
+
+  function closeDrawer() {
+    if (!drawer) return;
+    sfx.click();
+    drawer.classList.remove("active");
+    drawerOverlay.classList.remove("active");
+  }
+
+  if (drawerCloseBtn) drawerCloseBtn.addEventListener("click", closeDrawer);
+  if (drawerOverlay) drawerOverlay.addEventListener("click", closeDrawer);
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && drawer && drawer.classList.contains("active")) {
+      closeDrawer();
+    }
+  });
+
+  // ==========================================
+  // 5. LEADERBOARD DATA & RATIO BARS
+  // ==========================================
+  const searchInput = document.getElementById("operator-search");
+  const clearBtn = document.getElementById("search-clear");
+  const boardCount = document.getElementById("board-count");
+  const tbody = document.getElementById("board-body");
+
+  let allUsers = [];
+
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return "";
+    const div = document.createElement("div");
+    div.textContent = String(str);
+    return div.innerHTML;
+  }
+
+  function renderBoard(filter = "") {
+    if (!tbody) return;
+    const q = filter.trim().toLowerCase();
+
+    // Render ALL operators in table (including top 3)
+    const dataset = allUsers;
+    const matched = q ? dataset.filter(u => u.username.toLowerCase().includes(q)) : dataset;
+
+    if (boardCount) {
+      boardCount.textContent = q 
+        ? `Found ${matched.length} of ${allUsers.length} operators`
+        : `Showing all ${matched.length} operators`;
+    }
+
+    if (matched.length === 0) {
+      tbody.innerHTML = `
+        <tr class="empty-row">
+          <td colspan="6" class="no-results">
+            No operator found matching "<strong id="search-term-display"></strong>"
+          </td>
+        </tr>
+      `;
+      const termEl = tbody.querySelector("#search-term-display");
+      if (termEl) termEl.textContent = filter.trim();
+      return;
+    }
+
+    let html = "";
+    for (let i = 0; i < matched.length; i++) {
+      const u = matched[i];
+      const totSolves = u.easy + u.medium + u.hard;
+      const eP = totSolves ? Math.round((u.easy / totSolves) * 100) : 0;
+      const mP = totSolves ? Math.round((u.medium / totSolves) * 100) : 0;
+      const hP = totSolves ? Math.round((u.hard / totSolves) * 100) : 0;
+
+      let rankClass = "";
+      if (u.rank === 1) rankClass = "rank-gold";
+      else if (u.rank === 2) rankClass = "rank-silver";
+      else if (u.rank === 3) rankClass = "rank-bronze";
+
+      html += `
+        <tr class="operator-row" data-username="${escapeHtml(u.username)}">
+          <td class="c-rank ${rankClass}">${u.rank.toString().padStart(2, '0')}</td>
+          <td class="c-name">
+            <div class="name-cell">
+              <span class="name-text">${escapeHtml(u.username)}</span>
+              <div class="mini-ratio-bar" title="Easy: ${u.easy} | Med: ${u.medium} | Hard: ${u.hard}">
+                <span class="m-seg seg-e" style="width: ${eP}%"></span>
+                <span class="m-seg seg-m" style="width: ${mP}%"></span>
+                <span class="m-seg seg-h" style="width: ${hP}%"></span>
+              </div>
+            </div>
+          </td>
+          <td class="c-num">${u.easy}</td>
+          <td class="c-num">${u.medium}</td>
+          <td class="c-num">${u.hard}</td>
+          <td class="c-tot">
+            <span class="pts-badge">${u.total} <span class="pts-unit">PTS</span></span>
+          </td>
+        </tr>
+      `;
+    }
+    tbody.innerHTML = html;
+
+    // Attach row events
+    tbody.querySelectorAll(".operator-row").forEach(row => {
+      row.addEventListener("mouseenter", () => sfx.hover());
+      row.addEventListener("click", () => {
+        const uName = row.getAttribute("data-username");
+        const found = allUsers.find(x => x.username === uName);
+        if (found) openDrawer(found);
+      });
+    });
+  }
+
+  fetch('leaderboard.json', { cache: 'no-store' })
+    .then(r => {
+      if (!r.ok) throw new Error("Data fetch error");
+      return r.json();
+    })
+    .then(data => {
+      if (!data || !Array.isArray(data.leaderboard)) return;
+
+      const sanitized = data.leaderboard
+        .filter(u => u && typeof u.username === "string" && u.username.length <= 64)
+        .map(u => ({
+          username: String(u.username).trim(),
+          easy: Math.max(0, parseInt(u.easy, 10) || 0),
+          medium: Math.max(0, parseInt(u.medium, 10) || 0),
+          hard: Math.max(0, parseInt(u.hard, 10) || 0),
+          total: Math.max(0, parseInt(u.total, 10) || 0)
+        }));
+
+      const sorted = sanitized.sort((a, b) => 
+        b.total - a.total || b.hard - a.hard || b.medium - a.medium || b.easy - a.easy
+      );
+
+      allUsers = sorted.map((u, idx) => ({ ...u, rank: idx + 1 }));
+
+      // Populate Podium (Top 3)
+      for (let i = 1; i <= 3; i++) {
+        const user = allUsers[i - 1];
+        if (user) {
+          const nameEl = document.getElementById(`pod-${i}-name`);
+          const scoreEl = document.getElementById(`pod-${i}-score`);
+          if (nameEl) nameEl.textContent = user.username;
+          if (scoreEl) scoreEl.textContent = `${user.total} PTS`;
+
+          const spotEl = document.querySelector(`.spot-${i}`);
+          if (spotEl) {
+            spotEl.addEventListener("mouseenter", () => {
+              sfx.hover();
+              if (nameEl) scrambler.scramble(nameEl, user.username, 300);
+            });
+            spotEl.addEventListener("click", () => openDrawer(user));
+          }
+        }
+      }
+
+      // Initial Table Render
+      renderBoard();
+
+      // Search listeners
+      if (searchInput) {
+        searchInput.addEventListener("input", (e) => {
+          sfx.key();
+          const val = e.target.value;
+          if (clearBtn) clearBtn.style.display = val ? "inline-block" : "none";
+          renderBoard(val);
+        });
+      }
+
+      if (clearBtn && searchInput) {
+        clearBtn.addEventListener("click", () => {
+          sfx.click();
+          searchInput.value = "";
+          clearBtn.style.display = "none";
+          renderBoard("");
+          searchInput.focus();
+        });
+      }
+    })
+    .catch(() => {
+      // Graceful degradation without leaking error internals
+      if (tbody) {
+        tbody.innerHTML = `
+          <tr class="empty-row">
+            <td colspan="6" class="no-results">Unable to load live leaderboard. Please refresh.</td>
+          </tr>
+        `;
+      }
+    });
+});

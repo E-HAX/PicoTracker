@@ -1,0 +1,644 @@
+<!--Lae Sher aap toh zyada hi bade hacker ho-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EHAX - Leaderboard | CyLab</title>
+    <meta name="theme-color" content="#0a0a09">
+    <meta name="referrer" content="no-referrer">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Touch Responsive Glow -->
+    <div id="cursor-glow" class="cursor-glow"></div>
+    
+    <!-- EHAX Particle Canvas -->
+    <canvas id="particleCanvas"></canvas>
+
+    <div class="grain" aria-hidden="true"></div>
+    <div class="frame" aria-hidden="true"></div>
+
+    <header class="site-head">
+        <div class="wrap site-head-inner">
+            <a class="brand" href="./">
+                <span class="brand-mark"></span>
+                <span class="brand-word">CYLAB<span class="brand-sub">ACADEMY</span></span>
+            </a>
+            <div class="head-meta">
+                <button id="audio-toggle" class="audio-toggle active" title="Toggle cyber audio">
+                    <span class="audio-dot"></span>
+                    <span id="audio-label">AUDIO: ON</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-dots"></div>
+            <div class="hero-floor"><div class="hero-floor-grid"></div></div>
+
+            <div class="hero-inner">
+                <div class="hero-copy">
+                    <h1 class="hero-title">EHAX - <span class="dim">LEADERBOARD</span></h1>
+
+                    <!-- ============ PODIUM (TOP 3) ============ -->
+                    <div class="podium-section">
+                        <!-- Rank 2: Silver -->
+                        <div class="podium-spot spot-2" data-tilt data-rank="2">
+                            <div class="trophy-wrapper silver-glow">
+                                <svg class="elegant-trophy trophy-rank-2" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="halo-2" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#94A3B8" stop-opacity="0.4"/>
+      <stop offset="60%" stop-color="#94A3B8" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="body-2" x1="0%" y1="0%" x2="100%" y2="0%">
+      
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="18%" stop-color="#94A3B8"/>
+      <stop offset="32%" stop-color="#F1F5F9"/>
+      <stop offset="42%" stop-color="#FFFFFF"/>
+      <stop offset="52%" stop-color="#CBD5E1"/>
+      <stop offset="75%" stop-color="#64748B"/>
+      <stop offset="90%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+
+    </linearGradient>
+    <linearGradient id="rim-2" x1="0%" y1="0%" x2="100%" y2="0%">
+      
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="25%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#94A3B8"/>
+      <stop offset="75%" stop-color="#F1F5F9"/>
+      <stop offset="100%" stop-color="#334155"/>
+
+    </linearGradient>
+    <linearGradient id="handle-l-2" x1="100%" y1="0%" x2="0%" y2="100%">
+      
+      <stop offset="0%" stop-color="#F1F5F9"/>
+      <stop offset="40%" stop-color="#94A3B8"/>
+      <stop offset="80%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+
+    </linearGradient>
+    <linearGradient id="handle-r-2" x1="0%" y1="0%" x2="100%" y2="100%">
+      
+      <stop offset="0%" stop-color="#F1F5F9"/>
+      <stop offset="40%" stop-color="#94A3B8"/>
+      <stop offset="80%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+
+    </linearGradient>
+    <linearGradient id="ped-marble-2" x1="0%" y1="0%" x2="0%" y2="100%">
+      
+      <stop offset="0%" stop-color="#292524"/>
+      <stop offset="25%" stop-color="#1C1917"/>
+      <stop offset="75%" stop-color="#0C0A09"/>
+      <stop offset="100%" stop-color="#000000"/>
+
+    </linearGradient>
+    <linearGradient id="plate-2" x1="0%" y1="0%" x2="100%" y2="0%">
+      
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="20%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#94A3B8"/>
+      <stop offset="80%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#334155"/>
+
+    </linearGradient>
+    <linearGradient id="laurel-2" x1="0%" y1="0%" x2="0%" y2="100%">
+      
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#94A3B8"/>
+      <stop offset="100%" stop-color="#475569"/>
+
+    </linearGradient>
+  </defs>
+
+  <!-- Ambient Glow Aura -->
+  <circle cx="60" cy="52" r="46" fill="url(#halo-2)" />
+
+  <!-- Back Laurel Wreath (Wings) -->
+  <g fill="url(#laurel-2)" opacity="0.92">
+    <path d="M22 62 C16 54 18 42 27 34 C25 40 26 48 31 52 C26 55 23 58 22 62 Z"/>
+    <path d="M17 50 C12 42 16 32 26 26 C23 32 25 39 30 42 C24 44 20 47 17 50 Z"/>
+    <path d="M16 36 C13 28 19 18 29 14 C25 20 27 28 32 30 C25 31 19 33 16 36 Z"/>
+    <path d="M21 22 C20 14 28 6 38 4 C33 9 34 17 38 20 C30 19 24 20 21 22 Z"/>
+
+    <path d="M98 62 C104 54 102 42 93 34 C95 40 94 48 89 52 C94 55 97 58 98 62 Z"/>
+    <path d="M103 50 C108 42 104 32 94 26 C97 32 95 39 90 42 C96 44 100 47 103 50 Z"/>
+    <path d="M104 36 C107 28 101 18 91 14 C95 20 93 28 88 30 C95 31 101 33 104 36 Z"/>
+    <path d="M99 22 C100 14 92 6 82 4 C87 9 86 17 82 20 C90 19 96 20 99 22 Z"/>
+  </g>
+
+  <!-- Sweeping Handles (Sculpted 3D) -->
+  <path d="M38 28 C16 28 14 54 28 64 C33 67 36 62 33 59 C22 52 23 36 38 35 Z" fill="url(#handle-l-2)" />
+  <path d="M38 30 C22 30 20 50 30 58 C33 60 35 56 33 54 C25 48 26 36 38 34 Z" fill="#1E293B" opacity="0.55" />
+  <path d="M38 27 C24 27 20 42 27 54 C26 48 27 33 38 31 Z" fill="#FFFFFF" opacity="0.4" />
+
+  <path d="M82 28 C104 28 106 54 92 64 C87 67 84 62 87 59 C98 52 97 36 82 35 Z" fill="url(#handle-r-2)" />
+  <path d="M82 30 C98 30 100 50 90 58 C87 60 85 56 87 54 C95 48 94 36 82 34 Z" fill="#1E293B" opacity="0.55" />
+  <path d="M82 27 C96 27 100 42 93 54 C94 48 93 33 82 31 Z" fill="#FFFFFF" opacity="0.4" />
+
+  <!-- Trophy Stem & Nodes -->
+  <path d="M54 68 H66 L68 82 H52 Z" fill="url(#body-2)" />
+  <ellipse cx="60" cy="68" rx="8" ry="2.5" fill="url(#rim-2)" />
+  <ellipse cx="60" cy="75" rx="6.5" ry="2" fill="url(#rim-2)" />
+  <ellipse cx="60" cy="82" rx="11" ry="3" fill="url(#rim-2)" />
+
+  <!-- Main Chalice (Cup) -->
+  <path d="M36 22 H84 C84 48 74 66 60 69 C46 66 36 48 36 22 Z" fill="url(#body-2)" />
+
+  <!-- Cup Specular Shimmer / Highlights -->
+  <path d="M44 24 C45 36 49 56 60 68 C52 64 45 48 43 24 Z" fill="#FFFFFF" opacity="0.35" />
+  <path d="M78 24 C75 36 71 52 60 67 C66 62 74 46 76 24 Z" fill="#1E293B" opacity="0.38" />
+
+  <!-- Chalice Rim Lips -->
+  <ellipse cx="60" cy="22" rx="24" ry="5.5" fill="url(#rim-2)" />
+  <ellipse cx="60" cy="22" rx="21" ry="4" fill="#1E293B" />
+  <ellipse cx="60" cy="22" rx="20" ry="3" fill="#0A0A0A" />
+
+  <!-- Centerpiece Shield / Medallion -->
+  <g>
+    <circle cx="60" cy="44" r="13" fill="#1C1917" stroke="url(#rim-2)" stroke-width="1.5" />
+    <circle cx="60" cy="44" r="10.5" fill="url(#body-2)" />
+    <circle cx="60" cy="44" r="8.5" fill="#1E293B" />
+    <text x="60" y="49" font-family="'Space Grotesk', system-ui, sans-serif" font-size="12" font-weight="900" fill="#FFFFFF" text-anchor="middle" filter="drop-shadow(0 1px 2px #000)">2</text>
+  </g>
+
+  <!-- Crown / Star Apex -->
+  <g transform="translate(60, 11)">
+    <polygon points="0,-6 2,-1 7,-1 3,2 4.5,7 0,4 -4.5,7 -3,2 -7,-1 -2,-1" fill="#FFFFFF" filter="drop-shadow(0 0 4px #94A3B8)" />
+  </g>
+
+  <!-- Pedestal Base (Architectural / Multi-Tier Obsidian & Trim) -->
+  <path d="M46 82 H74 L78 88 H42 Z" fill="url(#body-2)" />
+  <rect x="34" y="88" width="52" height="22" rx="3" fill="url(#ped-marble-2)" stroke="#44403C" stroke-width="0.8" />
+  <rect x="30" y="110" width="60" height="5" rx="1.5" fill="url(#body-2)" />
+  <rect x="40" y="93" width="40" height="12" rx="1.5" fill="url(#plate-2)" stroke="rgba(255,255,255,0.2)" stroke-width="0.6" />
+  <text x="60" y="102" font-family="'JetBrains Mono', monospace" font-size="6.5" font-weight="800" fill="#0F172A" text-anchor="middle" letter-spacing="0.8">#2 ELITE</text>
+</svg>
+                            </div>
+                            <div class="podium-name" id="pod-2-name">--</div>
+                            <div class="podium-score" id="pod-2-score">-- PTS</div>
+                            <div class="podium-block block-2">2ND</div>
+                        </div>
+
+                        <!-- Rank 1: Gold -->
+                        <div class="podium-spot spot-1" data-tilt data-rank="1">
+                            <div class="trophy-wrapper gold-glow">
+                                <svg class="elegant-trophy trophy-rank-1" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="halo-1" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.4"/>
+      <stop offset="60%" stop-color="#FFD700" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="body-1" x1="0%" y1="0%" x2="100%" y2="0%">
+      
+      <stop offset="0%" stop-color="#78350F"/>
+      <stop offset="18%" stop-color="#F59E0B"/>
+      <stop offset="32%" stop-color="#FEF08A"/>
+      <stop offset="42%" stop-color="#FFFFFF"/>
+      <stop offset="52%" stop-color="#FBBF24"/>
+      <stop offset="75%" stop-color="#D97706"/>
+      <stop offset="90%" stop-color="#92400E"/>
+      <stop offset="100%" stop-color="#451A03"/>
+
+    </linearGradient>
+    <linearGradient id="rim-1" x1="0%" y1="0%" x2="100%" y2="0%">
+      
+      <stop offset="0%" stop-color="#92400E"/>
+      <stop offset="25%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="75%" stop-color="#FEF08A"/>
+      <stop offset="100%" stop-color="#78350F"/>
+
+    </linearGradient>
+    <linearGradient id="handle-l-1" x1="100%" y1="0%" x2="0%" y2="100%">
+      
+      <stop offset="0%" stop-color="#FEF08A"/>
+      <stop offset="40%" stop-color="#F59E0B"/>
+      <stop offset="80%" stop-color="#92400E"/>
+      <stop offset="100%" stop-color="#451A03"/>
+
+    </linearGradient>
+    <linearGradient id="handle-r-1" x1="0%" y1="0%" x2="100%" y2="100%">
+      
+      <stop offset="0%" stop-color="#FEF08A"/>
+      <stop offset="40%" stop-color="#F59E0B"/>
+      <stop offset="80%" stop-color="#92400E"/>
+      <stop offset="100%" stop-color="#451A03"/>
+
+    </linearGradient>
+    <linearGradient id="ped-marble-1" x1="0%" y1="0%" x2="0%" y2="100%">
+      
+      <stop offset="0%" stop-color="#292524"/>
+      <stop offset="25%" stop-color="#1C1917"/>
+      <stop offset="75%" stop-color="#0C0A09"/>
+      <stop offset="100%" stop-color="#000000"/>
+
+    </linearGradient>
+    <linearGradient id="plate-1" x1="0%" y1="0%" x2="100%" y2="0%">
+      
+      <stop offset="0%" stop-color="#78350F"/>
+      <stop offset="20%" stop-color="#FEF08A"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="80%" stop-color="#FEF08A"/>
+      <stop offset="100%" stop-color="#78350F"/>
+
+    </linearGradient>
+    <linearGradient id="laurel-1" x1="0%" y1="0%" x2="0%" y2="100%">
+      
+      <stop offset="0%" stop-color="#FEF08A"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#78350F"/>
+
+    </linearGradient>
+  </defs>
+
+  <!-- Ambient Glow Aura -->
+  <circle cx="60" cy="52" r="46" fill="url(#halo-1)" />
+
+  <!-- Back Laurel Wreath (Wings) -->
+  <g fill="url(#laurel-1)" opacity="0.92">
+    <path d="M22 62 C16 54 18 42 27 34 C25 40 26 48 31 52 C26 55 23 58 22 62 Z"/>
+    <path d="M17 50 C12 42 16 32 26 26 C23 32 25 39 30 42 C24 44 20 47 17 50 Z"/>
+    <path d="M16 36 C13 28 19 18 29 14 C25 20 27 28 32 30 C25 31 19 33 16 36 Z"/>
+    <path d="M21 22 C20 14 28 6 38 4 C33 9 34 17 38 20 C30 19 24 20 21 22 Z"/>
+
+    <path d="M98 62 C104 54 102 42 93 34 C95 40 94 48 89 52 C94 55 97 58 98 62 Z"/>
+    <path d="M103 50 C108 42 104 32 94 26 C97 32 95 39 90 42 C96 44 100 47 103 50 Z"/>
+    <path d="M104 36 C107 28 101 18 91 14 C95 20 93 28 88 30 C95 31 101 33 104 36 Z"/>
+    <path d="M99 22 C100 14 92 6 82 4 C87 9 86 17 82 20 C90 19 96 20 99 22 Z"/>
+  </g>
+
+  <!-- Sweeping Handles (Sculpted 3D) -->
+  <path d="M38 28 C16 28 14 54 28 64 C33 67 36 62 33 59 C22 52 23 36 38 35 Z" fill="url(#handle-l-1)" />
+  <path d="M38 30 C22 30 20 50 30 58 C33 60 35 56 33 54 C25 48 26 36 38 34 Z" fill="#451A03" opacity="0.55" />
+  <path d="M38 27 C24 27 20 42 27 54 C26 48 27 33 38 31 Z" fill="#FFFFFF" opacity="0.4" />
+
+  <path d="M82 28 C104 28 106 54 92 64 C87 67 84 62 87 59 C98 52 97 36 82 35 Z" fill="url(#handle-r-1)" />
+  <path d="M82 30 C98 30 100 50 90 58 C87 60 85 56 87 54 C95 48 94 36 82 34 Z" fill="#451A03" opacity="0.55" />
+  <path d="M82 27 C96 27 100 42 93 54 C94 48 93 33 82 31 Z" fill="#FFFFFF" opacity="0.4" />
+
+  <!-- Trophy Stem & Nodes -->
+  <path d="M54 68 H66 L68 82 H52 Z" fill="url(#body-1)" />
+  <ellipse cx="60" cy="68" rx="8" ry="2.5" fill="url(#rim-1)" />
+  <ellipse cx="60" cy="75" rx="6.5" ry="2" fill="url(#rim-1)" />
+  <ellipse cx="60" cy="82" rx="11" ry="3" fill="url(#rim-1)" />
+
+  <!-- Main Chalice (Cup) -->
+  <path d="M36 22 H84 C84 48 74 66 60 69 C46 66 36 48 36 22 Z" fill="url(#body-1)" />
+
+  <!-- Cup Specular Shimmer / Highlights -->
+  <path d="M44 24 C45 36 49 56 60 68 C52 64 45 48 43 24 Z" fill="#FFFFFF" opacity="0.35" />
+  <path d="M78 24 C75 36 71 52 60 67 C66 62 74 46 76 24 Z" fill="#451A03" opacity="0.38" />
+
+  <!-- Chalice Rim Lips -->
+  <ellipse cx="60" cy="22" rx="24" ry="5.5" fill="url(#rim-1)" />
+  <ellipse cx="60" cy="22" rx="21" ry="4" fill="#451A03" />
+  <ellipse cx="60" cy="22" rx="20" ry="3" fill="#0A0A0A" />
+
+  <!-- Centerpiece Shield / Medallion -->
+  <g>
+    <circle cx="60" cy="44" r="13" fill="#1C1917" stroke="url(#rim-1)" stroke-width="1.5" />
+    <circle cx="60" cy="44" r="10.5" fill="url(#body-1)" />
+    <circle cx="60" cy="44" r="8.5" fill="#451A03" />
+    <text x="60" y="49" font-family="'Space Grotesk', system-ui, sans-serif" font-size="12" font-weight="900" fill="#FFFFFF" text-anchor="middle" filter="drop-shadow(0 1px 2px #000)">1</text>
+  </g>
+
+  <!-- Crown / Star Apex -->
+  <g transform="translate(60, 11)">
+    <polygon points="0,-6 2,-1 7,-1 3,2 4.5,7 0,4 -4.5,7 -3,2 -7,-1 -2,-1" fill="#FFFFFF" filter="drop-shadow(0 0 4px #FFD700)" />
+  </g>
+
+  <!-- Pedestal Base (Architectural / Multi-Tier Obsidian & Trim) -->
+  <path d="M46 82 H74 L78 88 H42 Z" fill="url(#body-1)" />
+  <rect x="34" y="88" width="52" height="22" rx="3" fill="url(#ped-marble-1)" stroke="#44403C" stroke-width="0.8" />
+  <rect x="30" y="110" width="60" height="5" rx="1.5" fill="url(#body-1)" />
+  <rect x="40" y="93" width="40" height="12" rx="1.5" fill="url(#plate-1)" stroke="rgba(255,255,255,0.2)" stroke-width="0.6" />
+  <text x="60" y="102" font-family="'JetBrains Mono', monospace" font-size="6.5" font-weight="800" fill="#1C1917" text-anchor="middle" letter-spacing="0.8">#1 APEX</text>
+</svg>
+                            </div>
+                            <div class="podium-name" id="pod-1-name">--</div>
+                            <div class="podium-score" id="pod-1-score">-- PTS</div>
+                            <div class="podium-block block-1">1ST</div>
+                        </div>
+
+                        <!-- Rank 3: Bronze -->
+                        <div class="podium-spot spot-3" data-tilt data-rank="3">
+                            <div class="trophy-wrapper bronze-glow">
+                                <svg class="elegant-trophy trophy-rank-3" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="halo-3" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#EA580C" stop-opacity="0.4"/>
+      <stop offset="60%" stop-color="#EA580C" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="body-3" x1="0%" y1="0%" x2="100%" y2="0%">
+      
+      <stop offset="0%" stop-color="#431407"/>
+      <stop offset="18%" stop-color="#C2410C"/>
+      <stop offset="32%" stop-color="#FFEDD5"/>
+      <stop offset="42%" stop-color="#FFFFFF"/>
+      <stop offset="52%" stop-color="#FB923C"/>
+      <stop offset="75%" stop-color="#9A3412"/>
+      <stop offset="90%" stop-color="#7C2D12"/>
+      <stop offset="100%" stop-color="#270A03"/>
+
+    </linearGradient>
+    <linearGradient id="rim-3" x1="0%" y1="0%" x2="100%" y2="0%">
+      
+      <stop offset="0%" stop-color="#7C2D12"/>
+      <stop offset="25%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#C2410C"/>
+      <stop offset="75%" stop-color="#FFEDD5"/>
+      <stop offset="100%" stop-color="#431407"/>
+
+    </linearGradient>
+    <linearGradient id="handle-l-3" x1="100%" y1="0%" x2="0%" y2="100%">
+      
+      <stop offset="0%" stop-color="#FFEDD5"/>
+      <stop offset="40%" stop-color="#EA580C"/>
+      <stop offset="80%" stop-color="#7C2D12"/>
+      <stop offset="100%" stop-color="#270A03"/>
+
+    </linearGradient>
+    <linearGradient id="handle-r-3" x1="0%" y1="0%" x2="100%" y2="100%">
+      
+      <stop offset="0%" stop-color="#FFEDD5"/>
+      <stop offset="40%" stop-color="#EA580C"/>
+      <stop offset="80%" stop-color="#7C2D12"/>
+      <stop offset="100%" stop-color="#270A03"/>
+
+    </linearGradient>
+    <linearGradient id="ped-marble-3" x1="0%" y1="0%" x2="0%" y2="100%">
+      
+      <stop offset="0%" stop-color="#292524"/>
+      <stop offset="25%" stop-color="#1C1917"/>
+      <stop offset="75%" stop-color="#0C0A09"/>
+      <stop offset="100%" stop-color="#000000"/>
+
+    </linearGradient>
+    <linearGradient id="plate-3" x1="0%" y1="0%" x2="100%" y2="0%">
+      
+      <stop offset="0%" stop-color="#431407"/>
+      <stop offset="20%" stop-color="#FFEDD5"/>
+      <stop offset="50%" stop-color="#EA580C"/>
+      <stop offset="80%" stop-color="#FFEDD5"/>
+      <stop offset="100%" stop-color="#431407"/>
+
+    </linearGradient>
+    <linearGradient id="laurel-3" x1="0%" y1="0%" x2="0%" y2="100%">
+      
+      <stop offset="0%" stop-color="#FFEDD5"/>
+      <stop offset="50%" stop-color="#EA580C"/>
+      <stop offset="100%" stop-color="#431407"/>
+
+    </linearGradient>
+  </defs>
+
+  <!-- Ambient Glow Aura -->
+  <circle cx="60" cy="52" r="46" fill="url(#halo-3)" />
+
+  <!-- Back Laurel Wreath (Wings) -->
+  <g fill="url(#laurel-3)" opacity="0.92">
+    <path d="M22 62 C16 54 18 42 27 34 C25 40 26 48 31 52 C26 55 23 58 22 62 Z"/>
+    <path d="M17 50 C12 42 16 32 26 26 C23 32 25 39 30 42 C24 44 20 47 17 50 Z"/>
+    <path d="M16 36 C13 28 19 18 29 14 C25 20 27 28 32 30 C25 31 19 33 16 36 Z"/>
+    <path d="M21 22 C20 14 28 6 38 4 C33 9 34 17 38 20 C30 19 24 20 21 22 Z"/>
+
+    <path d="M98 62 C104 54 102 42 93 34 C95 40 94 48 89 52 C94 55 97 58 98 62 Z"/>
+    <path d="M103 50 C108 42 104 32 94 26 C97 32 95 39 90 42 C96 44 100 47 103 50 Z"/>
+    <path d="M104 36 C107 28 101 18 91 14 C95 20 93 28 88 30 C95 31 101 33 104 36 Z"/>
+    <path d="M99 22 C100 14 92 6 82 4 C87 9 86 17 82 20 C90 19 96 20 99 22 Z"/>
+  </g>
+
+  <!-- Sweeping Handles (Sculpted 3D) -->
+  <path d="M38 28 C16 28 14 54 28 64 C33 67 36 62 33 59 C22 52 23 36 38 35 Z" fill="url(#handle-l-3)" />
+  <path d="M38 30 C22 30 20 50 30 58 C33 60 35 56 33 54 C25 48 26 36 38 34 Z" fill="#270A03" opacity="0.55" />
+  <path d="M38 27 C24 27 20 42 27 54 C26 48 27 33 38 31 Z" fill="#FFFFFF" opacity="0.4" />
+
+  <path d="M82 28 C104 28 106 54 92 64 C87 67 84 62 87 59 C98 52 97 36 82 35 Z" fill="url(#handle-r-3)" />
+  <path d="M82 30 C98 30 100 50 90 58 C87 60 85 56 87 54 C95 48 94 36 82 34 Z" fill="#270A03" opacity="0.55" />
+  <path d="M82 27 C96 27 100 42 93 54 C94 48 93 33 82 31 Z" fill="#FFFFFF" opacity="0.4" />
+
+  <!-- Trophy Stem & Nodes -->
+  <path d="M54 68 H66 L68 82 H52 Z" fill="url(#body-3)" />
+  <ellipse cx="60" cy="68" rx="8" ry="2.5" fill="url(#rim-3)" />
+  <ellipse cx="60" cy="75" rx="6.5" ry="2" fill="url(#rim-3)" />
+  <ellipse cx="60" cy="82" rx="11" ry="3" fill="url(#rim-3)" />
+
+  <!-- Main Chalice (Cup) -->
+  <path d="M36 22 H84 C84 48 74 66 60 69 C46 66 36 48 36 22 Z" fill="url(#body-3)" />
+
+  <!-- Cup Specular Shimmer / Highlights -->
+  <path d="M44 24 C45 36 49 56 60 68 C52 64 45 48 43 24 Z" fill="#FFFFFF" opacity="0.35" />
+  <path d="M78 24 C75 36 71 52 60 67 C66 62 74 46 76 24 Z" fill="#270A03" opacity="0.38" />
+
+  <!-- Chalice Rim Lips -->
+  <ellipse cx="60" cy="22" rx="24" ry="5.5" fill="url(#rim-3)" />
+  <ellipse cx="60" cy="22" rx="21" ry="4" fill="#270A03" />
+  <ellipse cx="60" cy="22" rx="20" ry="3" fill="#0A0A0A" />
+
+  <!-- Centerpiece Shield / Medallion -->
+  <g>
+    <circle cx="60" cy="44" r="13" fill="#1C1917" stroke="url(#rim-3)" stroke-width="1.5" />
+    <circle cx="60" cy="44" r="10.5" fill="url(#body-3)" />
+    <circle cx="60" cy="44" r="8.5" fill="#270A03" />
+    <text x="60" y="49" font-family="'Space Grotesk', system-ui, sans-serif" font-size="12" font-weight="900" fill="#FFFFFF" text-anchor="middle" filter="drop-shadow(0 1px 2px #000)">3</text>
+  </g>
+
+  <!-- Crown / Star Apex -->
+  <g transform="translate(60, 11)">
+    <polygon points="0,-6 2,-1 7,-1 3,2 4.5,7 0,4 -4.5,7 -3,2 -7,-1 -2,-1" fill="#FFFFFF" filter="drop-shadow(0 0 4px #EA580C)" />
+  </g>
+
+  <!-- Pedestal Base (Architectural / Multi-Tier Obsidian & Trim) -->
+  <path d="M46 82 H74 L78 88 H42 Z" fill="url(#body-3)" />
+  <rect x="34" y="88" width="52" height="22" rx="3" fill="url(#ped-marble-3)" stroke="#44403C" stroke-width="0.8" />
+  <rect x="30" y="110" width="60" height="5" rx="1.5" fill="url(#body-3)" />
+  <rect x="40" y="93" width="40" height="12" rx="1.5" fill="url(#plate-3)" stroke="rgba(255,255,255,0.2)" stroke-width="0.6" />
+  <text x="60" y="102" font-family="'JetBrains Mono', monospace" font-size="6.5" font-weight="800" fill="#1C1917" text-anchor="middle" letter-spacing="0.8">#3 VANGUARD</text>
+</svg>
+                            </div>
+                            <div class="podium-name" id="pod-3-name">--</div>
+                            <div class="podium-score" id="pod-3-score">-- PTS</div>
+                            <div class="podium-block block-3">3RD</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-scene" id="heroScene" aria-hidden="true">
+                    <div class="scene-glow"></div>
+                    <canvas id="globeCanvas" class="scene-canvas" width="640" height="640"></canvas>
+                    <div class="orbits">
+                        <div class="orbit orbit-1">
+                            <div class="planet planet-1"></div>
+                            <div class="planet planet-3"></div>
+                        </div>
+                        <div class="orbit orbit-2">
+                            <div class="planet planet-2"></div>
+                        </div>
+                        <div class="orbit orbit-3">
+                            <div class="planet planet-4"></div>
+                        </div>
+                    </div>
+                    <div class="tess">
+                        <div class="cube cube-out">
+                            <div class="face f1"></div>
+                            <div class="face f2"></div>
+                            <div class="face f3"></div>
+                            <div class="face f4"></div>
+                            <div class="face f5"></div>
+                            <div class="face f6"></div>
+                        </div>
+                        <div class="cube cube-in">
+                            <div class="face f1"></div>
+                            <div class="face f2"></div>
+                            <div class="face f3"></div>
+                            <div class="face f4"></div>
+                            <div class="face f5"></div>
+                            <div class="face f6"></div>
+                        </div>
+                    </div>
+                    <img src="./ehax-wordmark.png" alt="" class="hero-mark">
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ BOARD (RANKS 4+) ============ -->
+        <section class="board wrap">
+            <div class="board-header">
+                <div class="board-title-group">
+                    <h3 class="board-heading">STANDINGS
+                    </h3>
+                    <span class="board-subtext" id="board-count">Showing operators</span>
+                </div>
+                <div class="search-box">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="operator-search" placeholder="Search operator..." autocomplete="off" spellcheck="false">
+                    <button id="search-clear" class="search-clear" aria-label="Clear search" style="display: none;">&times;</button>
+                </div>
+            </div>
+            <div class="table-wrap">
+                <table class="board-table">
+                    <thead>
+                        <tr>
+                            <th class="c-rank">RANK</th>
+                            <th class="c-name">USERNAME</th>
+                            <th class="c-num" title="Easy (1pt)">EASY</th>
+                            <th class="c-num" title="Medium (2pts)">MEDIUM</th>
+                            <th class="c-num" title="Hard (3pts)">HARD</th>
+                            <th class="c-tot" title="Total Points">POINTS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="board-body">
+                        <!-- Rows injected by script.js -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-foot">
+        <div class="wrap foot-inner">
+            <span>CYLAB ACADEMY &times; EHAX &mdash; DELHI TECHNOLOGICAL UNIVERSITY</span>
+            <span class="foot-right">FAIR SCORING ACTIVE</span>
+        </div>
+    </footer>
+
+    <!-- Operator Inspect Drawer (HUD) -->
+    <div id="drawer-overlay" class="drawer-overlay" aria-hidden="true"></div>
+    <aside id="operator-drawer" class="operator-drawer" aria-label="Operator Profile">
+        <div class="drawer-header">
+            <div class="drawer-prompt">
+                <span class="prompt-dot"></span>
+                <span>Profile</span>
+            </div>
+            <button id="drawer-close" class="drawer-close" aria-label="Close Drawer">&times;</button>
+        </div>
+
+        <div class="drawer-body">
+            <div class="drawer-hero">
+                <div class="drawer-avatar">
+                    <span id="drawer-avatar-icon" class="drawer-avatar-char">&gt;</span>
+                </div>
+                <div class="drawer-title-group">
+                    <h2 id="drawer-username" class="drawer-username">--</h2>
+                </div>
+            </div>
+
+            <div class="drawer-stat-grid">
+                <div class="drawer-stat-card">
+                    <span class="d-label">EHAX RANK</span>
+                    <span class="d-val" id="drawer-rank">#--</span>
+                </div>
+                <div class="drawer-stat-card">
+                    <span class="d-label">TOTAL SCORE</span>
+                    <span class="d-val highlight" id="drawer-score">-- PTS</span>
+                </div>
+                <div class="drawer-stat-card">
+                    <span class="d-label">ACADEMY STANDING</span>
+                    <span class="d-val" id="drawer-percentile">--</span>
+                </div>
+                <div class="drawer-stat-card">
+                    <span class="d-label">FLAGS LOGGED</span>
+                    <span class="d-val" id="drawer-flags">--</span>
+                </div>
+            </div>
+
+            <!-- Breakdown Visuals -->
+            <div class="drawer-section">
+                <h4 class="drawer-section-title">CHALLENGE RATIO BREAKDOWN</h4>
+                <div class="drawer-ratio-bar" id="drawer-ratio-bar">
+                    <div class="dr-seg dr-easy" id="dr-bar-easy" style="width: 33%"></div>
+                    <div class="dr-seg dr-med" id="dr-bar-med" style="width: 33%"></div>
+                    <div class="dr-seg dr-hard" id="dr-bar-hard" style="width: 34%"></div>
+                </div>
+
+                <div class="drawer-breakdown-list">
+                    <div class="db-item">
+                        <div class="db-dot dot-easy"></div>
+                        <span class="db-name">EASY (1 PT)</span>
+                        <span class="db-count" id="drawer-easy-count">--</span>
+                        <span class="db-pts" id="drawer-easy-pts">-- pts</span>
+                    </div>
+                    <div class="db-item">
+                        <div class="db-dot dot-med"></div>
+                        <span class="db-name">MEDIUM (2 PTS)</span>
+                        <span class="db-count" id="drawer-med-count">--</span>
+                        <span class="db-pts" id="drawer-med-pts">-- pts</span>
+                    </div>
+                    <div class="db-item">
+                        <div class="db-dot dot-hard"></div>
+                        <span class="db-name">HARD (3 PTS)</span>
+                        <span class="db-count" id="drawer-hard-count">--</span>
+                        <span class="db-pts" id="drawer-hard-pts">-- pts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <script src="script.js"></script>
+</body>
+</html>

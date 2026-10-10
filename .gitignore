@@ -1,5 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+*.env
+venv/
+.venv/
+
+# Ignore loose JSON files while preserving web & configuration JSON
 *.json
 !package.json
-__pycache__/
+!leaderboard.json
+!vercel.json
+
+# Temporary files & scrapers
+*.tmp
 chrome-linux64/
 .commandcode/
+
+# Operating System & IDE
+.DS_Store
+.vscode/
+.idea/
+Thumbs.db

@@ -1,77 +1,113 @@
-PicoTracker
-===========
+# EHAX &times; CyLab Academy Leaderboard
 
-**PicoTracker** is a project that uses GitHub Actions to run a script that updates Google Sheets with data from the CyLab Security Academy (formerly picoCTF). This tool automates fetching participant challenge data and storing it in a convenient format for easy access and analysis.
+A high-performance, secure, static cybersecurity leaderboard and automated tracker for CyLab Security Academy / PicoCTF challenges. Features a 3D wireframe interactive scene, custom vector podium chalices, live operator search, tactile Web Audio feedback, and automated stats aggregation.
 
-Project Structure
------------------
+---
 
-*   **`main.py`**: The main script that coordinates fetching stats and updating Google Sheets.
-*   **`requirements.txt`**: A list of Python packages required for the project.
-*   **`scraping.py`**: Fetches per-user solved-challenge counts from the CyLab Security Academy API.
-*   **`sheets.py`**: Contains the code to interact with the Google Sheets API.
+## ⚡ Features
 
-Setup Instructions
-------------------
+- **Weighted Fair Scoring System**:
+  - `EASY` = 1 PT
+  - `MEDIUM` = 2 PTS
+  - `HARD` = 3 PTS
+- **3D Perspective Scene**:
+  - Interactive WebGL/Canvas wireframe globe with orbital rings and mouse parallax.
+  - Perspective floor grid and geometric tesseract visuals.
+- **Top 3 Podium Chalices**:
+  - Custom multi-gradient vector chalices for Gold (#1), Silver (#2), and Bronze (#3) with 3D tilt.
+- **Operator HUD & Drawer**:
+  - Click on any operator to open an inspect drawer with challenge breakdown and academy standing.
+- **Live Search & Filter**:
+  - Instant client-side search with match counter and keyboard navigation.
+- **Hardened Architecture**:
+  - Strict Content Security Policy (CSP), anti-MIME sniffing, no-referrer privacy, and DOM-safe encoding.
+  - Zero sensitive backend endpoints exposed to the browser.
+- **Automated Hourly Updates**:
+  - GitHub Actions runs every hour or instantly when `roster.txt` is updated.
 
-1.  **Clone the repository**:
+---
 
-    ```
-    git clone https://github.com/yourusername/PicoTracker.git
-    cd PicoTracker
-    ```
+## 📁 Repository Structure
 
-2.  **Install dependencies**: Make sure you have Python installed, then install the required packages:
-    
-    `pip3 install -r requirements.txt`
-    
-3.  **Google API Credentials**:
-    
-    *   Create a Google Cloud project and enable the Google Sheets API.
-    *   Generate a service account key in JSON format.
-    *   Share your spreadsheet with the service account's email address as an Editor.
-    *   Export the key file contents as an environment variable:
-    
-    `export GOOGLE_SHEETS_CREDENTIALS="$(cat /path/to/your-key.json)"`
+```text
+├── index.html                   # Main leaderboard frontend
+├── styles.css                   # Cyber dark-mode stylesheet & 3D animations
+├── script.js                    # Web Audio, 3D particles, and client-side rendering
+├── ehax-wordmark.png            # Transparent brand wordmark
+├── logo.png                     # Brand asset
+├── leaderboard.json             # Live scored leaderboard data snapshot
+├── roster.txt                   # List of participant usernames (one per line)
+├── fetch_stats.py               # Automated stats scraper & weighted points engine
+├── requirements.txt             # Python dependencies
+├── vercel.json                  # Production security headers and route guards
+├── .vercelignore                # Prevents deployment of backend scripts & roster
+├── .github/
+│   └── workflows/
+│       └── update_leaderboard.yml # Automated CI/CD update workflow
+└── README.md                    # Documentation
+```
 
-4.  **GitHub Actions**: To let the workflow run the tracker automatically on every push to `main`, add a repository secret named `GOOGLE_SHEETS_CREDENTIALS` (Settings → Secrets and variables → Actions) containing the key file's full JSON contents.
+---
 
-Google Sheet Structure
-----------------------
+## ⚙️ GitHub Actions Automation Setup
 
-The spreadsheet has two worksheets:
+The repository is configured to automatically fetch challenge stats and update `leaderboard.json`:
+1. **Every Hour**: On a scheduled cron (`0 * * * *`).
+2. **On Roster Changes**: Automatically triggers whenever usernames are added or removed in `roster.txt`.
+3. **Manual Trigger**: Can be run anytime via the "Run workflow" button in the GitHub Actions tab.
 
-*   **Second worksheet (index 1)** — the roster: a `Username` column with one participant per row, starting at row 2. Add or remove participants here; the script reads every non-empty row.
-*   **First worksheet (index 0)** — the results: `Username | Easy | Medium | Hard` columns. The script keeps exactly one row per roster member:
-    *   Participants with solved challenges get their counts written.
-    *   Participants who haven't started get `0 / 0 / 0`.
-    *   Accounts the platform can't find get a blank row so they stand out.
-    *   A failed fetch never overwrites existing progress with zeros.
+### Step-by-Step Configuration
 
-Usage
------
+#### Step 1: Enable GitHub Actions Workflow Permissions
+1. Navigate to your repository on GitHub: `https://github.com/E-HAX/PicoTracker`.
+2. Click **Settings** (top tab) &rarr; **Actions** (left sidebar) &rarr; **General**.
+3. Scroll down to **Workflow permissions**:
+   - Select **Read and write permissions**.
+   - Check **Allow GitHub Actions to create and approve pull requests**.
+4. Click **Save**.
 
-To run the main script and fill the Google Sheets with participant data, use the following command:
+#### Step 2: Configure Optional Google Sheets Secret (If syncing from Google Sheets)
+*Note: If you only use `roster.txt`, you can skip this step! The script automatically falls back to `roster.txt`.*
 
-`python3 main.py`
+1. Go to **Settings** &rarr; **Secrets and variables** &rarr; **Actions**.
+2. Click **New repository secret**.
+3. Name: `GOOGLE_SHEETS_CREDENTIALS`
+4. Value: Paste your Google Service Account JSON key.
+5. (Optional) Name: `GOOGLE_SHEET_ID`, Value: Your spreadsheet ID.
+6. Click **Add secret**.
 
-Notes
------
+#### Step 3: Trigger Your First Automated Run
+1. Go to the **Actions** tab on GitHub.
+2. Under "All workflows", click **Update Leaderboard**.
+3. Click the **Run workflow** dropdown on the right &rarr; Click **Run workflow**.
+4. The workflow will execute, scrape the latest solves, calculate weighted points, and commit the updated `leaderboard.json`.
 
-*   Data comes from the public API at `learn.cylabacademy.org`; no browser or login is required.
-*   The project is designed to run in a Python 3.9+ environment; ensure compatibility with your setup.
+---
 
-License
--------
+## 🚀 Local Development
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+To run the static leaderboard locally:
 
-Contributing
-------------
+```bash
+# Start a local HTTP server
+python3 -m http.server 8080
+```
 
-Feel free to submit issues or pull requests to improve the project!
+Open `http://localhost:8080` in your browser.
 
-Acknowledgments
----------------
+To manually refresh stats from the command line:
 
-*   Thanks to [gspread](https://gspread.readthedocs.io/en/latest/) for Google Sheets API interaction.
+```bash
+pip install -r requirements.txt
+python fetch_stats.py
+```
+
+---
+
+## 🌐 Deployment (Vercel)
+
+The site is production-ready for deployment on [Vercel](https://vercel.com):
+- Connect the `E-HAX/PicoTracker` repository to Vercel.
+- Framework Preset: **Other**.
+- Root Directory: `./`.
+- The bundled `vercel.json` applies strict security headers (`nosniff`, `DENY`, `no-referrer`, strict CSP) and blocks direct public access to backend scripts (`fetch_stats.py`, `roster.txt`).
