@@ -1,50 +1,35 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
-from random_user_agent.user_agent import UserAgent
-from random_user_agent.params import SoftwareName, OperatingSystem
 import time
+from urllib.parse import quote
 
-# Generate a random User-Agent using the random-user-agent package
-def get_random_user_agent():
-    software_names = [SoftwareName.CHROME.value]  # You can add other browsers like Firefox, Edge, etc.
-    operating_systems = [OperatingSystem.WINDOWS.value, OperatingSystem.LINUX.value, OperatingSystem.MAC.value]
+import requests
 
-    user_agent_rotator = UserAgent(software_names=software_names, operating_systems=operating_systems, limit=100)
-    return user_agent_rotator.get_random_user_agent()
+BASE_URL = "https://learn.cylabacademy.org"
+HEADERS = {"Accept": "application/json", "User-Agent": "PicoTracker/1.0"}
 
-def scrape_difficulty_data(driver, difficulty_class):
-    try:
-        difficulty_element = driver.find_element(By.XPATH, f"//span[contains(@class, '{difficulty_class}')]")
-        data = difficulty_element.text.split()[0]  # Extract only the number after difficulty name
-    except NoSuchElementException:
-        data = 0  # Assume zero if element not found
-    return int(data)
 
-def scrape_picoctf_data(username):
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")  # Optional: Run headless if you don't need to see the browser window
-    
-    # Use a random User-Agent
-    random_user_agent = get_random_user_agent()
-    chrome_options.add_argument(f"user-agent={random_user_agent}")
-    
-    service = Service('chromedriver')  # Replace with your actual path to ChromeDriver
-    driver = webdriver.Chrome(service=service, options=chrome_options)
+def _get_json(path, retries=3):
+    for attempt in range(retries):
+        try:
+            resp = requests.get(BASE_URL + path, headers=HEADERS, timeout=30)
+            if resp.status_code in (401, 403, 404):
+                return None
+            if resp.status_code == 429 or resp.status_code >= 500:
+                time.sleep(2 ** attempt)
+                continue
+            resp.raise_for_status()
+            return resp.json()
+        except requests.RequestException:
+            time.sleep(2 ** attempt)
+    return None
 
-    try:
-        driver.get(f"https://play.picoctf.org/users/{username}")
-        time.sleep(10)  # Wait for the page to fully load
 
-        # Scrape the difficulty data for each level
-        easy_data = scrape_difficulty_data(driver, "difficulty-1")
-        medium_data = scrape_difficulty_data(driver, "difficulty-2")
-        hard_data = scrape_difficulty_data(driver, "difficulty-3")
-
-        return easy_data, medium_data, hard_data
-
-    finally:
-        driver.quit()
-
+def fetch_user_stats(username):
+    user = _get_json(f"/api/users/{quote(username, safe='')}/")
+    if not user or "id" not in user:
+        print(f"User not found or inaccessible: {username}")
+        return None
+    stats = _get_json(f"/api/users/{user['id']}/gym_stats/")
+    if not stats:
+        return None
+    d = stats["by_difficulty"]
+    return int(d["1"]["solved"]), int(d["2"]["solved"]), int(d["3"]["solved"])

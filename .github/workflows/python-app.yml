@@ -19,14 +19,6 @@ jobs:
       with:
         python-version: '3.9'
 
-    - name: Setup Chrome
-      uses: browser-actions/setup-chrome@v1
-      with:
-      #to fix error Current browser version is 129.0.6668.58 with binary path /opt/google/chrome/chrome
-        chrome-version: 129.0.6668.58
-        install-chromedriver: true  # Install ChromeDriver
-        install-dependencies: true    # Install necessary dependencies for Chrome
-
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
