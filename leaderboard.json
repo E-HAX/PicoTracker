@@ -1,19 +1,19 @@
 {
-  "last_updated": "2026-10-11T18:04:46.404506Z",
+  "last_updated": "2026-10-11T21:57:44.723745Z",
   "leaderboard": [
     {
       "username": "jdoe2374",
       "easy": 113,
-      "medium": 69,
+      "medium": 82,
       "hard": 2,
-      "total": 332
+      "total": 371
     },
     {
       "username": "boringxegotistical",
       "easy": 38,
-      "medium": 42,
+      "medium": 49,
       "hard": 3,
-      "total": 182
+      "total": 203
     },
     {
       "username": "reedhanG",
@@ -73,10 +73,10 @@
     },
     {
       "username": "Shikhar2904",
-      "easy": 28,
+      "easy": 30,
       "medium": 24,
       "hard": 0,
-      "total": 100
+      "total": 102
     },
     {
       "username": "Saarzka",
@@ -94,10 +94,10 @@
     },
     {
       "username": "imightlose",
-      "easy": 48,
+      "easy": 49,
       "medium": 14,
       "hard": 1,
-      "total": 96
+      "total": 97
     },
     {
       "username": "mayank18",
@@ -128,18 +128,18 @@
       "total": 64
     },
     {
+      "username": "saksyy69",
+      "easy": 38,
+      "medium": 8,
+      "hard": 0,
+      "total": 62
+    },
+    {
       "username": "shinchan56",
       "easy": 21,
       "medium": 13,
       "hard": 0,
       "total": 60
-    },
-    {
-      "username": "saksyy69",
-      "easy": 38,
-      "medium": 7,
-      "hard": 0,
-      "total": 59
     },
     {
       "username": "Dhruv3142",
@@ -184,18 +184,25 @@
       "total": 42
     },
     {
+      "username": "RandomBruh",
+      "easy": 39,
+      "medium": 1,
+      "hard": 0,
+      "total": 42
+    },
+    {
+      "username": "Pushpit1845",
+      "easy": 26,
+      "medium": 5,
+      "hard": 0,
+      "total": 41
+    },
+    {
       "username": "harshstayswithastick",
       "easy": 26,
       "medium": 4,
       "hard": 0,
       "total": 38
-    },
-    {
-      "username": "Pushpit1845",
-      "easy": 22,
-      "medium": 5,
-      "hard": 0,
-      "total": 37
     },
     {
       "username": "aashvi14",
@@ -219,6 +226,13 @@
       "total": 35
     },
     {
+      "username": "SampadaSnehi",
+      "easy": 34,
+      "medium": 0,
+      "hard": 0,
+      "total": 34
+    },
+    {
       "username": "daksh2011",
       "easy": 22,
       "medium": 3,
@@ -240,23 +254,9 @@
       "total": 27
     },
     {
-      "username": "SampadaSnehi",
-      "easy": 24,
-      "medium": 0,
-      "hard": 0,
-      "total": 24
-    },
-    {
       "username": "samyak23jain07",
       "easy": 14,
       "medium": 3,
-      "hard": 0,
-      "total": 23
-    },
-    {
-      "username": "RandomBruh",
-      "easy": 20,
-      "medium": 1,
       "hard": 0,
       "total": 23
     },
