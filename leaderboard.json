@@ -1,19 +1,19 @@
 {
-  "last_updated": "2026-10-11T19:57:18.011658Z",
+  "last_updated": "2026-10-11T23:20:22.009571Z",
   "leaderboard": [
     {
       "username": "jdoe2374",
       "easy": 113,
-      "medium": 78,
+      "medium": 82,
       "hard": 2,
-      "total": 359
+      "total": 371
     },
     {
       "username": "boringxegotistical",
       "easy": 38,
-      "medium": 45,
+      "medium": 50,
       "hard": 3,
-      "total": 191
+      "total": 206
     },
     {
       "username": "reedhanG",
@@ -94,10 +94,10 @@
     },
     {
       "username": "imightlose",
-      "easy": 48,
+      "easy": 49,
       "medium": 14,
       "hard": 1,
-      "total": 96
+      "total": 97
     },
     {
       "username": "mayank18",
@@ -128,18 +128,18 @@
       "total": 64
     },
     {
+      "username": "saksyy69",
+      "easy": 38,
+      "medium": 8,
+      "hard": 0,
+      "total": 62
+    },
+    {
       "username": "shinchan56",
       "easy": 21,
       "medium": 13,
       "hard": 0,
       "total": 60
-    },
-    {
-      "username": "saksyy69",
-      "easy": 38,
-      "medium": 7,
-      "hard": 0,
-      "total": 59
     },
     {
       "username": "Dhruv3142",
@@ -184,11 +184,18 @@
       "total": 42
     },
     {
+      "username": "RandomBruh",
+      "easy": 39,
+      "medium": 1,
+      "hard": 0,
+      "total": 42
+    },
+    {
       "username": "Pushpit1845",
-      "easy": 25,
+      "easy": 26,
       "medium": 5,
       "hard": 0,
-      "total": 40
+      "total": 41
     },
     {
       "username": "harshstayswithastick",
@@ -219,6 +226,13 @@
       "total": 35
     },
     {
+      "username": "SampadaSnehi",
+      "easy": 35,
+      "medium": 0,
+      "hard": 0,
+      "total": 35
+    },
+    {
       "username": "daksh2011",
       "easy": 22,
       "medium": 3,
@@ -226,25 +240,11 @@
       "total": 31
     },
     {
-      "username": "SampadaSnehi",
-      "easy": 30,
-      "medium": 0,
-      "hard": 0,
-      "total": 30
-    },
-    {
       "username": "nicehacker2501",
       "easy": 17,
       "medium": 4,
       "hard": 0,
       "total": 29
-    },
-    {
-      "username": "RandomBruh",
-      "easy": 25,
-      "medium": 1,
-      "hard": 0,
-      "total": 28
     },
     {
       "username": "Akshatt07",
