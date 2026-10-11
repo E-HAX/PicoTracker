@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-10T23:56:45.385653Z",
+  "last_updated": "2026-10-11T02:58:43.862045Z",
   "leaderboard": [
     {
       "username": "boringxegotistical",
@@ -121,6 +121,13 @@
       "total": 60
     },
     {
+      "username": "Dhruv3142",
+      "easy": 35,
+      "medium": 7,
+      "hard": 0,
+      "total": 56
+    },
+    {
       "username": "Himank",
       "easy": 54,
       "medium": 0,
@@ -133,13 +140,6 @@
       "medium": 7,
       "hard": 0,
       "total": 53
-    },
-    {
-      "username": "Dhruv3142",
-      "easy": 31,
-      "medium": 7,
-      "hard": 0,
-      "total": 52
     },
     {
       "username": "imightlose",
