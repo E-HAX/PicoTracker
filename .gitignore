@@ -24,3 +24,8 @@ chrome-linux64/
 .vscode/
 .idea/
 Thumbs.db
+
+# Roster & Name Mapping Sheets (Private)
+*.csv
+Cylab Username - Sheet1.csv
+

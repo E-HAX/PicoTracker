@@ -256,41 +256,93 @@ document.addEventListener("DOMContentLoaded", () => {
       this.enabled = true;
       this.ctx = null;
     }
-    ensureCtx() {
-      if (!this.ctx) {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        if (AudioCtx) this.ctx = new AudioCtx();
-      }
-      if (this.ctx && this.ctx.state === "suspended") {
-        this.ctx.resume();
-      }
+
+    init() {
+      try {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) this.ctx = new AudioCtx();
+        }
+        if (this.ctx && this.ctx.state === "suspended") {
+          this.ctx.resume().catch(() => {});
+        }
+      } catch (_) {}
     }
-    playTone(freq = 600, duration = 0.05, type = "sine", gainVal = 0.09) {
+
+    playTone(freq = 700, duration = 0.06, type = "triangle", gainVal = 0.22) {
       if (!this.enabled) return;
-      this.ensureCtx();
+      this.init();
       if (!this.ctx) return;
+
       const fire = () => {
         try {
+          const t = this.ctx.currentTime;
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
+
           osc.type = type;
-          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-          gain.gain.setValueAtTime(gainVal, this.ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
+          osc.frequency.setValueAtTime(freq, t);
+
+          gain.gain.setValueAtTime(gainVal, t);
+          gain.gain.exponentialRampToValueAtTime(0.0001, t + duration);
+
           osc.connect(gain);
           gain.connect(this.ctx.destination);
-          osc.start();
-          osc.stop(this.ctx.currentTime + duration);
+
+          osc.start(t);
+          osc.stop(t + duration);
         } catch (_) {}
       };
+
       if (this.ctx.state === "suspended") {
-        this.ctx.resume().then(fire);
+        this.ctx.resume().then(fire).catch(() => {});
       } else {
         fire();
       }
     }
+
+    hover() {
+      this.playTone(740, 0.05, "triangle", 0.20);
+    }
+
+    click() {
+      this.playTone(1100, 0.07, "triangle", 0.26);
+    }
+
+    drawer() {
+      if (!this.enabled) return;
+      this.init();
+      if (!this.ctx) return;
+      const fire = () => {
+        try {
+          const t = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = "sawtooth";
+          osc.frequency.setValueAtTime(560, t);
+          osc.frequency.exponentialRampToValueAtTime(1150, t + 0.12);
+          gain.gain.setValueAtTime(0.24, t);
+          gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.14);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(t);
+          osc.stop(t + 0.14);
+        } catch (_) {}
+      };
+      if (this.ctx.state === "suspended") {
+        this.ctx.resume().then(fire).catch(() => {});
+      } else {
+        fire();
+      }
+    }
+
+    key() {
+      this.playTone(650 + Math.random() * 200, 0.04, "triangle", 0.18);
+    }
+
     toggleOn() {
-      this.ensureCtx();
+      if (!this.enabled) return;
+      this.init();
       if (!this.ctx) return;
       const fire = () => {
         try {
@@ -300,7 +352,7 @@ document.addEventListener("DOMContentLoaded", () => {
           osc.type = "sine";
           osc.frequency.setValueAtTime(520, t);
           osc.frequency.exponentialRampToValueAtTime(980, t + 0.12);
-          gain.gain.setValueAtTime(0.12, t);
+          gain.gain.setValueAtTime(0.25, t);
           gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.14);
           osc.connect(gain);
           gain.connect(this.ctx.destination);
@@ -309,13 +361,14 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (_) {}
       };
       if (this.ctx.state === "suspended") {
-        this.ctx.resume().then(fire);
+        this.ctx.resume().then(fire).catch(() => {});
       } else {
         fire();
       }
     }
+
     toggleOff() {
-      this.ensureCtx();
+      this.init();
       if (!this.ctx) return;
       const fire = () => {
         try {
@@ -325,7 +378,7 @@ document.addEventListener("DOMContentLoaded", () => {
           osc.type = "sine";
           osc.frequency.setValueAtTime(700, t);
           osc.frequency.exponentialRampToValueAtTime(320, t + 0.12);
-          gain.gain.setValueAtTime(0.08, t);
+          gain.gain.setValueAtTime(0.18, t);
           gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.14);
           osc.connect(gain);
           gain.connect(this.ctx.destination);
@@ -334,31 +387,28 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (_) {}
       };
       if (this.ctx.state === "suspended") {
-        this.ctx.resume().then(fire);
+        this.ctx.resume().then(fire).catch(() => {});
       } else {
         fire();
       }
     }
-    hover() { this.playTone(540, 0.025, "sine", 0.04); }
-    click() { this.playTone(1100, 0.04, "triangle", 0.08); }
-    drawer() { this.playTone(820, 0.09, "sawtooth", 0.06); }
-    key() { this.playTone(580 + Math.random() * 150, 0.02, "triangle", 0.05); }
   }
   const sfx = new SoundFX();
 
-  // Unlock audio context on first interaction per browser autoplay policy
+  // Multi-event universal audio unlock on first user gesture
   const unlockAudio = () => {
-    if (sfx.enabled) sfx.ensureCtx();
-    window.removeEventListener("pointerdown", unlockAudio);
-    window.removeEventListener("keydown", unlockAudio);
+    sfx.init();
   };
-  window.addEventListener("pointerdown", unlockAudio, { once: true });
-  window.addEventListener("keydown", unlockAudio, { once: true });
+  ["pointerdown", "mousedown", "touchstart", "touchend", "click", "keydown"].forEach(evt => {
+    window.addEventListener(evt, unlockAudio, { capture: true, passive: true });
+    document.addEventListener(evt, unlockAudio, { capture: true, passive: true });
+  });
 
   const audioBtn = document.getElementById("audio-toggle");
   const audioLabel = document.getElementById("audio-label");
   if (audioBtn) {
     audioBtn.addEventListener("click", () => {
+      sfx.init();
       sfx.enabled = !sfx.enabled;
       audioBtn.classList.toggle("active", sfx.enabled);
       if (audioLabel) audioLabel.textContent = sfx.enabled ? "AUDIO: ON" : "AUDIO: OFF";
@@ -461,9 +511,22 @@ document.addEventListener("DOMContentLoaded", () => {
     sfx.drawer();
 
     // Populate Drawer Elements
-    document.getElementById("drawer-username").textContent = user.username;
+    const isDanger = user.total < 30;
+    const uNameEl = document.getElementById("drawer-username");
+    if (uNameEl) {
+      uNameEl.textContent = user.username;
+      uNameEl.classList.toggle("name-danger", isDanger);
+    }
+    const realNameEl = document.getElementById("drawer-realname");
+    if (realNameEl) {
+      realNameEl.textContent = user.name || "Busy Person";
+    }
     document.getElementById("drawer-rank").textContent = `#${user.rank.toString().padStart(2, '0')}`;
-    document.getElementById("drawer-score").textContent = `${user.total} PTS`;
+    const scoreEl = document.getElementById("drawer-score");
+    if (scoreEl) {
+      scoreEl.textContent = `${user.total} PTS`;
+      scoreEl.classList.toggle("danger", isDanger);
+    }
 
     const totalSolved = user.easy + user.medium + user.hard;
     document.getElementById("drawer-flags").textContent = totalSolved.toString();
@@ -568,12 +631,17 @@ document.addEventListener("DOMContentLoaded", () => {
       else if (u.rank === 2) rankClass = "rank-silver";
       else if (u.rank === 3) rankClass = "rank-bronze";
 
+      const isDanger = u.total < 30;
+      const rowDangerClass = isDanger ? "row-danger" : "";
+      const nameDangerClass = isDanger ? "name-danger" : "";
+      const ptsDangerClass = isDanger ? "pts-danger" : "";
+
       html += `
-        <tr class="operator-row" data-username="${escapeHtml(u.username)}">
+        <tr class="operator-row ${rowDangerClass}" data-username="${escapeHtml(u.username)}">
           <td class="c-rank ${rankClass}">#${u.rank.toString().padStart(2, '0')}</td>
           <td class="c-name">
             <div class="name-cell">
-              <span class="name-text">${escapeHtml(u.username)}</span>
+              <span class="name-text ${nameDangerClass}">${escapeHtml(u.username)}</span>
               <div class="mini-ratio-bar" title="Easy: ${u.easy} | Med: ${u.medium} | Hard: ${u.hard}">
                 <span class="m-seg seg-e" style="width: ${eP}%"></span>
                 <span class="m-seg seg-m" style="width: ${mP}%"></span>
@@ -625,6 +693,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const total = (easy * 1) + (medium * 3) + (hard * 6);
           return {
             username: String(u.username).trim(),
+            name: (u.name && String(u.name).trim()) || "Busy Person",
             easy,
             medium,
             hard,

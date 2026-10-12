@@ -1,7 +1,10 @@
 import os
 import re
+import csv
+import glob
 import time
 import json
+import difflib
 import requests
 from urllib.parse import quote
 from datetime import datetime
@@ -98,6 +101,70 @@ def fetch_usernames_from_sheet(start_row=2, end_row=500):
         print(f"Error fetching roster from sheet: {e}")
         return []
 
+def get_name_mapping(usernames):
+    name_map = {}
+    if os.path.exists("leaderboard.json"):
+        try:
+            with open("leaderboard.json", "r") as f:
+                old_data = json.load(f)
+                for entry in old_data.get("leaderboard", []):
+                    u = entry.get("username")
+                    n = entry.get("name")
+                    if u and n:
+                        name_map[u.strip()] = n.strip()
+        except Exception:
+            pass
+
+    csv_files = glob.glob("*.csv")
+    sheet_entries = []
+    for csv_file in csv_files:
+        try:
+            with open(csv_file, "r", encoding="utf-8-sig") as f:
+                reader = csv.reader(f)
+                for row in reader:
+                    if len(row) >= 2:
+                        u_raw = row[0].strip()
+                        n_raw = row[1].strip()
+                        if u_raw.lower() in ("username", "user", "handle") and n_raw.lower() in ("name", "real name"):
+                            continue
+                        if u_raw and n_raw:
+                            sheet_entries.append((u_raw, n_raw))
+        except Exception:
+            pass
+
+    if sheet_entries:
+        used_sheet = set()
+        for u in usernames:
+            for idx, (su, sname) in enumerate(sheet_entries):
+                if su.lower() == u.lower():
+                    name_map[u] = sname
+                    used_sheet.add(idx)
+                    break
+
+        remaining_sheet = [(idx, su, sname) for idx, (su, sname) in enumerate(sheet_entries) if idx not in used_sheet]
+        remaining_roster = [u for u in usernames if u not in name_map or name_map.get(u) == "Busy Person"]
+
+        for idx, su, sname in remaining_sheet:
+            prefix_match = [r for r in remaining_roster if r.lower().startswith(su.lower()) or su.lower().startswith(r.lower())]
+            if prefix_match:
+                matched = prefix_match[0]
+                name_map[matched] = sname
+                if matched in remaining_roster:
+                    remaining_roster.remove(matched)
+            else:
+                closest = difflib.get_close_matches(su.lower(), [r.lower() for r in remaining_roster], n=1, cutoff=0.7)
+                if closest:
+                    matched = [r for r in remaining_roster if r.lower() == closest[0]][0]
+                    name_map[matched] = sname
+                    if matched in remaining_roster:
+                        remaining_roster.remove(matched)
+
+    for u in usernames:
+        if u not in name_map or not name_map[u]:
+            name_map[u] = "Busy Person"
+
+    return name_map
+
 def main():
     usernames = fetch_usernames_from_sheet(start_row=2, end_row=500)
 
@@ -120,15 +187,19 @@ def main():
             seen.add(u.lower())
             unique_usernames.append(u)
 
+    name_map = get_name_mapping(unique_usernames)
+
     leaderboard = []
     for username in unique_usernames:
         print(f"Fetching stats for {username}...")
         result = fetch_user_stats(username)
+        real_name = name_map.get(username, "Busy Person")
         if result:
             easy, medium, hard = result
             total_points = (easy * 1) + (medium * 3) + (hard * 6)
             leaderboard.append({
                 "username": username,
+                "name": real_name,
                 "easy": easy,
                 "medium": medium,
                 "hard": hard,
@@ -137,6 +208,7 @@ def main():
         else:
             leaderboard.append({
                 "username": username,
+                "name": real_name,
                 "easy": 0,
                 "medium": 0,
                 "hard": 0,

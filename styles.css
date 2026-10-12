@@ -877,11 +877,78 @@ tbody tr:hover .pts-badge {
   min-width: 0;
 }
 
+.name-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+}
+
 .name-text {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 100%;
+}
+
+.name-text.name-danger {
+  color: #ef4444;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.45);
+  font-weight: 600;
+}
+
+.operator-row.row-danger td.c-name .name-text.name-danger {
+  color: #ef4444;
+}
+
+.operator-row.row-danger:hover td.c-name .name-text.name-danger {
+  color: #f87171;
+  text-shadow: 0 0 14px rgba(239, 68, 68, 0.7);
+}
+
+.danger-tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.60rem;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  padding: 1px 5px;
+  border-radius: 3px;
+  line-height: 1.2;
+  flex-shrink: 0;
+}
+
+.pts-badge.pts-danger {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.16) 0%, rgba(239, 68, 68, 0.06) 100%);
+  border-color: rgba(239, 68, 68, 0.45);
+  color: #ef4444;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.22);
+  text-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+}
+
+.pts-badge.pts-danger .pts-unit {
+  color: #fca5a5;
+}
+
+.operator-row.row-danger:hover .pts-badge.pts-danger {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.28) 0%, rgba(239, 68, 68, 0.15) 100%);
+  border-color: rgba(239, 68, 68, 0.75);
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.45);
+  color: #f87171;
+}
+
+.drawer-username.name-danger {
+  color: #ef4444 !important;
+  text-shadow: 0 0 12px rgba(239, 68, 68, 0.5);
+}
+
+.d-val.danger {
+  color: #ef4444 !important;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.45) !important;
 }
 
 .mini-ratio-bar {
@@ -1023,6 +1090,28 @@ tbody tr:hover .pts-badge {
   font-weight: 700;
   color: #fff;
   letter-spacing: -0.02em;
+}
+
+.drawer-name-box {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 77, 0, 0.08);
+  border: 1px solid rgba(255, 77, 0, 0.28);
+  padding: 4px 10px;
+  border-radius: 5px;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 2px;
+}
+
+.drawer-realname {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  word-break: break-word;
 }
 
 .drawer-badge {

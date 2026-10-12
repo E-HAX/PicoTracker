@@ -1,7 +1,7 @@
 {
   "routes": [
     {
-      "src": "/(fetch_stats\\.py|patch_html\\.py|roster\\.txt|requirements\\.txt|\\.github.*|\\.git.*)",
+      "src": "/(fetch_stats\\.py|patch_html\\.py|roster\\.txt|requirements\\.txt|.*\\.csv|\\.github.*|\\.git.*)",
       "status": 404
     }
   ],
