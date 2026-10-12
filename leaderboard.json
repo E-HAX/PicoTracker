@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-12T09:54:03.447368Z",
+  "last_updated": "2026-10-12T15:57:35.966586Z",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -17,10 +17,17 @@
     },
     {
       "username": "reedhanG",
-      "easy": 62,
+      "easy": 66,
       "medium": 33,
       "hard": 1,
-      "total": 167
+      "total": 171
+    },
+    {
+      "username": "SilentNinj4",
+      "easy": 92,
+      "medium": 24,
+      "hard": 0,
+      "total": 164
     },
     {
       "username": "aayushk79",
@@ -51,11 +58,18 @@
       "total": 140
     },
     {
-      "username": "SilentNinj4",
-      "easy": 62,
+      "username": "Saarzka",
+      "easy": 49,
       "medium": 24,
       "hard": 0,
-      "total": 134
+      "total": 121
+    },
+    {
+      "username": "Shikhar2904",
+      "easy": 42,
+      "medium": 24,
+      "hard": 0,
+      "total": 114
     },
     {
       "username": "AkshatJairath",
@@ -65,25 +79,11 @@
       "total": 114
     },
     {
-      "username": "Shikhar2904",
-      "easy": 38,
-      "medium": 24,
-      "hard": 0,
-      "total": 110
-    },
-    {
       "username": "goat69",
       "easy": 52,
       "medium": 19,
       "hard": 0,
       "total": 109
-    },
-    {
-      "username": "Saarzka",
-      "easy": 34,
-      "medium": 24,
-      "hard": 0,
-      "total": 106
     },
     {
       "username": "imightlose",
@@ -150,8 +150,15 @@
     },
     {
       "username": "pricyhacker",
-      "easy": 24,
+      "easy": 25,
       "medium": 8,
+      "hard": 0,
+      "total": 49
+    },
+    {
+      "username": "RandomBruh",
+      "easy": 45,
+      "medium": 1,
       "hard": 0,
       "total": 48
     },
@@ -173,13 +180,6 @@
       "username": "Mehulgarg23",
       "easy": 24,
       "medium": 6,
-      "hard": 0,
-      "total": 42
-    },
-    {
-      "username": "RandomBruh",
-      "easy": 39,
-      "medium": 1,
       "hard": 0,
       "total": 42
     },
