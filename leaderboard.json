@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-14T08:55:59.779263+00:00",
+  "last_updated": "2026-10-14T08:58:14.651460+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -277,9 +277,9 @@
       "username": "smlk3333",
       "name": "Soumil Malik",
       "easy": 10,
-      "medium": 4,
+      "medium": 5,
       "hard": 0,
-      "total": 22
+      "total": 25
     },
     {
       "username": "Sairese",
@@ -300,10 +300,10 @@
     {
       "username": "nineteen",
       "name": "Shashank Shekhar",
-      "easy": 15,
+      "easy": 16,
       "medium": 0,
       "hard": 0,
-      "total": 15
+      "total": 16
     },
     {
       "username": "smoothbrain01",
