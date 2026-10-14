@@ -102,7 +102,7 @@ def fetch_usernames_from_sheet(start_row=2, end_row=500):
         return []
 
 USERNAME_ALIASES = {
-    "nichehacker2501": "nicehacker2501",
+    "nicehacker2501": "Nichehacker2501",
     "smoothb": "smoothbrain01",
 }
 

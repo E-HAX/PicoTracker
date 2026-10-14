@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-14T16:06:49.064266+00:00",
+  "last_updated": "2026-10-14T16:11:14.362866+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -44,10 +44,10 @@
     {
       "username": "aayushk79",
       "name": "Aayush Kumar",
-      "easy": 100,
+      "easy": 101,
       "medium": 19,
       "hard": 0,
-      "total": 157
+      "total": 158
     },
     {
       "username": "Kartikey191108",
@@ -194,20 +194,20 @@
       "total": 57
     },
     {
+      "username": "akshut",
+      "name": "Akshut Goyal",
+      "easy": 39,
+      "medium": 6,
+      "hard": 0,
+      "total": 57
+    },
+    {
       "username": "RandomBruh",
       "name": "Rishabh Dev Malhotra",
       "easy": 53,
       "medium": 1,
       "hard": 0,
       "total": 56
-    },
-    {
-      "username": "akshut",
-      "name": "Akshut Goyal",
-      "easy": 37,
-      "medium": 6,
-      "hard": 0,
-      "total": 55
     },
     {
       "username": "Himank",
@@ -234,6 +234,14 @@
       "total": 45
     },
     {
+      "username": "Untr4ced",
+      "name": "Palak",
+      "easy": 17,
+      "medium": 9,
+      "hard": 0,
+      "total": 44
+    },
+    {
       "username": "prabk55",
       "name": "Prabhakar Kumar",
       "easy": 26,
@@ -248,14 +256,6 @@
       "medium": 6,
       "hard": 0,
       "total": 42
-    },
-    {
-      "username": "Untr4ced",
-      "name": "Palak",
-      "easy": 17,
-      "medium": 8,
-      "hard": 0,
-      "total": 41
     },
     {
       "username": "daksh2011",
@@ -288,6 +288,14 @@
       "medium": 2,
       "hard": 0,
       "total": 37
+    },
+    {
+      "username": "Nichehacker2501",
+      "name": "Kanav gupta",
+      "easy": 23,
+      "medium": 4,
+      "hard": 0,
+      "total": 35
     },
     {
       "username": "Karasuke",
@@ -380,14 +388,6 @@
     {
       "username": "hetainhack",
       "name": "Hetain Arora",
-      "easy": 0,
-      "medium": 0,
-      "hard": 0,
-      "total": 0
-    },
-    {
-      "username": "nicehacker2501",
-      "name": "Kanav gupta",
       "easy": 0,
       "medium": 0,
       "hard": 0,
