@@ -519,7 +519,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     const realNameEl = document.getElementById("drawer-realname");
     if (realNameEl) {
-      realNameEl.textContent = user.name || "Busy Person";
+      realNameEl.textContent = user.name || "Name not given";
     }
     document.getElementById("drawer-rank").textContent = `#${user.rank.toString().padStart(2, '0')}`;
     const scoreEl = document.getElementById("drawer-score");
@@ -646,7 +646,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const ptsDangerClass = isDanger ? "pts-danger" : "";
 
       html += `
-        <tr class="operator-row ${rowDangerClass}" data-username="${escapeHtml(u.username)}" data-realname="${escapeHtml(u.name || '')}" title="${escapeHtml(u.name && u.name !== 'Busy Person' ? `${u.username} (${u.name})` : u.username)}">
+        <tr class="operator-row ${rowDangerClass}" data-username="${escapeHtml(u.username)}" data-realname="${escapeHtml(u.name || '')}" title="${escapeHtml(u.name && u.name !== 'Name not given' && u.name !== 'Busy Person' ? `${u.username} (${u.name})` : u.username)}">
           <td class="c-rank ${rankClass}">#${u.rank.toString().padStart(2, '0')}</td>
           <td class="c-name">
             <div class="name-cell">
@@ -702,7 +702,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const total = (easy * 1) + (medium * 3) + (hard * 6);
           return {
             username: String(u.username).trim(),
-            name: (u.name && String(u.name).trim()) || "Busy Person",
+            name: (u.name && String(u.name).trim()) || "Name not given",
             easy,
             medium,
             hard,

@@ -37,6 +37,7 @@ A high-performance, secure, static cybersecurity leaderboard and automated track
 ├── logo.png                     # Brand asset
 ├── leaderboard.json             # Live scored leaderboard data snapshot
 ├── Cylab Username - Sheet1.csv  # Primary participant roster & name mappings
+├── roster.txt                   # Participant usernames roster
 ├── fetch_stats.py               # Automated stats scraper & weighted points engine
 ├── requirements.txt             # Python dependencies
 ├── vercel.json                  # Production security headers and route guards

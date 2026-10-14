@@ -139,7 +139,7 @@ def load_roster_from_sheet(preferred_csv="Cylab Username - Sheet1.csv"):
                         seen.add(resolved_u.lower())
                         entries.append({
                             "username": resolved_u,
-                            "name": n_raw if n_raw else "Busy Person"
+                            "name": n_raw if n_raw else "Name not given"
                         })
             if entries:
                 break
@@ -190,7 +190,7 @@ def get_name_mapping(usernames):
                     break
 
         remaining_sheet = [(idx, su, sname) for idx, (su, sname) in enumerate(sheet_entries) if idx not in used_sheet]
-        remaining_roster = [u for u in usernames if u not in name_map or name_map.get(u) == "Busy Person"]
+        remaining_roster = [u for u in usernames if u not in name_map or name_map.get(u) in ("Name not given", "Busy Person")]
 
         for idx, su, sname in remaining_sheet:
             prefix_match = [r for r in remaining_roster if r.lower().startswith(su.lower()) or su.lower().startswith(r.lower())]
@@ -209,25 +209,39 @@ def get_name_mapping(usernames):
 
     for u in usernames:
         if u not in name_map or not name_map[u]:
-            name_map[u] = "Busy Person"
+            name_map[u] = "Name not given"
 
     return name_map
 
 def main():
-    # Primary roster source: local CSV sheet
+    # 1. Primary roster source: local CSV sheet
     roster_entries = load_roster_from_sheet()
 
-    # Optional Google Sheets fallback if no local CSV found
+    # 2. Check roster.txt for any extra usernames
+    if os.path.exists("roster.txt"):
+        try:
+            with open("roster.txt", "r") as f:
+                roster_txt_users = [line.strip() for line in f if is_valid_username(line.strip())]
+            existing_sheet_users = {e["username"].lower() for e in roster_entries}
+            for u in roster_txt_users:
+                resolved_u = USERNAME_ALIASES.get(u.lower(), u)
+                if resolved_u.lower() not in existing_sheet_users:
+                    roster_entries.append({"username": resolved_u, "name": "Name not given"})
+                    existing_sheet_users.add(resolved_u.lower())
+        except Exception as e:
+            print(f"Error checking roster.txt: {e}")
+
+    # 3. Optional Google Sheets fallback if neither local CSV nor roster.txt found
     if not roster_entries:
         usernames = fetch_usernames_from_sheet(start_row=2, end_row=500)
         name_map = get_name_mapping(usernames)
-        roster_entries = [{"username": u, "name": name_map.get(u, "Busy Person")} for u in usernames]
+        roster_entries = [{"username": u, "name": name_map.get(u, "Name not given")} for u in usernames]
 
     if not roster_entries:
-        print("Roster is empty. Add a CSV sheet (e.g. Cylab Username - Sheet1.csv).")
+        print("Roster is empty. Add a CSV sheet (e.g. Cylab Username - Sheet1.csv) or roster.txt.")
         return
 
-    # Fallback to existing leaderboard.json names if name is Busy Person
+    # Fallback to existing leaderboard.json names if name is Name not given / Busy Person
     old_names = {}
     if os.path.exists("leaderboard.json"):
         try:
@@ -235,7 +249,7 @@ def main():
                 for entry in json.load(f).get("leaderboard", []):
                     u = entry.get("username")
                     n = entry.get("name")
-                    if u and n and n != "Busy Person":
+                    if u and n and n not in ("Name not given", "Busy Person"):
                         old_names[u.lower()] = n
         except Exception:
             pass
@@ -244,8 +258,8 @@ def main():
     for item in roster_entries:
         username = item["username"]
         real_name = item.get("name")
-        if not real_name or real_name == "Busy Person":
-            real_name = old_names.get(username.lower(), "Busy Person")
+        if not real_name or real_name in ("Name not given", "Busy Person"):
+            real_name = old_names.get(username.lower(), "Name not given")
 
         print(f"Fetching stats for {username} ({real_name})...")
         result = fetch_user_stats(username)

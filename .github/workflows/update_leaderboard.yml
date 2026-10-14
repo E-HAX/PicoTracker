@@ -10,6 +10,7 @@ on:
     paths:
       - 'Cylab Username - Sheet1.csv'
       - '*.csv'
+      - 'roster.txt'
       - 'fetch_stats.py'
       - 'requirements.txt'
       - '.github/workflows/update_leaderboard.yml'

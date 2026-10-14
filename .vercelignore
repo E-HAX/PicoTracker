@@ -1,6 +1,7 @@
 fetch_stats.py
 patch_html.py
 requirements.txt
+roster.txt
 *.csv
 Cylab Username - Sheet1.csv
 .github/
