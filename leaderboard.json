@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-13T21:21:27.305070Z",
+  "last_updated": "2026-10-14T00:23:46.982621Z",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -24,6 +24,14 @@
       "medium": 40,
       "hard": 1,
       "total": 195
+    },
+    {
+      "username": "Pointbreak007",
+      "name": "Atishay Jain",
+      "easy": 76,
+      "medium": 24,
+      "hard": 6,
+      "total": 184
     },
     {
       "username": "SilentNinj4",
@@ -64,14 +72,6 @@
       "medium": 9,
       "hard": 0,
       "total": 140
-    },
-    {
-      "username": "Pointbreak007",
-      "name": "Atishay Jain",
-      "easy": 73,
-      "medium": 14,
-      "hard": 4,
-      "total": 139
     },
     {
       "username": "Shikhar2904",
