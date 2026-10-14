@@ -602,7 +602,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Render ALL operators in table (including top 3)
     const dataset = allUsers;
-    const matched = q ? dataset.filter(u => u.username.toLowerCase().includes(q)) : dataset;
+    const matched = q ? dataset.filter(u => {
+      const uName = (u.username || "").toLowerCase();
+      const rName = (u.name || "").toLowerCase();
+      if (uName.includes(q) || rName.includes(q)) return true;
+      const tokens = q.split(/\s+/).filter(Boolean);
+      if (tokens.length > 1) {
+        return tokens.every(token => uName.includes(token) || rName.includes(token));
+      }
+      return false;
+    }) : dataset;
 
 
     if (matched.length === 0) {
@@ -637,7 +646,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const ptsDangerClass = isDanger ? "pts-danger" : "";
 
       html += `
-        <tr class="operator-row ${rowDangerClass}" data-username="${escapeHtml(u.username)}">
+        <tr class="operator-row ${rowDangerClass}" data-username="${escapeHtml(u.username)}" data-realname="${escapeHtml(u.name || '')}" title="${escapeHtml(u.name && u.name !== 'Busy Person' ? `${u.username} (${u.name})` : u.username)}">
           <td class="c-rank ${rankClass}">#${u.rank.toString().padStart(2, '0')}</td>
           <td class="c-name">
             <div class="name-cell">
