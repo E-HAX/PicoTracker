@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-14T16:44:14.954304+00:00",
+  "last_updated": "2026-10-14T16:46:14.240741+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -44,10 +44,10 @@
     {
       "username": "aayushk79",
       "name": "Aayush Kumar",
-      "easy": 102,
+      "easy": 103,
       "medium": 19,
       "hard": 0,
-      "total": 159
+      "total": 160
     },
     {
       "username": "Kartikey191108",
@@ -380,10 +380,10 @@
     {
       "username": "hetainhack",
       "name": "Hetain Arora",
-      "easy": 6,
+      "easy": 7,
       "medium": 0,
       "hard": 0,
-      "total": 6
+      "total": 7
     },
     {
       "username": "hardik1200",
