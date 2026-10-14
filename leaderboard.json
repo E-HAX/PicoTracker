@@ -1,13 +1,13 @@
 {
-  "last_updated": "2026-10-14T16:46:14.240741+00:00",
+  "last_updated": "2026-10-14T18:26:35.072081+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
       "name": "Aashvik",
       "easy": 113,
       "medium": 92,
-      "hard": 5,
-      "total": 419
+      "hard": 6,
+      "total": 425
     },
     {
       "username": "boringxegotistical",
@@ -116,18 +116,18 @@
     {
       "username": "rushilarora",
       "name": "Rushil Arora",
-      "easy": 59,
+      "easy": 64,
       "medium": 16,
       "hard": 0,
-      "total": 107
+      "total": 112
     },
     {
       "username": "Ananya0501",
       "name": "Ananya",
-      "easy": 63,
+      "easy": 72,
       "medium": 12,
       "hard": 0,
-      "total": 99
+      "total": 108
     },
     {
       "username": "mayank18",
@@ -140,10 +140,10 @@
     {
       "username": "pricyhacker",
       "name": "Name not given",
-      "easy": 66,
+      "easy": 71,
       "medium": 8,
       "hard": 0,
-      "total": 90
+      "total": 95
     },
     {
       "username": "hackernull1",
@@ -152,6 +152,14 @@
       "medium": 14,
       "hard": 0,
       "total": 89
+    },
+    {
+      "username": "Pushpit1845",
+      "name": "Pushpit chhabra",
+      "easy": 27,
+      "medium": 12,
+      "hard": 1,
+      "total": 69
     },
     {
       "username": "saksyy69",
@@ -202,14 +210,6 @@
       "total": 59
     },
     {
-      "username": "Pushpit1845",
-      "name": "Pushpit chhabra",
-      "easy": 27,
-      "medium": 10,
-      "hard": 0,
-      "total": 57
-    },
-    {
       "username": "RandomBruh",
       "name": "Rishabh Dev Malhotra",
       "easy": 53,
@@ -234,6 +234,14 @@
       "total": 50
     },
     {
+      "username": "hetainhack",
+      "name": "Hetain Arora",
+      "easy": 25,
+      "medium": 8,
+      "hard": 0,
+      "total": 49
+    },
+    {
       "username": "merrymerry",
       "name": "Nipun Bhatia",
       "easy": 24,
@@ -250,12 +258,36 @@
       "total": 47
     },
     {
+      "username": "Nmn007",
+      "name": "Naman",
+      "easy": 16,
+      "medium": 6,
+      "hard": 2,
+      "total": 46
+    },
+    {
+      "username": "harshstayswithastick",
+      "name": "Harsh Goswami",
+      "easy": 31,
+      "medium": 5,
+      "hard": 0,
+      "total": 46
+    },
+    {
       "username": "prabk55",
       "name": "Prabhakar Kumar",
       "easy": 26,
       "medium": 6,
       "hard": 0,
       "total": 44
+    },
+    {
+      "username": "Mehulgarg23",
+      "name": "Mehul garg",
+      "easy": 25,
+      "medium": 6,
+      "hard": 0,
+      "total": 43
     },
     {
       "username": "smlk3333",
@@ -266,12 +298,28 @@
       "total": 42
     },
     {
-      "username": "Mehulgarg23",
-      "name": "Mehul garg",
-      "easy": 24,
-      "medium": 6,
+      "username": "Sakshamm",
+      "name": "Saksham Garg",
+      "easy": 33,
+      "medium": 3,
       "hard": 0,
       "total": 42
+    },
+    {
+      "username": "smoothbrain01",
+      "name": "Shraddha Abirami A",
+      "easy": 32,
+      "medium": 3,
+      "hard": 0,
+      "total": 41
+    },
+    {
+      "username": "Nichehacker2501",
+      "name": "Kanav gupta",
+      "easy": 28,
+      "medium": 4,
+      "hard": 0,
+      "total": 40
     },
     {
       "username": "SampadaSnehi",
@@ -282,18 +330,10 @@
       "total": 40
     },
     {
-      "username": "harshstayswithastick",
-      "name": "Harsh Goswami",
-      "easy": 26,
-      "medium": 4,
-      "hard": 0,
-      "total": 38
-    },
-    {
-      "username": "smoothbrain01",
-      "name": "Shraddha Abirami A",
-      "easy": 32,
-      "medium": 2,
+      "username": "Akshatt07",
+      "name": "Akshat Budhori",
+      "easy": 29,
+      "medium": 3,
       "hard": 0,
       "total": 38
     },
@@ -314,22 +354,6 @@
       "total": 37
     },
     {
-      "username": "Nichehacker2501",
-      "name": "Kanav gupta",
-      "easy": 23,
-      "medium": 4,
-      "hard": 0,
-      "total": 35
-    },
-    {
-      "username": "Akshatt07",
-      "name": "Akshat Budhori",
-      "easy": 25,
-      "medium": 3,
-      "hard": 0,
-      "total": 34
-    },
-    {
       "username": "Karasuke",
       "name": "Anshul",
       "easy": 15,
@@ -338,12 +362,20 @@
       "total": 33
     },
     {
-      "username": "Sakshamm",
-      "name": "Saksham Garg",
-      "easy": 33,
-      "medium": 0,
+      "username": "hardik1200",
+      "name": "Hardik Bansal",
+      "easy": 17,
+      "medium": 5,
       "hard": 0,
-      "total": 33
+      "total": 32
+    },
+    {
+      "username": "Sairese",
+      "name": "Sarra Sharma",
+      "easy": 25,
+      "medium": 2,
+      "hard": 0,
+      "total": 31
     },
     {
       "username": "nineteen",
@@ -354,44 +386,12 @@
       "total": 30
     },
     {
-      "username": "Sairese",
-      "name": "Sarra Sharma",
-      "easy": 22,
-      "medium": 2,
-      "hard": 0,
-      "total": 28
-    },
-    {
       "username": "samyak23jain07",
       "name": "Name not given",
       "easy": 14,
       "medium": 4,
       "hard": 0,
       "total": 26
-    },
-    {
-      "username": "Nmn007",
-      "name": "Naman",
-      "easy": 16,
-      "medium": 3,
-      "hard": 0,
-      "total": 25
-    },
-    {
-      "username": "hetainhack",
-      "name": "Hetain Arora",
-      "easy": 7,
-      "medium": 0,
-      "hard": 0,
-      "total": 7
-    },
-    {
-      "username": "hardik1200",
-      "name": "Hardik Bansal",
-      "easy": 5,
-      "medium": 0,
-      "hard": 0,
-      "total": 5
     },
     {
       "username": "Vridhi",
