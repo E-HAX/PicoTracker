@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-14T16:12:47.547795+00:00",
+  "last_updated": "2026-10-14T16:32:11.982079+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -44,10 +44,10 @@
     {
       "username": "aayushk79",
       "name": "Aayush Kumar",
-      "easy": 101,
+      "easy": 102,
       "medium": 19,
       "hard": 0,
-      "total": 158
+      "total": 159
     },
     {
       "username": "Kartikey191108",
@@ -138,20 +138,20 @@
       "total": 99
     },
     {
+      "username": "pricyhacker",
+      "name": "Name not given",
+      "easy": 66,
+      "medium": 8,
+      "hard": 0,
+      "total": 90
+    },
+    {
       "username": "hackernull1",
       "name": "Rishabh Sakhuja",
       "easy": 47,
       "medium": 14,
       "hard": 0,
       "total": 89
-    },
-    {
-      "username": "pricyhacker",
-      "name": "Name not given",
-      "easy": 62,
-      "medium": 8,
-      "hard": 0,
-      "total": 86
     },
     {
       "username": "saksyy69",
@@ -168,6 +168,14 @@
       "medium": 12,
       "hard": 0,
       "total": 64
+    },
+    {
+      "username": "akshut",
+      "name": "Akshut Goyal",
+      "easy": 39,
+      "medium": 8,
+      "hard": 0,
+      "total": 63
     },
     {
       "username": "shivanshuuu67",
@@ -194,12 +202,12 @@
       "total": 57
     },
     {
-      "username": "akshut",
-      "name": "Akshut Goyal",
-      "easy": 39,
-      "medium": 6,
-      "hard": 0,
-      "total": 57
+      "username": "Untr4ced",
+      "name": "Palak",
+      "easy": 17,
+      "medium": 9,
+      "hard": 2,
+      "total": 56
     },
     {
       "username": "RandomBruh",
@@ -234,14 +242,6 @@
       "total": 45
     },
     {
-      "username": "Untr4ced",
-      "name": "Palak",
-      "easy": 17,
-      "medium": 9,
-      "hard": 0,
-      "total": 44
-    },
-    {
       "username": "prabk55",
       "name": "Prabhakar Kumar",
       "easy": 26,
@@ -250,20 +250,20 @@
       "total": 44
     },
     {
+      "username": "daksh2011",
+      "name": "Daksh Bhardwaj",
+      "easy": 34,
+      "medium": 3,
+      "hard": 0,
+      "total": 43
+    },
+    {
       "username": "Mehulgarg23",
       "name": "Mehul garg",
       "easy": 24,
       "medium": 6,
       "hard": 0,
       "total": 42
-    },
-    {
-      "username": "daksh2011",
-      "name": "Daksh Bhardwaj",
-      "easy": 32,
-      "medium": 3,
-      "hard": 0,
-      "total": 41
     },
     {
       "username": "SampadaSnehi",
@@ -282,6 +282,14 @@
       "total": 38
     },
     {
+      "username": "smlk3333",
+      "name": "Soumil Malik",
+      "easy": 13,
+      "medium": 8,
+      "hard": 0,
+      "total": 37
+    },
+    {
       "username": "aashvi14",
       "name": "Aashvi",
       "easy": 31,
@@ -298,19 +306,35 @@
       "total": 35
     },
     {
+      "username": "Chowdharyji",
+      "name": "Ujjawal Chowdhary",
+      "easy": 32,
+      "medium": 1,
+      "hard": 0,
+      "total": 35
+    },
+    {
+      "username": "Akshatt07",
+      "name": "Akshat Budhori",
+      "easy": 25,
+      "medium": 3,
+      "hard": 0,
+      "total": 34
+    },
+    {
+      "username": "smoothbrain01",
+      "name": "Shraddha Abirami A",
+      "easy": 31,
+      "medium": 1,
+      "hard": 0,
+      "total": 34
+    },
+    {
       "username": "Karasuke",
       "name": "Anshul",
       "easy": 15,
       "medium": 4,
       "hard": 1,
-      "total": 33
-    },
-    {
-      "username": "Chowdharyji",
-      "name": "Ujjawal Chowdhary",
-      "easy": 30,
-      "medium": 1,
-      "hard": 0,
       "total": 33
     },
     {
@@ -320,30 +344,6 @@
       "medium": 0,
       "hard": 0,
       "total": 33
-    },
-    {
-      "username": "Akshatt07",
-      "name": "Akshat Budhori",
-      "easy": 23,
-      "medium": 3,
-      "hard": 0,
-      "total": 32
-    },
-    {
-      "username": "smlk3333",
-      "name": "Soumil Malik",
-      "easy": 10,
-      "medium": 7,
-      "hard": 0,
-      "total": 31
-    },
-    {
-      "username": "smoothbrain01",
-      "name": "Shraddha Abirami A",
-      "easy": 27,
-      "medium": 1,
-      "hard": 0,
-      "total": 30
     },
     {
       "username": "nineteen",
@@ -436,6 +436,14 @@
     {
       "username": "vrindam667",
       "name": "Name not given",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "hardik1200",
+      "name": "Hardik Bansal",
       "easy": 0,
       "medium": 0,
       "hard": 0,
