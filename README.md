@@ -23,7 +23,7 @@ A high-performance, secure, static cybersecurity leaderboard and automated track
   - Strict Content Security Policy (CSP), anti-MIME sniffing, no-referrer privacy, and DOM-safe encoding.
   - Zero sensitive backend endpoints exposed to the browser.
 - **Automated Hourly Updates**:
-  - GitHub Actions runs every hour or instantly when `roster.txt` is updated.
+  - GitHub Actions runs every hour or instantly when `Cylab Username - Sheet1.csv` is updated.
 
 ---
 
@@ -36,11 +36,11 @@ A high-performance, secure, static cybersecurity leaderboard and automated track
 ├── ehax-wordmark.png            # Transparent brand wordmark
 ├── logo.png                     # Brand asset
 ├── leaderboard.json             # Live scored leaderboard data snapshot
-├── roster.txt                   # List of participant usernames (one per line)
+├── Cylab Username - Sheet1.csv  # Primary participant roster & name mappings
 ├── fetch_stats.py               # Automated stats scraper & weighted points engine
 ├── requirements.txt             # Python dependencies
 ├── vercel.json                  # Production security headers and route guards
-├── .vercelignore                # Prevents deployment of backend scripts & roster
+├── .vercelignore                # Prevents deployment of backend scripts & raw CSV
 ├── .github/
 │   └── workflows/
 │       └── update_leaderboard.yml # Automated CI/CD update workflow
@@ -53,7 +53,7 @@ A high-performance, secure, static cybersecurity leaderboard and automated track
 
 The repository is configured to automatically fetch challenge stats and update `leaderboard.json`:
 1. **Every Hour**: On a scheduled cron (`0 * * * *`).
-2. **On Roster Changes**: Automatically triggers whenever usernames are added or removed in `roster.txt`.
+2. **On Roster Changes**: Automatically triggers whenever usernames are added or removed in `Cylab Username - Sheet1.csv`.
 3. **Manual Trigger**: Can be run anytime via the "Run workflow" button in the GitHub Actions tab.
 
 ### Step-by-Step Configuration
@@ -67,7 +67,7 @@ The repository is configured to automatically fetch challenge stats and update `
 4. Click **Save**.
 
 #### Step 2: Configure Optional Google Sheets Secret (If syncing from Google Sheets)
-*Note: If you only use `roster.txt`, you can skip this step! The script automatically falls back to `roster.txt`.*
+*Note: If you only use `Cylab Username - Sheet1.csv`, you can skip this step! The script automatically uses `Cylab Username - Sheet1.csv` as the primary source.*
 
 1. Go to **Settings** &rarr; **Secrets and variables** &rarr; **Actions**.
 2. Click **New repository secret**.
@@ -110,4 +110,4 @@ The site is production-ready for deployment on [Vercel](https://vercel.com):
 - Connect the `E-HAX/PicoTracker` repository to Vercel.
 - Framework Preset: **Other**.
 - Root Directory: `./`.
-- The bundled `vercel.json` applies strict security headers (`nosniff`, `DENY`, `no-referrer`, strict CSP) and blocks direct public access to backend scripts (`fetch_stats.py`, `roster.txt`).
+- The bundled `vercel.json` applies strict security headers (`nosniff`, `DENY`, `no-referrer`, strict CSP) and blocks direct public access to backend scripts (`fetch_stats.py`, `*.csv`).

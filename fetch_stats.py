@@ -7,7 +7,7 @@ import json
 import difflib
 import requests
 from urllib.parse import quote
-from datetime import datetime
+from datetime import datetime, timezone
 
 BASE_URL = os.getenv("CYLAB_API_BASE", "https://learn.cylabacademy.org")
 HEADERS = {"Accept": "application/json", "User-Agent": "CylabLeaderboard/1.0"}
@@ -101,6 +101,53 @@ def fetch_usernames_from_sheet(start_row=2, end_row=500):
         print(f"Error fetching roster from sheet: {e}")
         return []
 
+USERNAME_ALIASES = {
+    "nichehacker2501": "nicehacker2501",
+    "smoothb": "smoothbrain01",
+}
+
+def load_roster_from_sheet(preferred_csv="Cylab Username - Sheet1.csv"):
+    candidates = []
+    if os.path.exists(preferred_csv):
+        candidates.append(preferred_csv)
+    for f in glob.glob("*.csv"):
+        if f not in candidates:
+            candidates.append(f)
+            
+    entries = []
+    seen = set()
+    
+    for file_path in candidates:
+        if not os.path.exists(file_path):
+            continue
+        try:
+            with open(file_path, "r", encoding="utf-8-sig") as f:
+                reader = csv.reader(f)
+                for row in reader:
+                    if not row or len(row) < 1:
+                        continue
+                    u_raw = row[0].strip()
+                    n_raw = row[1].strip() if len(row) > 1 else ""
+                    if u_raw.lower() in ("username", "user", "handle") and n_raw.lower() in ("name", "real name", ""):
+                        continue
+                    if not u_raw:
+                        continue
+                    resolved_u = USERNAME_ALIASES.get(u_raw.lower(), u_raw)
+                    if not is_valid_username(resolved_u):
+                        continue
+                    if resolved_u.lower() not in seen:
+                        seen.add(resolved_u.lower())
+                        entries.append({
+                            "username": resolved_u,
+                            "name": n_raw if n_raw else "Busy Person"
+                        })
+            if entries:
+                break
+        except Exception as e:
+            print(f"Error reading {file_path}: {e}")
+            
+    return entries
+
 def get_name_mapping(usernames):
     name_map = {}
     if os.path.exists("leaderboard.json"):
@@ -128,7 +175,8 @@ def get_name_mapping(usernames):
                         if u_raw.lower() in ("username", "user", "handle") and n_raw.lower() in ("name", "real name"):
                             continue
                         if u_raw and n_raw:
-                            sheet_entries.append((u_raw, n_raw))
+                            resolved_u = USERNAME_ALIASES.get(u_raw.lower(), u_raw)
+                            sheet_entries.append((resolved_u, n_raw))
         except Exception:
             pass
 
@@ -166,34 +214,41 @@ def get_name_mapping(usernames):
     return name_map
 
 def main():
-    usernames = fetch_usernames_from_sheet(start_row=2, end_row=500)
+    # Primary roster source: local CSV sheet
+    roster_entries = load_roster_from_sheet()
 
-    if not usernames:
-        try:
-            with open("roster.txt", "r") as f:
-                usernames = [line.strip() for line in f if is_valid_username(line.strip())]
-        except FileNotFoundError:
-            pass
+    # Optional Google Sheets fallback if no local CSV found
+    if not roster_entries:
+        usernames = fetch_usernames_from_sheet(start_row=2, end_row=500)
+        name_map = get_name_mapping(usernames)
+        roster_entries = [{"username": u, "name": name_map.get(u, "Busy Person")} for u in usernames]
 
-    if not usernames:
-        print("Roster is empty. Add valid usernames to roster.txt.")
+    if not roster_entries:
+        print("Roster is empty. Add a CSV sheet (e.g. Cylab Username - Sheet1.csv).")
         return
 
-    # Deduplicate while preserving order
-    seen = set()
-    unique_usernames = []
-    for u in usernames:
-        if u.lower() not in seen:
-            seen.add(u.lower())
-            unique_usernames.append(u)
-
-    name_map = get_name_mapping(unique_usernames)
+    # Fallback to existing leaderboard.json names if name is Busy Person
+    old_names = {}
+    if os.path.exists("leaderboard.json"):
+        try:
+            with open("leaderboard.json", "r") as f:
+                for entry in json.load(f).get("leaderboard", []):
+                    u = entry.get("username")
+                    n = entry.get("name")
+                    if u and n and n != "Busy Person":
+                        old_names[u.lower()] = n
+        except Exception:
+            pass
 
     leaderboard = []
-    for username in unique_usernames:
-        print(f"Fetching stats for {username}...")
+    for item in roster_entries:
+        username = item["username"]
+        real_name = item.get("name")
+        if not real_name or real_name == "Busy Person":
+            real_name = old_names.get(username.lower(), "Busy Person")
+
+        print(f"Fetching stats for {username} ({real_name})...")
         result = fetch_user_stats(username)
-        real_name = name_map.get(username, "Busy Person")
         if result:
             easy, medium, hard = result
             total_points = (easy * 1) + (medium * 3) + (hard * 6)
@@ -219,7 +274,7 @@ def main():
     leaderboard.sort(key=lambda x: (x['total'], x['hard'], x['medium'], x['easy']), reverse=True)
 
     output = {
-        "last_updated": datetime.utcnow().isoformat() + "Z",
+        "last_updated": datetime.now(timezone.utc).isoformat(),
         "leaderboard": leaderboard
     }
 
@@ -233,3 +288,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

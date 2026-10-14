@@ -8,7 +8,8 @@ on:
     branches:
       - main
     paths:
-      - 'roster.txt'
+      - 'Cylab Username - Sheet1.csv'
+      - '*.csv'
       - 'fetch_stats.py'
       - 'requirements.txt'
       - '.github/workflows/update_leaderboard.yml'
@@ -86,4 +87,3 @@ jobs:
           else
             echo "Leaderboard data is already up to date. No commit needed."
           fi
-```
