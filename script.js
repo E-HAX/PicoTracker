@@ -511,7 +511,7 @@ document.addEventListener("DOMContentLoaded", () => {
     sfx.drawer();
 
     // Populate Drawer Elements
-    const isDanger = user.total < 30;
+    const isDanger = user.total < 40;
     const uNameEl = document.getElementById("drawer-username");
     if (uNameEl) {
       uNameEl.textContent = user.username;
@@ -640,7 +640,7 @@ document.addEventListener("DOMContentLoaded", () => {
       else if (u.rank === 2) rankClass = "rank-silver";
       else if (u.rank === 3) rankClass = "rank-bronze";
 
-      const isDanger = u.total < 30;
+      const isDanger = u.total < 40;
       const rowDangerClass = isDanger ? "row-danger" : "";
       const nameDangerClass = isDanger ? "name-danger" : "";
       const ptsDangerClass = isDanger ? "pts-danger" : "";
