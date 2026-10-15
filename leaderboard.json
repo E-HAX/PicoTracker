@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-15T18:34:55.136924+00:00",
+  "last_updated": "2026-10-15T21:43:20.634107+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -12,10 +12,10 @@
     {
       "username": "boringxegotistical",
       "name": "Saiyam Chaudhary",
-      "easy": 81,
+      "easy": 100,
       "medium": 50,
       "hard": 3,
-      "total": 249
+      "total": 268
     },
     {
       "username": "reedhanG",
@@ -100,10 +100,10 @@
     {
       "username": "jak3p3ralta",
       "name": "hardik sachdeva",
-      "easy": 66,
+      "easy": 69,
       "medium": 19,
       "hard": 0,
-      "total": 123
+      "total": 126
     },
     {
       "username": "Ananya0501",
@@ -140,10 +140,10 @@
     {
       "username": "hackernull1",
       "name": "Rishabh Sakhuja",
-      "easy": 53,
+      "easy": 61,
       "medium": 14,
       "hard": 0,
-      "total": 95
+      "total": 103
     },
     {
       "username": "pricyhacker",
@@ -274,6 +274,14 @@
       "total": 47
     },
     {
+      "username": "aashvi14",
+      "name": "Aashvi",
+      "easy": 41,
+      "medium": 2,
+      "hard": 0,
+      "total": 47
+    },
+    {
       "username": "Nmn007",
       "name": "Naman",
       "easy": 16,
@@ -370,14 +378,6 @@
       "total": 42
     },
     {
-      "username": "aashvi14",
-      "name": "Aashvi",
-      "easy": 35,
-      "medium": 2,
-      "hard": 0,
-      "total": 41
-    },
-    {
       "username": "samyak23jain07",
       "name": "Name not given",
       "easy": 27,
@@ -394,6 +394,14 @@
       "total": 34
     },
     {
+      "username": "Ashtami02",
+      "name": "Name not given",
+      "easy": 2,
+      "medium": 1,
+      "hard": 0,
+      "total": 5
+    },
+    {
       "username": "Vridhi",
       "name": "Name not given",
       "easy": 0,
@@ -403,14 +411,6 @@
     },
     {
       "username": "goat69",
-      "name": "Name not given",
-      "easy": 0,
-      "medium": 0,
-      "hard": 0,
-      "total": 0
-    },
-    {
-      "username": "Ashtami02",
       "name": "Name not given",
       "easy": 0,
       "medium": 0,
