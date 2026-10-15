@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-15T05:05:28.537117+00:00",
+  "last_updated": "2026-10-15T09:48:31.129154+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -20,18 +20,18 @@
     {
       "username": "reedhanG",
       "name": "Reedhan Garg",
-      "easy": 69,
-      "medium": 42,
+      "easy": 70,
+      "medium": 43,
       "hard": 2,
-      "total": 207
+      "total": 211
     },
     {
       "username": "pointbreak007",
       "name": "Atishay Jain",
       "easy": 76,
       "medium": 24,
-      "hard": 6,
-      "total": 184
+      "hard": 7,
+      "total": 190
     },
     {
       "username": "SilentNinj4",
@@ -66,20 +66,20 @@
       "total": 152
     },
     {
+      "username": "Shikhar2904",
+      "name": "Shikhar Singh",
+      "easy": 43,
+      "medium": 35,
+      "hard": 0,
+      "total": 148
+    },
+    {
       "username": "rakshaa",
       "name": "Nirali Kushwaha",
       "easy": 113,
       "medium": 9,
       "hard": 0,
       "total": 140
-    },
-    {
-      "username": "Shikhar2904",
-      "name": "Shikhar Singh",
-      "easy": 43,
-      "medium": 30,
-      "hard": 0,
-      "total": 133
     },
     {
       "username": "rushilarora",
@@ -106,6 +106,14 @@
       "total": 116
     },
     {
+      "username": "jak3p3ralta",
+      "name": "hardik sachdeva",
+      "easy": 57,
+      "medium": 19,
+      "hard": 0,
+      "total": 114
+    },
+    {
       "username": "AkshatJairath",
       "name": "Name not given",
       "easy": 102,
@@ -119,14 +127,6 @@
       "easy": 58,
       "medium": 16,
       "hard": 1,
-      "total": 112
-    },
-    {
-      "username": "jak3p3ralta",
-      "name": "hardik sachdeva",
-      "easy": 55,
-      "medium": 19,
-      "hard": 0,
       "total": 112
     },
     {
@@ -388,10 +388,10 @@
     {
       "username": "samyak23jain07",
       "name": "Name not given",
-      "easy": 14,
+      "easy": 20,
       "medium": 4,
       "hard": 0,
-      "total": 26
+      "total": 32
     },
     {
       "username": "Vridhi",
