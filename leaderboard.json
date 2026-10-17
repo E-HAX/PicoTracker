@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-17T01:29:19.742768+00:00",
+  "last_updated": "2026-10-17T06:04:31.354603+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -21,9 +21,9 @@
       "username": "reedhanG",
       "name": "Reedhan Garg",
       "easy": 73,
-      "medium": 45,
+      "medium": 46,
       "hard": 2,
-      "total": 220
+      "total": 223
     },
     {
       "username": "pointbreak007",
@@ -68,10 +68,10 @@
     {
       "username": "Shikhar2904",
       "name": "Shikhar Singh",
-      "easy": 43,
+      "easy": 46,
       "medium": 35,
       "hard": 0,
-      "total": 148
+      "total": 151
     },
     {
       "username": "imightlose",
