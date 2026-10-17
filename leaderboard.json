@@ -1,13 +1,13 @@
 {
-  "last_updated": "2026-10-17T06:04:31.354603+00:00",
+  "last_updated": "2026-10-17T10:33:00.657546+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
       "name": "Aashvik",
       "easy": 113,
       "medium": 98,
-      "hard": 19,
-      "total": 521
+      "hard": 24,
+      "total": 551
     },
     {
       "username": "boringxegotistical",
@@ -20,10 +20,10 @@
     {
       "username": "reedhanG",
       "name": "Reedhan Garg",
-      "easy": 73,
+      "easy": 75,
       "medium": 46,
       "hard": 2,
-      "total": 223
+      "total": 225
     },
     {
       "username": "pointbreak007",
@@ -170,6 +170,14 @@
       "total": 93
     },
     {
+      "username": "baldev1408singh",
+      "name": "Baldev Singh",
+      "easy": 47,
+      "medium": 12,
+      "hard": 0,
+      "total": 83
+    },
+    {
       "username": "Untr4ced",
       "name": "Palak",
       "easy": 23,
@@ -186,12 +194,12 @@
       "total": 69
     },
     {
-      "username": "baldev1408singh",
-      "name": "Baldev Singh",
-      "easy": 29,
-      "medium": 12,
+      "username": "Sakshamm",
+      "name": "Saksham Garg",
+      "easy": 49,
+      "medium": 5,
       "hard": 0,
-      "total": 65
+      "total": 64
     },
     {
       "username": "akshut",
@@ -226,20 +234,12 @@
       "total": 60
     },
     {
-      "username": "Sakshamm",
-      "name": "Saksham Garg",
-      "easy": 47,
-      "medium": 3,
-      "hard": 0,
-      "total": 56
-    },
-    {
       "username": "Chowdharyji",
       "name": "Ujjawal Chowdhary",
-      "easy": 42,
+      "easy": 47,
       "medium": 4,
       "hard": 0,
-      "total": 54
+      "total": 59
     },
     {
       "username": "SampadaSnehi",
@@ -248,6 +248,14 @@
       "medium": 0,
       "hard": 0,
       "total": 54
+    },
+    {
+      "username": "merrymerry",
+      "name": "Nipun Bhatia",
+      "easy": 25,
+      "medium": 9,
+      "hard": 0,
+      "total": 52
     },
     {
       "username": "daksh2011",
@@ -272,14 +280,6 @@
       "medium": 8,
       "hard": 0,
       "total": 49
-    },
-    {
-      "username": "merrymerry",
-      "name": "Nipun Bhatia",
-      "easy": 24,
-      "medium": 8,
-      "hard": 0,
-      "total": 48
     },
     {
       "username": "vjiking",
