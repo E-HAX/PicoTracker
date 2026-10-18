@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-18T01:30:12.712714+00:00",
+  "last_updated": "2026-10-18T06:33:53.392541+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -21,9 +21,9 @@
       "username": "reedhanG",
       "name": "Reedhan Garg",
       "easy": 76,
-      "medium": 46,
+      "medium": 51,
       "hard": 2,
-      "total": 226
+      "total": 241
     },
     {
       "username": "Kartikey191108",
@@ -204,10 +204,10 @@
     {
       "username": "Dhruv3142",
       "name": "Dhruv Sharma",
-      "easy": 45,
+      "easy": 48,
       "medium": 8,
       "hard": 0,
-      "total": 69
+      "total": 72
     },
     {
       "username": "akshut",
