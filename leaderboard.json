@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-18T14:54:42.602019+00:00",
+  "last_updated": "2026-10-18T18:03:10.081821+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -20,10 +20,10 @@
     {
       "username": "reedhanG",
       "name": "Reedhan Garg",
-      "easy": 76,
+      "easy": 79,
       "medium": 54,
       "hard": 2,
-      "total": 250
+      "total": 253
     },
     {
       "username": "Kartikey191108",
@@ -114,20 +114,20 @@
       "total": 130
     },
     {
+      "username": "AkshatJairath",
+      "name": "Name not given",
+      "easy": 102,
+      "medium": 9,
+      "hard": 0,
+      "total": 129
+    },
+    {
       "username": "saarzka",
       "name": "Saarika Parveen",
       "easy": 55,
       "medium": 24,
       "hard": 0,
       "total": 127
-    },
-    {
-      "username": "AkshatJairath",
-      "name": "Name not given",
-      "easy": 102,
-      "medium": 7,
-      "hard": 0,
-      "total": 123
     },
     {
       "username": "Ananya0501",
@@ -178,20 +178,20 @@
       "total": 93
     },
     {
+      "username": "Akshatt07",
+      "name": "Akshat Budhori",
+      "easy": 43,
+      "medium": 12,
+      "hard": 0,
+      "total": 79
+    },
+    {
       "username": "Sakshamm",
       "name": "Saksham Garg",
       "easy": 49,
       "medium": 10,
       "hard": 0,
       "total": 79
-    },
-    {
-      "username": "Akshatt07",
-      "name": "Akshat Budhori",
-      "easy": 43,
-      "medium": 11,
-      "hard": 0,
-      "total": 76
     },
     {
       "username": "Untr4ced",
@@ -234,6 +234,14 @@
       "total": 63
     },
     {
+      "username": "aashvi14",
+      "name": "Aashvi",
+      "easy": 44,
+      "medium": 6,
+      "hard": 0,
+      "total": 62
+    },
+    {
       "username": "SampadaSnehi",
       "name": "Sampada Snehi",
       "easy": 61,
@@ -270,14 +278,6 @@
       "name": "Daksh Bhardwaj",
       "easy": 38,
       "medium": 4,
-      "hard": 0,
-      "total": 50
-    },
-    {
-      "username": "aashvi14",
-      "name": "Aashvi",
-      "easy": 44,
-      "medium": 2,
       "hard": 0,
       "total": 50
     },
@@ -330,6 +330,14 @@
       "total": 45
     },
     {
+      "username": "nineteen",
+      "name": "Shashank Shekhar",
+      "easy": 36,
+      "medium": 3,
+      "hard": 0,
+      "total": 45
+    },
+    {
       "username": "smoothbrain01",
       "name": "Shraddha Abirami A",
       "easy": 36,
@@ -350,14 +358,6 @@
       "name": "Prabhakar Kumar",
       "easy": 26,
       "medium": 6,
-      "hard": 0,
-      "total": 44
-    },
-    {
-      "username": "nineteen",
-      "name": "Shashank Shekhar",
-      "easy": 35,
-      "medium": 3,
       "hard": 0,
       "total": 44
     },
