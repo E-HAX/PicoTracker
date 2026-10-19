@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-19T10:57:10.791114+00:00",
+  "last_updated": "2026-10-19T17:27:06.456884+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -13,25 +13,25 @@
       "username": "boringxegotistical",
       "name": "Saiyam Chaudhary",
       "easy": 100,
-      "medium": 72,
+      "medium": 73,
       "hard": 6,
-      "total": 352
+      "total": 355
     },
     {
       "username": "reedhanG",
       "name": "Reedhan Garg",
-      "easy": 79,
-      "medium": 54,
+      "easy": 82,
+      "medium": 56,
       "hard": 2,
-      "total": 253
+      "total": 262
     },
     {
       "username": "Kartikey191108",
       "name": "Kartikey",
       "easy": 89,
-      "medium": 42,
+      "medium": 45,
       "hard": 0,
-      "total": 215
+      "total": 224
     },
     {
       "username": "pointbreak007",
@@ -50,20 +50,20 @@
       "total": 179
     },
     {
+      "username": "Shikhar2904",
+      "name": "Shikhar Singh",
+      "easy": 55,
+      "medium": 35,
+      "hard": 0,
+      "total": 160
+    },
+    {
       "username": "aayushk79",
       "name": "Aayush Kumar",
       "easy": 103,
       "medium": 19,
       "hard": 0,
       "total": 160
-    },
-    {
-      "username": "Shikhar2904",
-      "name": "Shikhar Singh",
-      "easy": 54,
-      "medium": 35,
-      "hard": 0,
-      "total": 159
     },
     {
       "username": "n1flheim",
@@ -74,18 +74,18 @@
       "total": 152
     },
     {
+      "username": "rakshaa",
+      "name": "Nirali Kushwaha",
+      "easy": 113,
+      "medium": 12,
+      "hard": 0,
+      "total": 149
+    },
+    {
       "username": "mayank18",
       "name": "Mayank Panchal",
       "easy": 80,
       "medium": 21,
-      "hard": 0,
-      "total": 143
-    },
-    {
-      "username": "rakshaa",
-      "name": "Nirali Kushwaha",
-      "easy": 113,
-      "medium": 10,
       "hard": 0,
       "total": 143
     },
@@ -117,9 +117,9 @@
       "username": "AkshatJairath",
       "name": "Name not given",
       "easy": 102,
-      "medium": 10,
+      "medium": 11,
       "hard": 0,
-      "total": 132
+      "total": 135
     },
     {
       "username": "saarzka",
@@ -136,6 +136,14 @@
       "medium": 12,
       "hard": 0,
       "total": 116
+    },
+    {
+      "username": "Sakshamm",
+      "name": "Saksham Garg",
+      "easy": 49,
+      "medium": 22,
+      "hard": 0,
+      "total": 115
     },
     {
       "username": "hackernull1",
@@ -178,14 +186,6 @@
       "total": 93
     },
     {
-      "username": "Sakshamm",
-      "name": "Saksham Garg",
-      "easy": 49,
-      "medium": 13,
-      "hard": 0,
-      "total": 88
-    },
-    {
       "username": "Akshatt07",
       "name": "Akshat Budhori",
       "easy": 51,
@@ -194,20 +194,20 @@
       "total": 87
     },
     {
-      "username": "shivanshuuu67",
-      "name": "shivanshu gupta",
-      "easy": 27,
-      "medium": 18,
-      "hard": 0,
-      "total": 81
-    },
-    {
       "username": "aashvi14",
       "name": "Aashvi",
-      "easy": 49,
-      "medium": 10,
+      "easy": 53,
+      "medium": 11,
       "hard": 0,
-      "total": 79
+      "total": 86
+    },
+    {
+      "username": "shivanshuuu67",
+      "name": "shivanshu gupta",
+      "easy": 28,
+      "medium": 19,
+      "hard": 0,
+      "total": 85
     },
     {
       "username": "Dhruv3142",
@@ -260,10 +260,10 @@
     {
       "username": "Mehulgarg23",
       "name": "Mehul garg",
-      "easy": 42,
+      "easy": 44,
       "medium": 6,
       "hard": 0,
-      "total": 60
+      "total": 62
     },
     {
       "username": "RandomBruh",
@@ -396,18 +396,18 @@
     {
       "username": "Ashtami02",
       "name": "Name not given",
-      "easy": 2,
-      "medium": 6,
+      "easy": 4,
+      "medium": 7,
       "hard": 0,
-      "total": 20
+      "total": 25
     },
     {
       "username": "vrindam667",
       "name": "Name not given",
       "easy": 0,
-      "medium": 3,
+      "medium": 4,
       "hard": 0,
-      "total": 9
+      "total": 12
     },
     {
       "username": "Vridhi",
