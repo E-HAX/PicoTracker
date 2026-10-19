@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-19T05:15:31.160503+00:00",
+  "last_updated": "2026-10-19T10:57:10.791114+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -117,9 +117,9 @@
       "username": "AkshatJairath",
       "name": "Name not given",
       "easy": 102,
-      "medium": 9,
+      "medium": 10,
       "hard": 0,
-      "total": 129
+      "total": 132
     },
     {
       "username": "saarzka",
@@ -178,6 +178,14 @@
       "total": 93
     },
     {
+      "username": "Sakshamm",
+      "name": "Saksham Garg",
+      "easy": 49,
+      "medium": 13,
+      "hard": 0,
+      "total": 88
+    },
+    {
       "username": "Akshatt07",
       "name": "Akshat Budhori",
       "easy": 51,
@@ -186,20 +194,28 @@
       "total": 87
     },
     {
-      "username": "Sakshamm",
-      "name": "Saksham Garg",
+      "username": "shivanshuuu67",
+      "name": "shivanshu gupta",
+      "easy": 27,
+      "medium": 18,
+      "hard": 0,
+      "total": 81
+    },
+    {
+      "username": "aashvi14",
+      "name": "Aashvi",
       "easy": 49,
       "medium": 10,
       "hard": 0,
       "total": 79
     },
     {
-      "username": "aashvi14",
-      "name": "Aashvi",
-      "easy": 48,
-      "medium": 10,
+      "username": "Dhruv3142",
+      "name": "Dhruv Sharma",
+      "easy": 55,
+      "medium": 8,
       "hard": 0,
-      "total": 78
+      "total": 79
     },
     {
       "username": "SampadaSnehi",
@@ -215,14 +231,6 @@
       "easy": 23,
       "medium": 11,
       "hard": 3,
-      "total": 74
-    },
-    {
-      "username": "Dhruv3142",
-      "name": "Dhruv Sharma",
-      "easy": 50,
-      "medium": 8,
-      "hard": 0,
       "total": 74
     },
     {
@@ -250,10 +258,10 @@
       "total": 63
     },
     {
-      "username": "shivanshuuu67",
-      "name": "shivanshu gupta",
-      "easy": 21,
-      "medium": 13,
+      "username": "Mehulgarg23",
+      "name": "Mehul garg",
+      "easy": 42,
+      "medium": 6,
       "hard": 0,
       "total": 60
     },
@@ -330,14 +338,6 @@
       "total": 45
     },
     {
-      "username": "Mehulgarg23",
-      "name": "Mehul garg",
-      "easy": 27,
-      "medium": 6,
-      "hard": 0,
-      "total": 45
-    },
-    {
       "username": "smoothbrain01",
       "name": "Shraddha Abirami A",
       "easy": 36,
@@ -405,9 +405,9 @@
       "username": "vrindam667",
       "name": "Name not given",
       "easy": 0,
-      "medium": 2,
+      "medium": 3,
       "hard": 0,
-      "total": 6
+      "total": 9
     },
     {
       "username": "Vridhi",
