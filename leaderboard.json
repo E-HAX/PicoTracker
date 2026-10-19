@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-19T17:27:06.456884+00:00",
+  "last_updated": "2026-10-19T21:44:47.601573+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -13,9 +13,9 @@
       "username": "boringxegotistical",
       "name": "Saiyam Chaudhary",
       "easy": 100,
-      "medium": 73,
+      "medium": 75,
       "hard": 6,
-      "total": 355
+      "total": 361
     },
     {
       "username": "reedhanG",
@@ -52,10 +52,10 @@
     {
       "username": "Shikhar2904",
       "name": "Shikhar Singh",
-      "easy": 55,
+      "easy": 58,
       "medium": 35,
       "hard": 0,
-      "total": 160
+      "total": 163
     },
     {
       "username": "aayushk79",
@@ -80,6 +80,14 @@
       "medium": 12,
       "hard": 0,
       "total": 149
+    },
+    {
+      "username": "AkshatJairath",
+      "name": "Name not given",
+      "easy": 102,
+      "medium": 15,
+      "hard": 0,
+      "total": 147
     },
     {
       "username": "mayank18",
@@ -110,14 +118,6 @@
       "name": "Rushil Arora",
       "easy": 66,
       "medium": 23,
-      "hard": 0,
-      "total": 135
-    },
-    {
-      "username": "AkshatJairath",
-      "name": "Name not given",
-      "easy": 102,
-      "medium": 11,
       "hard": 0,
       "total": 135
     },
@@ -186,20 +186,20 @@
       "total": 93
     },
     {
+      "username": "aashvi14",
+      "name": "Aashvi",
+      "easy": 59,
+      "medium": 11,
+      "hard": 0,
+      "total": 92
+    },
+    {
       "username": "Akshatt07",
       "name": "Akshat Budhori",
       "easy": 51,
       "medium": 12,
       "hard": 0,
       "total": 87
-    },
-    {
-      "username": "aashvi14",
-      "name": "Aashvi",
-      "easy": 53,
-      "medium": 11,
-      "hard": 0,
-      "total": 86
     },
     {
       "username": "shivanshuuu67",
@@ -404,10 +404,10 @@
     {
       "username": "vrindam667",
       "name": "Name not given",
-      "easy": 0,
+      "easy": 2,
       "medium": 4,
       "hard": 0,
-      "total": 12
+      "total": 14
     },
     {
       "username": "Vridhi",
