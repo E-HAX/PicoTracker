@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-19T20:09:36.301770+00:00",
+  "last_updated": "2026-10-19T23:46:57.350518+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -82,6 +82,14 @@
       "total": 149
     },
     {
+      "username": "AkshatJairath",
+      "name": "Name not given",
+      "easy": 102,
+      "medium": 15,
+      "hard": 0,
+      "total": 147
+    },
+    {
       "username": "mayank18",
       "name": "Mayank Panchal",
       "easy": 80,
@@ -102,14 +110,6 @@
       "name": "hardik sachdeva",
       "easy": 81,
       "medium": 19,
-      "hard": 0,
-      "total": 138
-    },
-    {
-      "username": "AkshatJairath",
-      "name": "Name not given",
-      "easy": 102,
-      "medium": 12,
       "hard": 0,
       "total": 138
     },
@@ -162,6 +162,14 @@
       "total": 105
     },
     {
+      "username": "aashvi14",
+      "name": "Aashvi",
+      "easy": 65,
+      "medium": 11,
+      "hard": 0,
+      "total": 98
+    },
+    {
       "username": "pricyhacker",
       "name": "Name not given",
       "easy": 71,
@@ -186,20 +194,20 @@
       "total": 93
     },
     {
+      "username": "SampadaSnehi",
+      "name": "Sampada Snehi",
+      "easy": 68,
+      "medium": 8,
+      "hard": 0,
+      "total": 92
+    },
+    {
       "username": "Akshatt07",
       "name": "Akshat Budhori",
       "easy": 51,
       "medium": 12,
       "hard": 0,
       "total": 87
-    },
-    {
-      "username": "aashvi14",
-      "name": "Aashvi",
-      "easy": 53,
-      "medium": 11,
-      "hard": 0,
-      "total": 86
     },
     {
       "username": "shivanshuuu67",
@@ -216,14 +224,6 @@
       "medium": 8,
       "hard": 0,
       "total": 79
-    },
-    {
-      "username": "SampadaSnehi",
-      "name": "Sampada Snehi",
-      "easy": 67,
-      "medium": 3,
-      "hard": 0,
-      "total": 76
     },
     {
       "username": "Untr4ced",
@@ -404,10 +404,10 @@
     {
       "username": "vrindam667",
       "name": "Name not given",
-      "easy": 0,
+      "easy": 2,
       "medium": 4,
       "hard": 0,
-      "total": 12
+      "total": 14
     },
     {
       "username": "Vridhi",
