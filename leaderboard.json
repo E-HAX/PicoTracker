@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-20T19:26:53.088345+00:00",
+  "last_updated": "2026-10-20T22:37:20.719281+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -162,6 +162,14 @@
       "total": 105
     },
     {
+      "username": "baldev1408singh",
+      "name": "Baldev Singh",
+      "easy": 60,
+      "medium": 13,
+      "hard": 0,
+      "total": 99
+    },
+    {
       "username": "aashvi14",
       "name": "Aashvi",
       "easy": 65,
@@ -184,14 +192,6 @@
       "medium": 8,
       "hard": 0,
       "total": 95
-    },
-    {
-      "username": "baldev1408singh",
-      "name": "Baldev Singh",
-      "easy": 58,
-      "medium": 12,
-      "hard": 0,
-      "total": 94
     },
     {
       "username": "Pushpit1845",
