@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-21T18:54:05.813600+00:00",
+  "last_updated": "2026-10-21T22:15:27.268119+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -106,6 +106,14 @@
       "total": 147
     },
     {
+      "username": "hackernull1",
+      "name": "Rishabh Sakhuja",
+      "easy": 62,
+      "medium": 26,
+      "hard": 0,
+      "total": 140
+    },
+    {
       "username": "jak3p3ralta",
       "name": "hardik sachdeva",
       "easy": 81,
@@ -138,14 +146,6 @@
       "total": 127
     },
     {
-      "username": "hackernull1",
-      "name": "Rishabh Sakhuja",
-      "easy": 61,
-      "medium": 22,
-      "hard": 0,
-      "total": 127
-    },
-    {
       "username": "pricyhacker",
       "name": "Name not given",
       "easy": 80,
@@ -172,10 +172,18 @@
     {
       "username": "Himank",
       "name": "Himank",
-      "easy": 75,
+      "easy": 82,
       "medium": 10,
       "hard": 0,
-      "total": 105
+      "total": 112
+    },
+    {
+      "username": "Pushpit1845",
+      "name": "Pushpit chhabra",
+      "easy": 27,
+      "medium": 22,
+      "hard": 1,
+      "total": 99
     },
     {
       "username": "baldev1408singh",
@@ -192,14 +200,6 @@
       "medium": 11,
       "hard": 0,
       "total": 98
-    },
-    {
-      "username": "Pushpit1845",
-      "name": "Pushpit chhabra",
-      "easy": 27,
-      "medium": 20,
-      "hard": 1,
-      "total": 93
     },
     {
       "username": "SampadaSnehi",
@@ -228,10 +228,10 @@
     {
       "username": "saksyy69",
       "name": "Saksham Mittal",
-      "easy": 43,
+      "easy": 49,
       "medium": 11,
       "hard": 0,
-      "total": 76
+      "total": 82
     },
     {
       "username": "Untr4ced",
@@ -290,6 +290,14 @@
       "total": 55
     },
     {
+      "username": "Karasuke",
+      "name": "Anshul",
+      "easy": 26,
+      "medium": 6,
+      "hard": 1,
+      "total": 50
+    },
+    {
       "username": "hetainhack",
       "name": "Hetain Arora",
       "easy": 25,
@@ -328,14 +336,6 @@
       "medium": 3,
       "hard": 0,
       "total": 46
-    },
-    {
-      "username": "Karasuke",
-      "name": "Anshul",
-      "easy": 21,
-      "medium": 6,
-      "hard": 1,
-      "total": 45
     },
     {
       "username": "smoothbrain01",
