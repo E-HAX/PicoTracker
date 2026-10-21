@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-21T09:33:33.395228+00:00",
+  "last_updated": "2026-10-21T14:37:37.185700+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -114,6 +114,14 @@
       "total": 138
     },
     {
+      "username": "Sakshamm",
+      "name": "Saksham Garg",
+      "easy": 50,
+      "medium": 29,
+      "hard": 0,
+      "total": 137
+    },
+    {
       "username": "rushilarora",
       "name": "Rushil Arora",
       "easy": 66,
@@ -130,12 +138,20 @@
       "total": 127
     },
     {
-      "username": "Sakshamm",
-      "name": "Saksham Garg",
-      "easy": 50,
-      "medium": 24,
+      "username": "pricyhacker",
+      "name": "Name not given",
+      "easy": 80,
+      "medium": 15,
       "hard": 0,
-      "total": 122
+      "total": 125
+    },
+    {
+      "username": "hackernull1",
+      "name": "Rishabh Sakhuja",
+      "easy": 61,
+      "medium": 19,
+      "hard": 0,
+      "total": 118
     },
     {
       "username": "Ananya0501",
@@ -144,14 +160,6 @@
       "medium": 12,
       "hard": 0,
       "total": 116
-    },
-    {
-      "username": "hackernull1",
-      "name": "Rishabh Sakhuja",
-      "easy": 61,
-      "medium": 17,
-      "hard": 0,
-      "total": 112
     },
     {
       "username": "Himank",
@@ -170,28 +178,20 @@
       "total": 99
     },
     {
+      "username": "Dhruv3142",
+      "name": "Dhruv Sharma",
+      "easy": 75,
+      "medium": 8,
+      "hard": 0,
+      "total": 99
+    },
+    {
       "username": "aashvi14",
       "name": "Aashvi",
       "easy": 65,
       "medium": 11,
       "hard": 0,
       "total": 98
-    },
-    {
-      "username": "Dhruv3142",
-      "name": "Dhruv Sharma",
-      "easy": 72,
-      "medium": 8,
-      "hard": 0,
-      "total": 96
-    },
-    {
-      "username": "pricyhacker",
-      "name": "Name not given",
-      "easy": 71,
-      "medium": 8,
-      "hard": 0,
-      "total": 95
     },
     {
       "username": "Pushpit1845",
@@ -276,10 +276,10 @@
     {
       "username": "merrymerry",
       "name": "Nipun Bhatia",
-      "easy": 25,
-      "medium": 9,
+      "easy": 26,
+      "medium": 10,
       "hard": 0,
-      "total": 52
+      "total": 56
     },
     {
       "username": "daksh2011",
