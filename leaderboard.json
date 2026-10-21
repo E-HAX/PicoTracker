@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-21T16:09:26.565763+00:00",
+  "last_updated": "2026-10-21T20:15:39.436194+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -21,9 +21,9 @@
       "username": "reedhanG",
       "name": "Reedhan Garg",
       "easy": 83,
-      "medium": 58,
+      "medium": 59,
       "hard": 4,
-      "total": 281
+      "total": 284
     },
     {
       "username": "Kartikey191108",
@@ -52,10 +52,10 @@
     {
       "username": "Shikhar2904",
       "name": "Shikhar Singh",
-      "easy": 65,
+      "easy": 66,
       "medium": 35,
       "hard": 0,
-      "total": 170
+      "total": 171
     },
     {
       "username": "imightlose",
@@ -130,6 +130,14 @@
       "total": 135
     },
     {
+      "username": "hackernull1",
+      "name": "Rishabh Sakhuja",
+      "easy": 61,
+      "medium": 23,
+      "hard": 0,
+      "total": 130
+    },
+    {
       "username": "saarzka",
       "name": "Saarika Parveen",
       "easy": 55,
@@ -146,10 +154,10 @@
       "total": 125
     },
     {
-      "username": "hackernull1",
-      "name": "Rishabh Sakhuja",
-      "easy": 61,
-      "medium": 19,
+      "username": "Dhruv3142",
+      "name": "Dhruv Sharma",
+      "easy": 79,
+      "medium": 13,
       "hard": 0,
       "total": 118
     },
@@ -174,14 +182,6 @@
       "name": "Baldev Singh",
       "easy": 60,
       "medium": 13,
-      "hard": 0,
-      "total": 99
-    },
-    {
-      "username": "Dhruv3142",
-      "name": "Dhruv Sharma",
-      "easy": 75,
-      "medium": 8,
       "hard": 0,
       "total": 99
     },
@@ -212,10 +212,10 @@
     {
       "username": "Akshatt07",
       "name": "Akshat Budhori",
-      "easy": 51,
+      "easy": 52,
       "medium": 12,
       "hard": 0,
-      "total": 87
+      "total": 88
     },
     {
       "username": "shivanshuuu67",
@@ -228,10 +228,10 @@
     {
       "username": "saksyy69",
       "name": "Saksham Mittal",
-      "easy": 42,
+      "easy": 48,
       "medium": 11,
       "hard": 0,
-      "total": 75
+      "total": 81
     },
     {
       "username": "Untr4ced",
@@ -284,10 +284,10 @@
     {
       "username": "daksh2011",
       "name": "Daksh Bhardwaj",
-      "easy": 41,
+      "easy": 43,
       "medium": 4,
       "hard": 0,
-      "total": 53
+      "total": 55
     },
     {
       "username": "hetainhack",
