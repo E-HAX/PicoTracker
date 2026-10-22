@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-22T15:33:31.674574+00:00",
+  "last_updated": "2026-10-22T19:24:54.152459+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -20,10 +20,10 @@
     {
       "username": "reedhanG",
       "name": "Reedhan Garg",
-      "easy": 87,
+      "easy": 88,
       "medium": 61,
       "hard": 5,
-      "total": 300
+      "total": 301
     },
     {
       "username": "Kartikey191108",
@@ -52,10 +52,10 @@
     {
       "username": "Shikhar2904",
       "name": "Shikhar Singh",
-      "easy": 66,
+      "easy": 68,
       "medium": 35,
       "hard": 0,
-      "total": 171
+      "total": 173
     },
     {
       "username": "imightlose",
@@ -138,6 +138,14 @@
       "total": 135
     },
     {
+      "username": "Dhruv3142",
+      "name": "Dhruv Sharma",
+      "easy": 81,
+      "medium": 16,
+      "hard": 0,
+      "total": 129
+    },
+    {
       "username": "saarzka",
       "name": "Saarika Parveen",
       "easy": 55,
@@ -154,20 +162,20 @@
       "total": 125
     },
     {
-      "username": "Dhruv3142",
-      "name": "Dhruv Sharma",
-      "easy": 81,
-      "medium": 13,
-      "hard": 0,
-      "total": 120
-    },
-    {
       "username": "Pushpit1845",
       "name": "Pushpit chhabra",
       "easy": 28,
       "medium": 26,
       "hard": 2,
       "total": 118
+    },
+    {
+      "username": "saksyy69",
+      "name": "Saksham Mittal",
+      "easy": 53,
+      "medium": 21,
+      "hard": 0,
+      "total": 116
     },
     {
       "username": "Ananya0501",
@@ -224,14 +232,6 @@
       "medium": 12,
       "hard": 0,
       "total": 88
-    },
-    {
-      "username": "saksyy69",
-      "name": "Saksham Mittal",
-      "easy": 51,
-      "medium": 11,
-      "hard": 0,
-      "total": 84
     },
     {
       "username": "Untr4ced",
