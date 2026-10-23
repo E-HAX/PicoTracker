@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-23T20:38:34.514198+00:00",
+  "last_updated": "2026-10-23T23:35:26.338786+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -45,9 +45,9 @@
       "username": "Pushpit1845",
       "name": "Pushpit chhabra",
       "easy": 28,
-      "medium": 44,
+      "medium": 46,
       "hard": 2,
-      "total": 172
+      "total": 178
     },
     {
       "username": "SilentNinj4",
@@ -306,6 +306,14 @@
       "total": 49
     },
     {
+      "username": "vjiking",
+      "name": "Vaibhav Joshi",
+      "easy": 28,
+      "medium": 7,
+      "hard": 0,
+      "total": 49
+    },
+    {
       "username": "smlk3333",
       "name": "Soumil Malik",
       "easy": 15,
@@ -327,14 +335,6 @@
       "easy": 16,
       "medium": 6,
       "hard": 2,
-      "total": 46
-    },
-    {
-      "username": "vjiking",
-      "name": "Vaibhav Joshi",
-      "easy": 28,
-      "medium": 6,
-      "hard": 0,
       "total": 46
     },
     {
