@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-23T01:00:47.375758+00:00",
+  "last_updated": "2026-10-23T05:55:51.340947+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -20,10 +20,10 @@
     {
       "username": "reedhanG",
       "name": "Reedhan Garg",
-      "easy": 95,
+      "easy": 96,
       "medium": 54,
       "hard": 5,
-      "total": 287
+      "total": 288
     },
     {
       "username": "Kartikey191108",
@@ -306,6 +306,14 @@
       "total": 49
     },
     {
+      "username": "vrindam667",
+      "name": "Name not given",
+      "easy": 36,
+      "medium": 4,
+      "hard": 0,
+      "total": 48
+    },
+    {
       "username": "Nmn007",
       "name": "Naman",
       "easy": 16,
@@ -326,14 +334,6 @@
       "name": "Vaibhav Joshi",
       "easy": 27,
       "medium": 6,
-      "hard": 0,
-      "total": 45
-    },
-    {
-      "username": "vrindam667",
-      "name": "Name not given",
-      "easy": 33,
-      "medium": 4,
       "hard": 0,
       "total": 45
     },
