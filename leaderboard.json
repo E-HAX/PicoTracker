@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-23T05:55:51.340947+00:00",
+  "last_updated": "2026-10-23T11:28:16.384032+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -74,6 +74,14 @@
       "total": 160
     },
     {
+      "username": "SilentNinj4",
+      "name": "Atharv Bansal",
+      "easy": 121,
+      "medium": 13,
+      "hard": 0,
+      "total": 160
+    },
+    {
       "username": "mayank18",
       "name": "Mayank Panchal",
       "easy": 91,
@@ -82,12 +90,12 @@
       "total": 154
     },
     {
-      "username": "SilentNinj4",
-      "name": "Atharv Bansal",
-      "easy": 120,
-      "medium": 11,
-      "hard": 0,
-      "total": 153
+      "username": "Pushpit1845",
+      "name": "Pushpit chhabra",
+      "easy": 28,
+      "medium": 36,
+      "hard": 2,
+      "total": 148
     },
     {
       "username": "AkshatJairath",
@@ -136,14 +144,6 @@
       "medium": 16,
       "hard": 0,
       "total": 129
-    },
-    {
-      "username": "Pushpit1845",
-      "name": "Pushpit chhabra",
-      "easy": 28,
-      "medium": 29,
-      "hard": 2,
-      "total": 127
     },
     {
       "username": "saarzka",
@@ -234,6 +234,14 @@
       "total": 88
     },
     {
+      "username": "RandomBruh",
+      "name": "Rishabh Dev Malhotra",
+      "easy": 63,
+      "medium": 5,
+      "hard": 0,
+      "total": 78
+    },
+    {
       "username": "Untr4ced",
       "name": "Palak",
       "easy": 23,
@@ -248,14 +256,6 @@
       "medium": 4,
       "hard": 0,
       "total": 70
-    },
-    {
-      "username": "RandomBruh",
-      "name": "Rishabh Dev Malhotra",
-      "easy": 63,
-      "medium": 1,
-      "hard": 0,
-      "total": 66
     },
     {
       "username": "akshut",
@@ -346,20 +346,20 @@
       "total": 44
     },
     {
+      "username": "Sairese",
+      "name": "Sarra Sharma",
+      "easy": 32,
+      "medium": 2,
+      "hard": 1,
+      "total": 44
+    },
+    {
       "username": "harshstayswithastick",
       "name": "Harsh Goswami",
       "easy": 32,
       "medium": 4,
       "hard": 0,
       "total": 44
-    },
-    {
-      "username": "Sairese",
-      "name": "Sarra Sharma",
-      "easy": 31,
-      "medium": 2,
-      "hard": 1,
-      "total": 43
     },
     {
       "username": "Nichehacker2501",
