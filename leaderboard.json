@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-24T07:13:39.325063+00:00",
+  "last_updated": "2026-10-24T12:05:59.919548+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -21,9 +21,9 @@
       "username": "reedhanG",
       "name": "Reedhan Garg",
       "easy": 98,
-      "medium": 55,
+      "medium": 56,
       "hard": 5,
-      "total": 293
+      "total": 296
     },
     {
       "username": "Kartikey191108",
@@ -37,9 +37,9 @@
       "username": "pointbreak007",
       "name": "Atishay Jain",
       "easy": 77,
-      "medium": 23,
+      "medium": 24,
       "hard": 7,
-      "total": 188
+      "total": 191
     },
     {
       "username": "Pushpit1845",
@@ -106,18 +106,18 @@
       "total": 154
     },
     {
+      "username": "AkshatJairath",
+      "name": "Name not given",
+      "easy": 102,
+      "medium": 17,
+      "hard": 0,
+      "total": 153
+    },
+    {
       "username": "Sakshamm",
       "name": "Saksham Garg",
       "easy": 51,
       "medium": 32,
-      "hard": 0,
-      "total": 147
-    },
-    {
-      "username": "AkshatJairath",
-      "name": "Name not given",
-      "easy": 102,
-      "medium": 15,
       "hard": 0,
       "total": 147
     },
@@ -144,6 +144,14 @@
       "medium": 16,
       "hard": 0,
       "total": 133
+    },
+    {
+      "username": "shivanshuuu67",
+      "name": "shivanshu gupta",
+      "easy": 72,
+      "medium": 19,
+      "hard": 0,
+      "total": 129
     },
     {
       "username": "saarzka",
@@ -186,20 +194,20 @@
       "total": 114
     },
     {
-      "username": "shivanshuuu67",
-      "name": "shivanshu gupta",
-      "easy": 56,
-      "medium": 19,
-      "hard": 0,
-      "total": 113
-    },
-    {
       "username": "Himank",
       "name": "Himank",
       "easy": 82,
       "medium": 10,
       "hard": 0,
       "total": 112
+    },
+    {
+      "username": "aashvi14",
+      "name": "Aashvi",
+      "easy": 68,
+      "medium": 11,
+      "hard": 0,
+      "total": 101
     },
     {
       "username": "baldev1408singh",
@@ -210,12 +218,12 @@
       "total": 99
     },
     {
-      "username": "aashvi14",
-      "name": "Aashvi",
-      "easy": 65,
-      "medium": 11,
-      "hard": 0,
-      "total": 98
+      "username": "akshut",
+      "name": "Akshut Goyal",
+      "easy": 49,
+      "medium": 14,
+      "hard": 1,
+      "total": 97
     },
     {
       "username": "Akshatt07",
@@ -229,25 +237,17 @@
       "username": "SampadaSnehi",
       "name": "Sampada Snehi",
       "easy": 69,
-      "medium": 7,
+      "medium": 8,
       "hard": 0,
-      "total": 90
+      "total": 93
     },
     {
       "username": "RandomBruh",
       "name": "Rishabh Dev Malhotra",
-      "easy": 63,
+      "easy": 64,
       "medium": 8,
       "hard": 0,
-      "total": 87
-    },
-    {
-      "username": "akshut",
-      "name": "Akshut Goyal",
-      "easy": 49,
-      "medium": 10,
-      "hard": 1,
-      "total": 85
+      "total": 88
     },
     {
       "username": "Untr4ced",
@@ -266,12 +266,20 @@
       "total": 70
     },
     {
+      "username": "smlk3333",
+      "name": "Soumil Malik",
+      "easy": 27,
+      "medium": 14,
+      "hard": 0,
+      "total": 69
+    },
+    {
       "username": "Mehulgarg23",
       "name": "Mehul garg",
-      "easy": 48,
+      "easy": 50,
       "medium": 5,
       "hard": 0,
-      "total": 63
+      "total": 65
     },
     {
       "username": "merrymerry",
@@ -288,14 +296,6 @@
       "medium": 4,
       "hard": 0,
       "total": 55
-    },
-    {
-      "username": "smlk3333",
-      "name": "Soumil Malik",
-      "easy": 15,
-      "medium": 13,
-      "hard": 0,
-      "total": 54
     },
     {
       "username": "Karasuke",
@@ -346,6 +346,14 @@
       "total": 46
     },
     {
+      "username": "smoothbrain01",
+      "name": "Shraddha Abirami A",
+      "easy": 40,
+      "medium": 2,
+      "hard": 0,
+      "total": 46
+    },
+    {
       "username": "Sairese",
       "name": "Sarra Sharma",
       "easy": 33,
@@ -366,14 +374,6 @@
       "name": "Harsh Goswami",
       "easy": 32,
       "medium": 4,
-      "hard": 0,
-      "total": 44
-    },
-    {
-      "username": "smoothbrain01",
-      "name": "Shraddha Abirami A",
-      "easy": 38,
-      "medium": 2,
       "hard": 0,
       "total": 44
     },
