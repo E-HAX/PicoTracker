@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-24T01:57:33.547822+00:00",
+  "last_updated": "2026-10-24T07:13:39.325063+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -290,6 +290,14 @@
       "total": 55
     },
     {
+      "username": "smlk3333",
+      "name": "Soumil Malik",
+      "easy": 15,
+      "medium": 13,
+      "hard": 0,
+      "total": 54
+    },
+    {
       "username": "Karasuke",
       "name": "Anshul",
       "easy": 26,
@@ -312,14 +320,6 @@
       "medium": 7,
       "hard": 0,
       "total": 49
-    },
-    {
-      "username": "smlk3333",
-      "name": "Soumil Malik",
-      "easy": 15,
-      "medium": 11,
-      "hard": 0,
-      "total": 48
     },
     {
       "username": "vrindam667",
