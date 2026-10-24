@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-24T19:51:34.257546+00:00",
+  "last_updated": "2026-10-24T21:59:52.881361+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -98,6 +98,14 @@
       "total": 158
     },
     {
+      "username": "saksyy69",
+      "name": "Saksham Mittal",
+      "easy": 55,
+      "medium": 33,
+      "hard": 0,
+      "total": 154
+    },
+    {
       "username": "mayank18",
       "name": "Mayank Panchal",
       "easy": 91,
@@ -114,6 +122,14 @@
       "total": 153
     },
     {
+      "username": "aashvi14",
+      "name": "Aashvi",
+      "easy": 80,
+      "medium": 23,
+      "hard": 0,
+      "total": 149
+    },
+    {
       "username": "Sakshamm",
       "name": "Saksham Garg",
       "easy": 51,
@@ -122,12 +138,12 @@
       "total": 147
     },
     {
-      "username": "saksyy69",
-      "name": "Saksham Mittal",
-      "easy": 55,
-      "medium": 29,
+      "username": "shivanshuuu67",
+      "name": "shivanshu gupta",
+      "easy": 81,
+      "medium": 20,
       "hard": 0,
-      "total": 142
+      "total": 141
     },
     {
       "username": "hackernull1",
@@ -136,14 +152,6 @@
       "medium": 26,
       "hard": 0,
       "total": 140
-    },
-    {
-      "username": "shivanshuuu67",
-      "name": "shivanshu gupta",
-      "easy": 81,
-      "medium": 19,
-      "hard": 0,
-      "total": 138
     },
     {
       "username": "jak3p3ralta",
@@ -186,14 +194,6 @@
       "total": 125
     },
     {
-      "username": "aashvi14",
-      "name": "Aashvi",
-      "easy": 78,
-      "medium": 13,
-      "hard": 0,
-      "total": 117
-    },
-    {
       "username": "Ananya0501",
       "name": "Ananya",
       "easy": 81,
@@ -208,6 +208,14 @@
       "medium": 10,
       "hard": 0,
       "total": 112
+    },
+    {
+      "username": "RandomBruh",
+      "name": "Rishabh Dev Malhotra",
+      "easy": 70,
+      "medium": 13,
+      "hard": 0,
+      "total": 109
     },
     {
       "username": "smlk3333",
@@ -248,14 +256,6 @@
       "medium": 12,
       "hard": 0,
       "total": 93
-    },
-    {
-      "username": "RandomBruh",
-      "name": "Rishabh Dev Malhotra",
-      "easy": 64,
-      "medium": 8,
-      "hard": 0,
-      "total": 88
     },
     {
       "username": "Nichehacker2501",
