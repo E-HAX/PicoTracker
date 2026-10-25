@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-25T16:35:36.985583+00:00",
+  "last_updated": "2026-10-25T19:15:18.663099+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -74,20 +74,20 @@
       "total": 175
     },
     {
+      "username": "imightlose",
+      "name": "Shobhit Pandey",
+      "easy": 77,
+      "medium": 28,
+      "hard": 2,
+      "total": 173
+    },
+    {
       "username": "SilentNinj4",
       "name": "Atharv Bansal",
       "easy": 127,
       "medium": 15,
       "hard": 0,
       "total": 172
-    },
-    {
-      "username": "imightlose",
-      "name": "Shobhit Pandey",
-      "easy": 75,
-      "medium": 28,
-      "hard": 2,
-      "total": 171
     },
     {
       "username": "rakshaa",
@@ -298,20 +298,20 @@
       "total": 74
     },
     {
+      "username": "Mehulgarg23",
+      "name": "Mehul garg",
+      "easy": 57,
+      "medium": 5,
+      "hard": 0,
+      "total": 72
+    },
+    {
       "username": "Chowdharyji",
       "name": "Ujjawal Chowdhary",
       "easy": 58,
       "medium": 4,
       "hard": 0,
       "total": 70
-    },
-    {
-      "username": "Mehulgarg23",
-      "name": "Mehul garg",
-      "easy": 54,
-      "medium": 5,
-      "hard": 0,
-      "total": 69
     },
     {
       "username": "merrymerry",
@@ -324,10 +324,10 @@
     {
       "username": "Sairese",
       "name": "Sarra Sharma",
-      "easy": 42,
+      "easy": 43,
       "medium": 2,
       "hard": 1,
-      "total": 54
+      "total": 55
     },
     {
       "username": "Karasuke",
