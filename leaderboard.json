@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-25T19:55:18.291887+00:00",
+  "last_updated": "2026-10-25T22:27:29.307488+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -322,6 +322,14 @@
       "total": 62
     },
     {
+      "username": "smoothbrain01",
+      "name": "Shraddha Abirami A",
+      "easy": 40,
+      "medium": 7,
+      "hard": 0,
+      "total": 61
+    },
+    {
       "username": "Sairese",
       "name": "Sarra Sharma",
       "easy": 43,
@@ -350,14 +358,6 @@
       "name": "Vaibhav Joshi",
       "easy": 28,
       "medium": 7,
-      "hard": 0,
-      "total": 49
-    },
-    {
-      "username": "smoothbrain01",
-      "name": "Shraddha Abirami A",
-      "easy": 40,
-      "medium": 3,
       "hard": 0,
       "total": 49
     },
