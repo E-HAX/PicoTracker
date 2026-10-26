@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-26T17:36:06.379225+00:00",
+  "last_updated": "2026-10-26T21:50:41.303673+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -13,9 +13,9 @@
       "username": "boringxegotistical",
       "name": "Saiyam Chaudhary",
       "easy": 113,
-      "medium": 76,
+      "medium": 80,
       "hard": 6,
-      "total": 377
+      "total": 389
     },
     {
       "username": "reedhanG",
@@ -138,6 +138,14 @@
       "total": 147
     },
     {
+      "username": "Dhruv3142",
+      "name": "Dhruv Sharma",
+      "easy": 91,
+      "medium": 18,
+      "hard": 0,
+      "total": 145
+    },
+    {
       "username": "shivanshuuu67",
       "name": "shivanshu gupta",
       "easy": 81,
@@ -160,14 +168,6 @@
       "medium": 19,
       "hard": 0,
       "total": 138
-    },
-    {
-      "username": "Dhruv3142",
-      "name": "Dhruv Sharma",
-      "easy": 85,
-      "medium": 16,
-      "hard": 0,
-      "total": 133
     },
     {
       "username": "saarzka",
@@ -362,6 +362,14 @@
       "total": 49
     },
     {
+      "username": "hardik1200",
+      "name": "Hardik Bansal",
+      "easy": 24,
+      "medium": 6,
+      "hard": 1,
+      "total": 48
+    },
+    {
       "username": "vrindam667",
       "name": "Name not given",
       "easy": 36,
@@ -375,14 +383,6 @@
       "easy": 16,
       "medium": 6,
       "hard": 2,
-      "total": 46
-    },
-    {
-      "username": "hardik1200",
-      "name": "Hardik Bansal",
-      "easy": 22,
-      "medium": 6,
-      "hard": 1,
       "total": 46
     },
     {
