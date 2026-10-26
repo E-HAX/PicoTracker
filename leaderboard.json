@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-26T11:28:37.717876+00:00",
+  "last_updated": "2026-10-26T17:36:06.379225+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -13,17 +13,17 @@
       "username": "boringxegotistical",
       "name": "Saiyam Chaudhary",
       "easy": 113,
-      "medium": 64,
+      "medium": 76,
       "hard": 6,
-      "total": 341
+      "total": 377
     },
     {
       "username": "reedhanG",
       "name": "Reedhan Garg",
       "easy": 99,
-      "medium": 67,
+      "medium": 71,
       "hard": 5,
-      "total": 330
+      "total": 342
     },
     {
       "username": "Kartikey191108",
@@ -36,10 +36,10 @@
     {
       "username": "Shikhar2904",
       "name": "Shikhar Singh",
-      "easy": 115,
-      "medium": 29,
+      "easy": 116,
+      "medium": 31,
       "hard": 0,
-      "total": 202
+      "total": 209
     },
     {
       "username": "pointbreak007",
@@ -258,20 +258,20 @@
       "total": 102
     },
     {
+      "username": "Akshatt07",
+      "name": "Akshat Budhori",
+      "easy": 65,
+      "medium": 12,
+      "hard": 0,
+      "total": 101
+    },
+    {
       "username": "akshut",
       "name": "Akshut Goyal",
       "easy": 49,
       "medium": 15,
       "hard": 1,
       "total": 100
-    },
-    {
-      "username": "Akshatt07",
-      "name": "Akshat Budhori",
-      "easy": 63,
-      "medium": 12,
-      "hard": 0,
-      "total": 99
     },
     {
       "username": "daksh2011",
@@ -288,6 +288,14 @@
       "medium": 12,
       "hard": 0,
       "total": 91
+    },
+    {
+      "username": "smoothbrain01",
+      "name": "Shraddha Abirami A",
+      "easy": 42,
+      "medium": 12,
+      "hard": 0,
+      "total": 78
     },
     {
       "username": "prabk55",
@@ -320,14 +328,6 @@
       "medium": 10,
       "hard": 0,
       "total": 62
-    },
-    {
-      "username": "smoothbrain01",
-      "name": "Shraddha Abirami A",
-      "easy": 40,
-      "medium": 7,
-      "hard": 0,
-      "total": 61
     },
     {
       "username": "Sairese",
