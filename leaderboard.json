@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-27T06:13:12.039087+00:00",
+  "last_updated": "2026-10-27T12:28:02.521068+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -21,9 +21,9 @@
       "username": "reedhanG",
       "name": "Reedhan Garg",
       "easy": 99,
-      "medium": 71,
+      "medium": 72,
       "hard": 5,
-      "total": 342
+      "total": 345
     },
     {
       "username": "Kartikey191108",
@@ -298,20 +298,20 @@
       "total": 78
     },
     {
+      "username": "Mehulgarg23",
+      "name": "Mehul garg",
+      "easy": 60,
+      "medium": 5,
+      "hard": 0,
+      "total": 75
+    },
+    {
       "username": "prabk55",
       "name": "Prabhakar Kumar",
       "easy": 32,
       "medium": 14,
       "hard": 0,
       "total": 74
-    },
-    {
-      "username": "Mehulgarg23",
-      "name": "Mehul garg",
-      "easy": 57,
-      "medium": 5,
-      "hard": 0,
-      "total": 72
     },
     {
       "username": "Chowdharyji",
