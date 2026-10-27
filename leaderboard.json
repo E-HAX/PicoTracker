@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-27T18:14:20.339137+00:00",
+  "last_updated": "2026-10-27T22:25:44.412661+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -50,6 +50,14 @@
       "total": 191
     },
     {
+      "username": "Pushpit1845",
+      "name": "Pushpit chhabra",
+      "easy": 28,
+      "medium": 50,
+      "hard": 2,
+      "total": 190
+    },
+    {
       "username": "saksyy69",
       "name": "Saksham Mittal",
       "easy": 59,
@@ -58,12 +66,12 @@
       "total": 188
     },
     {
-      "username": "Pushpit1845",
-      "name": "Pushpit chhabra",
-      "easy": 28,
-      "medium": 49,
+      "username": "imightlose",
+      "name": "Shobhit Pandey",
+      "easy": 78,
+      "medium": 30,
       "hard": 2,
-      "total": 187
+      "total": 180
     },
     {
       "username": "mayank18",
@@ -72,14 +80,6 @@
       "medium": 27,
       "hard": 0,
       "total": 178
-    },
-    {
-      "username": "imightlose",
-      "name": "Shobhit Pandey",
-      "easy": 77,
-      "medium": 28,
-      "hard": 2,
-      "total": 173
     },
     {
       "username": "SilentNinj4",
@@ -202,20 +202,20 @@
       "total": 117
     },
     {
+      "username": "RandomBruh",
+      "name": "Rishabh Dev Malhotra",
+      "easy": 72,
+      "medium": 14,
+      "hard": 0,
+      "total": 114
+    },
+    {
       "username": "Himank",
       "name": "Himank",
       "easy": 82,
       "medium": 10,
       "hard": 0,
       "total": 112
-    },
-    {
-      "username": "RandomBruh",
-      "name": "Rishabh Dev Malhotra",
-      "easy": 70,
-      "medium": 13,
-      "hard": 0,
-      "total": 109
     },
     {
       "username": "Untr4ced",
@@ -300,10 +300,10 @@
     {
       "username": "Mehulgarg23",
       "name": "Mehul garg",
-      "easy": 60,
+      "easy": 63,
       "medium": 5,
       "hard": 0,
-      "total": 75
+      "total": 78
     },
     {
       "username": "prabk55",
@@ -378,19 +378,19 @@
       "total": 48
     },
     {
+      "username": "nineteen",
+      "name": "Shashank Shekhar",
+      "easy": 38,
+      "medium": 3,
+      "hard": 0,
+      "total": 47
+    },
+    {
       "username": "Nmn007",
       "name": "Naman",
       "easy": 16,
       "medium": 6,
       "hard": 2,
-      "total": 46
-    },
-    {
-      "username": "nineteen",
-      "name": "Shashank Shekhar",
-      "easy": 37,
-      "medium": 3,
-      "hard": 0,
       "total": 46
     },
     {
