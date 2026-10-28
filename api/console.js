@@ -20,7 +20,6 @@ const {
   get: blobGet,
   put: blobPut,
   BlobNotFoundError,
-  BlobPreconditionFailedError,
 } = require('@vercel/blob');
 
 const MAX_BODY_BYTES = 256 * 1024;
@@ -138,13 +137,6 @@ function isNotFoundError(error) {
   );
 }
 
-function isPreconditionFailed(error) {
-  return (
-    error instanceof BlobPreconditionFailedError ||
-    (error && error.name === 'BlobPreconditionFailedError')
-  );
-}
-
 function blobTimeout(ms = 10_000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), ms);
@@ -168,15 +160,12 @@ async function readJsonBlob(pathname) {
         abortSignal: timeout.signal,
       });
     } catch (error) {
-      if (isNotFoundError(error)) return { value: null, etag: null };
+      if (isNotFoundError(error)) return { value: null };
       throw storageUnavailable(error);
     }
 
     if (!result || result.statusCode !== 200 || !result.stream) {
-      return {
-        value: null,
-        etag: result && result.blob ? result.blob.etag : null,
-      };
+      return { value: null };
     }
 
     let text;
@@ -187,11 +176,11 @@ async function readJsonBlob(pathname) {
     }
 
     if (!text) {
-      return { value: null, etag: result.blob.etag };
+      return { value: null };
     }
 
     try {
-      return { value: JSON.parse(text), etag: result.blob.etag };
+      return { value: JSON.parse(text) };
     } catch (error) {
       const wrapped = httpError(
         503,
@@ -206,7 +195,7 @@ async function readJsonBlob(pathname) {
   }
 }
 
-async function writeJsonBlob(pathname, value, etag) {
+async function writeJsonBlob(pathname, value) {
   const body = JSON.stringify(value);
   if (Buffer.byteLength(body, 'utf8') > MAX_STORE_BYTES) {
     throw httpError(
@@ -225,18 +214,10 @@ async function writeJsonBlob(pathname, value, etag) {
     cacheControlMaxAge: 60,
     abortSignal: timeout.signal,
   };
-  if (etag) options.ifMatch = etag;
 
   try {
     return await blobPut(pathname, body, options);
   } catch (error) {
-    if (isPreconditionFailed(error)) {
-      throw httpError(
-        409,
-        'revision_conflict',
-        'Attendance data changed in another tab. Reload and try again.'
-      );
-    }
     throw storageUnavailable(error);
   } finally {
     timeout.clear();
@@ -407,19 +388,6 @@ function normalizeId(value) {
   return value;
 }
 
-function parseRevision(value) {
-  const revision =
-    typeof value === 'number' ? value : Number(value);
-  if (
-    !Number.isSafeInteger(revision) ||
-    revision < 0 ||
-    revision > 1_000_000_000
-  ) {
-    throw httpError(400, 'invalid_revision', 'Invalid data revision.');
-  }
-  return revision;
-}
-
 function sanitizeStoredMeeting(raw) {
   if (!raw || typeof raw !== 'object') return null;
   if (
@@ -513,12 +481,12 @@ function normalizeStore(raw) {
 }
 
 async function loadStore() {
-  const { value, etag } = await readJsonBlob(DATA_PATHNAME);
-  return { store: normalizeStore(value), etag };
+  const { value } = await readJsonBlob(DATA_PATHNAME);
+  return normalizeStore(value);
 }
 
 async function withStoreWrite(callback, session) {
-  const { store, etag } = await loadStore();
+  const store = await loadStore();
 
   if (session && session.epoch !== store.sessionEpoch) {
     throw httpError(
@@ -534,18 +502,8 @@ async function withStoreWrite(callback, session) {
   store.revision += 1;
   store.updatedAt = new Date().toISOString();
 
-  await writeJsonBlob(DATA_PATHNAME, store, etag);
+  await writeJsonBlob(DATA_PATHNAME, store);
   return { store, result };
-}
-
-function requireRevision(store, expected) {
-  if (expected !== store.revision) {
-    throw httpError(
-      409,
-      'revision_conflict',
-      'Attendance data changed in another tab. Reload and try again.'
-    );
-  }
 }
 
 function buildPublicData(store, roster) {
@@ -983,75 +941,53 @@ function pruneRateEntries(entries) {
 async function bumpLoginRate(req) {
   const key = rateFingerprint(req);
   const now = Date.now();
+  const { value } = await readJsonBlob(RATE_PATHNAME);
+  const entries = normalizeRateEntries(value, now);
+  const current = entries[key];
 
-  for (let attempt = 0; attempt < 4; attempt += 1) {
-    const { value, etag } = await readJsonBlob(RATE_PATHNAME);
-    const entries = normalizeRateEntries(value, now);
-    const current = entries[key];
-
-    if (current && current.count >= LOGIN_MAX_ATTEMPTS) {
-      return {
-        allowed: false,
-        key,
-        retryAfter: Math.max(
-          1,
-          Math.ceil((current.reset - now) / 1000)
-        ),
-      };
-    }
-
-    const reset =
-      current && current.reset > now
-        ? current.reset
-        : now + LOGIN_WINDOW_SECONDS * 1000;
-    const count = (current ? current.count : 0) + 1;
-    entries[key] = { count, reset };
-    pruneRateEntries(entries);
-
-    try {
-      await writeJsonBlob(
-        RATE_PATHNAME,
-        { version: 1, entries },
-        etag
-      );
-      return {
-        allowed: true,
-        key,
-        count,
-        retryAfter: Math.max(1, Math.ceil((reset - now) / 1000)),
-      };
-    } catch (error) {
-      if (error && error.status === 409) continue;
-      throw error;
-    }
+  if (current && current.count >= LOGIN_MAX_ATTEMPTS) {
+    return {
+      allowed: false,
+      key,
+      retryAfter: Math.max(
+        1,
+        Math.ceil((current.reset - now) / 1000)
+      ),
+    };
   }
 
-  throw httpError(
-    503,
-    'storage_busy',
-    'Login verification is busy. Try again in a moment.'
-  );
+  const reset =
+    current && current.reset > now
+      ? current.reset
+      : now + LOGIN_WINDOW_SECONDS * 1000;
+  const count = (current ? current.count : 0) + 1;
+  entries[key] = { count, reset };
+  pruneRateEntries(entries);
+
+  await writeJsonBlob(RATE_PATHNAME, { version: 1, entries });
+
+  return {
+    allowed: true,
+    key,
+    count,
+    retryAfter: Math.max(1, Math.ceil((reset - now) / 1000)),
+  };
 }
 
 async function clearLoginRate(key) {
   if (!key) return;
 
-  for (let attempt = 0; attempt < 3; attempt += 1) {
-    try {
-      const { value, etag } = await readJsonBlob(RATE_PATHNAME);
-      const entries = normalizeRateEntries(value, Date.now());
-      if (!entries[key]) return;
-      delete entries[key];
-      await writeJsonBlob(
-        RATE_PATHNAME,
-        { version: 1, entries },
-        etag
-      );
-      return;
-    } catch (error) {
-      if (error && error.status === 409) continue;
-      return;
-    }
+  try {
+    const { value } = await readJsonBlob(RATE_PATHNAME);
+    const entries = normalizeRateEntries(value, Date.now());
+    if (!entries[key]) return;
+    delete entries[key];
+    await writeJsonBlob(RATE_PATHNAME, {
+      version: 1,
+      entries,
+    });
+  } catch (_) {
+    // Rate-limit cleanup is best effort; the entry expires on its own.
   }
 }
 
@@ -1110,11 +1046,10 @@ async function handleGet(req, res) {
     throw httpError(401, 'unauthorized', 'Authentication required.');
   }
 
-  const [roster, loaded] = await Promise.all([
+  const [roster, store] = await Promise.all([
     loadRoster(),
     loadStore(),
   ]);
-  const store = loaded.store;
 
   if (session.epoch !== store.sessionEpoch) {
     clearSessionCookie(req, res);
@@ -1172,11 +1107,10 @@ async function handleLogin(req, res, body) {
 
   await clearLoginRate(rate.key);
 
-  const [roster, loaded] = await Promise.all([
+  const [roster, store] = await Promise.all([
     loadRoster(),
     loadStore(),
   ]);
-  const store = loaded.store;
   const session = createSession(store.sessionEpoch);
 
   setSessionCookie(req, res, session.token);
@@ -1231,12 +1165,9 @@ async function handleLogout(req, res, session) {
 async function handleAddMeeting(req, res, body, session) {
   const date = normalizeDate(body.date);
   const label = normalizeLabel(body.label);
-  const expected = parseRevision(body.expectedRevision);
   const roster = await loadRoster();
 
   const { store, result } = await withStoreWrite(async (draft) => {
-    requireRevision(draft, expected);
-
     if (draft.meetings.some((meeting) => meeting.date === date)) {
       throw httpError(
         409,
@@ -1276,12 +1207,9 @@ async function handleUpdateMeeting(req, res, body, session) {
   const meetingId = normalizeId(body.meetingId);
   const date = normalizeDate(body.date);
   const label = normalizeLabel(body.label);
-  const expected = parseRevision(body.expectedRevision);
   const roster = await loadRoster();
 
   const { store, result } = await withStoreWrite(async (draft) => {
-    requireRevision(draft, expected);
-
     const meeting = draft.meetings.find((item) => item.id === meetingId);
     if (!meeting) {
       throw httpError(404, 'meeting_not_found', 'Meeting not found.');
@@ -1316,48 +1244,25 @@ async function handleDeleteMeeting(req, res, body, session) {
   const meetingId = normalizeId(body.meetingId);
   const roster = await loadRoster();
 
-  // Deletion is intentionally idempotent: if another tab already removed the
-  // meeting, or the client's revision is stale, the requested end state is
-  // still "this meeting does not exist". Retry only on Blob ETag conflicts.
-  let finalStore = null;
-  let finalResult = null;
-
-  for (let attempt = 0; attempt < 3; attempt += 1) {
-    try {
-      const { store, result } = await withStoreWrite(async (draft) => {
-        const index = draft.meetings.findIndex(
-          (meeting) => meeting.id === meetingId
-        );
-        if (index === -1) {
-          return { deletedMeetingId: meetingId, alreadyDeleted: true };
-        }
-
-        draft.meetings.splice(index, 1);
-        delete draft.records[meetingId];
-        return { deletedMeetingId: meetingId, alreadyDeleted: false };
-      }, session);
-
-      finalStore = store;
-      finalResult = result;
-      break;
-    } catch (error) {
-      if (error && error.status === 409 && attempt < 2) continue;
-      throw error;
-    }
-  }
-
-  if (!finalStore) {
-    throw httpError(
-      503,
-      'delete_incomplete',
-      'Could not delete the meeting. Try again.'
+  // Idempotent: if another tab already removed the meeting, the requested
+  // end state is still "this meeting does not exist".
+  const { store, result } = await withStoreWrite(async (draft) => {
+    const index = draft.meetings.findIndex(
+      (meeting) => meeting.id === meetingId
     );
-  }
+    if (index === -1) {
+      return { deletedMeetingId: meetingId, alreadyDeleted: true };
+    }
+
+    draft.meetings.splice(index, 1);
+    delete draft.records[meetingId];
+    return { deletedMeetingId: meetingId, alreadyDeleted: false };
+  }, session);
 
   sendJson(
     res,
     200,
-    buildClientPayload(finalStore, roster, session, finalResult)
+    buildClientPayload(store, roster, session, result)
   );
 }
 
@@ -1389,13 +1294,10 @@ function normalizeMarks(marks, roster) {
 
 async function handleSaveAttendance(req, res, body, session) {
   const meetingId = normalizeId(body.meetingId);
-  const expected = parseRevision(body.expectedRevision);
   const roster = await loadRoster();
   const marks = normalizeMarks(body.marks, roster);
 
   const { store, result } = await withStoreWrite(async (draft) => {
-    requireRevision(draft, expected);
-
     const meeting = draft.meetings.find((item) => item.id === meetingId);
     if (!meeting) {
       throw httpError(404, 'meeting_not_found', 'Meeting not found.');

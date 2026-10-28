@@ -1062,7 +1062,6 @@
       const result = await authenticatedPost({
         action: 'save-attendance',
         meetingId: state.selectedId,
-        expectedRevision: state.data.revision,
         marks,
       });
 
@@ -1070,7 +1069,7 @@
 
       if (result.status === 409) {
         await refreshData(
-          'Data changed elsewhere. Reloaded. Your last change was not saved.'
+          'Could not save because the data changed. Reloaded the latest version; try again.'
         );
         return;
       }
@@ -1197,7 +1196,6 @@
       action: wasAdd ? 'add-meeting' : 'update-meeting',
       date,
       label,
-      expectedRevision: state.data.revision,
     };
     if (!wasAdd) body.meetingId = state.modalMeetingId;
 
@@ -1222,7 +1220,7 @@
         return;
       }
       closeMeetingModal();
-      await refreshData('Data changed elsewhere. Reloaded.');
+      await refreshData('The date list changed. Reloaded.');
       return;
     }
 

@@ -57,8 +57,9 @@ leaderboard**. It has no attendance data in the static HTML, CSS, JS,
   record.
 - **Password rotation**: changing the password hash immediately invalidates
   all existing admin sessions.
-- **Data integrity**: optimistic revisions plus Blob ETag conditional writes
-  prevent two tabs from silently overwriting each other.
+- **Data integrity**: the UI prevents double-submits, and every mutation
+  reloads the latest server state. This is a single-admin console, so if two
+  tabs are open, the last write wins.
 - **No client storage**: the console keeps attendance data in memory only.
   It is wiped from the DOM when the session expires or is locked.
 - **Export**: CSV export happens locally in the browser.
