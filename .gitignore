@@ -10,12 +10,17 @@ __pycache__/
 venv/
 .venv/
 
+# Node
+node_modules/
+npm-debug.log*
+
 # Local deployment tooling
 .vercel/
 
 # Ignore loose JSON files while preserving web & configuration JSON
 *.json
 !package.json
+!package-lock.json
 !leaderboard.json
 !vercel.json
 

@@ -6,6 +6,7 @@ roster.txt
 requirements.txt
 README.md
 scripts/
+node_modules/
 .env
 .env.*
 .vercel/

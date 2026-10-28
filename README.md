@@ -37,7 +37,7 @@ leaderboard**. It has no attendance data in the static HTML, CSS, JS,
 - It shows only a password gate until the admin authenticates.
 - The roster is loaded from `leaderboard.json`, so usernames and real names
   always match the leaderboard.
-- Meetings and marks are stored server-side in Upstash Redis / Vercel KV.
+- Meetings and marks are stored server-side in a **private Vercel Blob store**.
 - The console is marked `noindex`, `noarchive`, and `no-store`.
 
 ### Security model
@@ -45,16 +45,19 @@ leaderboard**. It has no attendance data in the static HTML, CSS, JS,
 - **Password**: stored only as a scrypt hash in a Vercel environment variable.
   The plaintext password is never committed and never leaves the browser
   except in the login request over HTTPS.
-- **Sessions**: opaque 256-bit random session IDs stored server-side in Redis.
-  The cookie is `HttpOnly`, `Secure` in production, `SameSite=Strict`, and
-  uses the `__Host-` prefix.
+- **Sessions**: HMAC-signed `HttpOnly` cookies, signed with a key derived from
+  the password hash. The cookie is `Secure` in production, `SameSite=Strict`,
+  uses the `__Host-` prefix, and is a browser-session cookie.
+- **Logout**: clearing the cookie also bumps a server-side session epoch in the
+  Blob state, invalidating every outstanding signed session.
 - **CSRF**: every authenticated state-changing request needs a session-bound
   CSRF token. Same-origin checks are enforced for all POST requests, including
   login.
-- **Brute force**: login attempts are rate limited per IP.
+- **Brute force**: login attempts are rate limited per IP using a private Blob
+  record.
 - **Password rotation**: changing the password hash immediately invalidates
   all existing admin sessions.
-- **Data integrity**: optimistic revisions plus a short Redis write lock
+- **Data integrity**: optimistic revisions plus Blob ETag conditional writes
   prevent two tabs from silently overwriting each other.
 - **No client storage**: the console keeps attendance data in memory only.
   It is wiped from the DOM when the session expires or is locked.
@@ -62,15 +65,14 @@ leaderboard**. It has no attendance data in the static HTML, CSS, JS,
 
 ### One-time deployment setup
 
-1. **Create the database**
+1. **Create the Blob store**
 
-   In Vercel, open **Storage / Marketplace** and create an **Upstash Redis**
-   database. Connect it to this project. The integration adds either:
+   In Vercel, open **Storage → Create → Blob**. Choose **Private** access
+   (important), create the store, and connect it to this project. Vercel adds
+   `BLOB_STORE_ID` and the rotating OIDC credentials automatically.
 
-   - `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`, or
-   - `KV_REST_API_URL` + `KV_REST_API_TOKEN`
-
-   Both naming styles are supported.
+   On the Hobby plan, Blob includes 1 GB storage, 10K reads, and 2K writes per
+   month. For 5–10 meetings this app uses only a tiny fraction of that.
 
 2. **Generate the admin password hash**
 
@@ -97,12 +99,14 @@ leaderboard**. It has no attendance data in the static HTML, CSS, JS,
    | Variable | Required | Purpose |
    |---|---|---|
    | `ATTENDANCE_ADMIN_PASSWORD_HASH` | Yes | scrypt password hash |
-   | `UPSTASH_REDIS_REST_URL` | Yes* | Redis REST endpoint |
-   | `UPSTASH_REDIS_REST_TOKEN` | Yes* | Redis REST token |
    | `ATTENDANCE_SESSION_HOURS` | No | Session lifetime, default `4`, max `24` |
-   | `ATTENDANCE_DATA_KEY` | No | Override the Redis data key/namespace |
+   | `ATTENDANCE_BLOB_PATH` | No | Override the state Blob path |
+   | `ATTENDANCE_RATE_BLOB_PATH` | No | Override the rate-limit Blob path |
 
-   \* Or use the equivalent `KV_REST_API_URL` / `KV_REST_API_TOKEN` names.
+   The Blob connection variables (`BLOB_STORE_ID` and `VERCEL_OIDC_TOKEN`) are
+   added automatically when you connect the store. Do not commit them. If your
+   project does not provide OIDC credentials, add the store's
+   `BLOB_READ_WRITE_TOKEN` as an environment variable instead.
 
    Use a long, unique password (20+ characters). For a quick temporary setup
    only, `ATTENDANCE_ADMIN_PASSWORD` is also accepted, but the hash is the
@@ -110,8 +114,9 @@ leaderboard**. It has no attendance data in the static HTML, CSS, JS,
 
 4. **Redeploy** and open `/console`.
 
-If `ATTENDANCE_ADMIN_PASSWORD_HASH` or Redis is missing, the console fails
-closed with a configuration error instead of falling back to an insecure mode.
+If `ATTENDANCE_ADMIN_PASSWORD_HASH` or the Blob connection is missing, the
+console fails closed with a configuration error instead of falling back to an
+insecure mode.
 
 ### Day-to-day use
 
@@ -127,10 +132,11 @@ closed with a configuration error instead of falling back to an insecure mode.
 
 ### Wiping or moving attendance data
 
-- The data lives in the Redis key
-  `cylab:attendance:<VERCEL_ENV>:v1` (or `ATTENDANCE_DATA_KEY`).
-- Delete that key in the Upstash console to wipe all attendance.
-- Changing `ATTENDANCE_DATA_KEY` starts a separate namespace; it does not
+- The state lives in the private Blob path
+  `attendance/<VERCEL_ENV>/state-v1.json`.
+- Rate-limit data lives at `attendance/<VERCEL_ENV>/rate-v1.json`.
+- Delete those Blobs in the Vercel Blob store to wipe the console data.
+- Changing `ATTENDANCE_BLOB_PATH` starts a separate namespace; it does not
   migrate existing data.
 - Changing the password hash invalidates sessions but does **not** delete
   attendance data.
@@ -143,15 +149,17 @@ The public leaderboard still works with a plain static server:
 python3 -m http.server 8080
 ```
 
-The console API requires the Vercel serverless runtime and Redis. Use the
-Vercel CLI with the environment variables exported in your shell:
+The console API requires the Vercel serverless runtime and Blob. For local
+development, copy `BLOB_READ_WRITE_TOKEN` from the Blob store and export it
+with your password hash, then run:
 
 ```bash
 export ATTENDANCE_ADMIN_PASSWORD_HASH='scrypt$...'
-export UPSTASH_REDIS_REST_URL='https://...'
-export UPSTASH_REDIS_REST_TOKEN='...'
+export BLOB_READ_WRITE_TOKEN='vercel_blob_rw_...'
 vercel dev
 ```
+
+On Vercel, the rotating OIDC credentials are used automatically instead.
 
 ---
 
@@ -165,7 +173,7 @@ vercel dev
 ├── console.css                  # Private console styling
 ├── console.js                   # Private console client logic
 ├── api/
-│   └── console.js               # Authenticated attendance API + Redis storage
+│   └── console.js               # Authenticated attendance API + Blob storage
 ├── scripts/
 │   ├── hash-password.mjs        # scrypt admin-password hash generator (Node)
 │   └── hash_password.py         # same generator (Python)
@@ -176,7 +184,8 @@ vercel dev
 ├── roster.txt                   # Participant usernames roster
 ├── fetch_stats.py               # Automated stats scraper & weighted points engine
 ├── requirements.txt             # Python dependencies
-├── package.json                 # Node metadata / hash-password helper
+├── package.json                 # Node metadata, Blob SDK dependency, hash helper
+├── package-lock.json            # Locked Node dependency tree
 ├── .env.example                 # Console environment variable template
 ├── vercel.json                  # Security headers, route guards, API bundle
 ├── .vercelignore                # Prevents deployment of backend scripts & raw CSV
@@ -250,4 +259,4 @@ The site is production-ready for deployment on [Vercel](https://vercel.com):
 - Framework Preset: **Other**.
 - Root Directory: `./`.
 - The bundled `vercel.json` applies strict security headers (`nosniff`, `DENY`, `no-referrer`, strict CSP) and blocks direct public access to backend scripts (`*.py`, `*.csv`).
-- The owner-only console also needs the one-time Redis + password setup described above. Without it, the console fails closed while the public leaderboard continues to work.
+- The owner-only console also needs the one-time private Blob + password setup described above. Without it, the console fails closed while the public leaderboard continues to work.

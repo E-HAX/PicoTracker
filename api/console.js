@@ -5,10 +5,10 @@
  *
  * Security model:
  * - Admin password is verified server-side (scrypt hash, or env password fallback).
- * - Sessions are opaque 256-bit random IDs stored server-side in Redis with a TTL.
- * - The session cookie is HttpOnly, SameSite=Strict, Secure in production.
+ * - Sessions are HMAC-signed HttpOnly cookies; no session data lives client-side
+ *   beyond the opaque signed token. Logout bumps a server-side session epoch.
  * - Every state-changing request requires a session-bound CSRF token and same-origin.
- * - Login attempts are rate limited per IP.
+ * - Login attempts are rate limited per IP using a private Blob record.
  * - Attendance data is only ever returned to an authenticated admin.
  * - No attendance data lives in the static deployment.
  */
@@ -16,6 +16,12 @@
 const crypto = require('node:crypto');
 const fs = require('node:fs/promises');
 const path = require('node:path');
+const {
+  get: blobGet,
+  put: blobPut,
+  BlobNotFoundError,
+  BlobPreconditionFailedError,
+} = require('@vercel/blob');
 
 const MAX_BODY_BYTES = 256 * 1024;
 const MAX_STORE_BYTES = 900 * 1024;
@@ -24,17 +30,17 @@ const MAX_LABEL_LENGTH = 80;
 const MAX_PASSWORD_LENGTH = 256;
 const LOGIN_WINDOW_SECONDS = 15 * 60;
 const LOGIN_MAX_ATTEMPTS = 6;
-const DATA_LOCK_SECONDS = 30;
+const MAX_RATE_ENTRIES = 200;
 const ROSTER_CACHE_MS = 30 * 1000;
 const DEFAULT_SESSION_HOURS = 4;
 
 const ENVIRONMENT = process.env.VERCEL_ENV || 'local';
-const DATA_KEY =
-  process.env.ATTENDANCE_DATA_KEY ||
-  `cylab:attendance:${ENVIRONMENT}:v1`;
-const DATA_LOCK_KEY = `${DATA_KEY}:lock`;
-const SESSION_PREFIX = `cylab:attendance:${ENVIRONMENT}:session:`;
-const RATE_PREFIX = `cylab:attendance:${ENVIRONMENT}:rate:`;
+const DATA_PATHNAME =
+  process.env.ATTENDANCE_BLOB_PATH ||
+  `attendance/${ENVIRONMENT}/state-v1.json`;
+const RATE_PATHNAME =
+  process.env.ATTENDANCE_RATE_BLOB_PATH ||
+  `attendance/${ENVIRONMENT}/rate-v1.json`;
 
 const SESSION_TTL_SECONDS = (() => {
   const raw = Number(process.env.ATTENDANCE_SESSION_HOURS);
@@ -106,85 +112,135 @@ function handleError(res, error) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Storage (Upstash Redis REST / Vercel KV REST)                       */
+/* Storage (private Vercel Blob store)                                 */
 /* ------------------------------------------------------------------ */
 
-function getRedisConfig() {
-  const url =
-    process.env.UPSTASH_REDIS_REST_URL ||
-    process.env.KV_REST_API_URL ||
-    '';
-  const token =
-    process.env.UPSTASH_REDIS_REST_TOKEN ||
-    process.env.KV_REST_API_TOKEN ||
-    '';
-  return { url: String(url).replace(/\/+$/, ''), token: String(token) };
-}
-
 function storageConfigured() {
-  const { url, token } = getRedisConfig();
-  return Boolean(url && token);
+  return Boolean(
+    process.env.BLOB_STORE_ID || process.env.BLOB_READ_WRITE_TOKEN
+  );
 }
 
-async function redis(command) {
-  const { url, token } = getRedisConfig();
-  if (!url || !token) {
-    throw httpError(
-      503,
-      'storage_not_configured',
-      'Console storage is not configured.'
-    );
-  }
+function storageUnavailable(cause) {
+  const error = httpError(
+    503,
+    'storage_unavailable',
+    'Console storage is temporarily unavailable.'
+  );
+  error.cause = cause;
+  return error;
+}
 
+function isNotFoundError(error) {
+  return (
+    error instanceof BlobNotFoundError ||
+    (error && error.name === 'BlobNotFoundError')
+  );
+}
+
+function isPreconditionFailed(error) {
+  return (
+    error instanceof BlobPreconditionFailedError ||
+    (error && error.name === 'BlobPreconditionFailedError')
+  );
+}
+
+function blobTimeout(ms = 10_000) {
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 5000);
-  let response;
+  const timer = setTimeout(() => controller.abort(), ms);
+  return {
+    signal: controller.signal,
+    clear() {
+      clearTimeout(timer);
+    },
+  };
+}
+
+async function readJsonBlob(pathname) {
+  const timeout = blobTimeout();
+
   try {
-    response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify(command),
-      cache: 'no-store',
-      signal: controller.signal,
-    });
-  } catch (error) {
-    const wrapped = httpError(
-      503,
-      'storage_unavailable',
-      'Console storage is temporarily unavailable.'
-    );
-    wrapped.cause = error;
-    throw wrapped;
+    let result;
+    try {
+      result = await blobGet(pathname, {
+        access: 'private',
+        useCache: false,
+        abortSignal: timeout.signal,
+      });
+    } catch (error) {
+      if (isNotFoundError(error)) return { value: null, etag: null };
+      throw storageUnavailable(error);
+    }
+
+    if (!result || result.statusCode !== 200 || !result.stream) {
+      return {
+        value: null,
+        etag: result && result.blob ? result.blob.etag : null,
+      };
+    }
+
+    let text;
+    try {
+      text = await new Response(result.stream).text();
+    } catch (error) {
+      throw storageUnavailable(error);
+    }
+
+    if (!text) {
+      return { value: null, etag: result.blob.etag };
+    }
+
+    try {
+      return { value: JSON.parse(text), etag: result.blob.etag };
+    } catch (error) {
+      const wrapped = httpError(
+        503,
+        'data_unavailable',
+        'Attendance data could not be read.'
+      );
+      wrapped.cause = error;
+      throw wrapped;
+    }
   } finally {
-    clearTimeout(timeoutId);
+    timeout.clear();
   }
+}
 
-  let payload;
-  try {
-    payload = await response.json();
-  } catch (error) {
-    const wrapped = httpError(
-      503,
-      'storage_unavailable',
-      'Console storage returned an invalid response.'
-    );
-    wrapped.cause = error;
-    throw wrapped;
-  }
-
-  if (!response.ok || (payload && payload.error)) {
+async function writeJsonBlob(pathname, value, etag) {
+  const body = JSON.stringify(value);
+  if (Buffer.byteLength(body, 'utf8') > MAX_STORE_BYTES) {
     throw httpError(
-      503,
-      'storage_unavailable',
-      'Console storage is temporarily unavailable.'
+      413,
+      'data_too_large',
+      'Attendance data is too large to save.'
     );
   }
 
-  return payload ? payload.result : null;
+  const timeout = blobTimeout();
+  const options = {
+    access: 'private',
+    allowOverwrite: true,
+    addRandomSuffix: false,
+    contentType: 'application/json',
+    cacheControlMaxAge: 60,
+    abortSignal: timeout.signal,
+  };
+  if (etag) options.ifMatch = etag;
+
+  try {
+    return await blobPut(pathname, body, options);
+  } catch (error) {
+    if (isPreconditionFailed(error)) {
+      throw httpError(
+        409,
+        'revision_conflict',
+        'Attendance data changed in another tab. Reload and try again.'
+      );
+    }
+    throw storageUnavailable(error);
+  } finally {
+    timeout.clear();
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -302,6 +358,7 @@ function emptyStore() {
   return {
     version: 1,
     revision: 0,
+    sessionEpoch: 0,
     meetings: [],
     records: {},
     updatedAt: null,
@@ -439,10 +496,15 @@ function normalizeStore(raw) {
   }
 
   const revision = Number(raw.revision);
+  const sessionEpoch = Number(raw.sessionEpoch);
   return {
     version: 1,
     revision:
       Number.isSafeInteger(revision) && revision >= 0 ? revision : 0,
+    sessionEpoch:
+      Number.isSafeInteger(sessionEpoch) && sessionEpoch >= 0
+        ? sessionEpoch
+        : 0,
     meetings,
     records,
     updatedAt:
@@ -451,79 +513,29 @@ function normalizeStore(raw) {
 }
 
 async function loadStore() {
-  const raw = await redis(['GET', DATA_KEY]);
-  if (raw === null || raw === undefined || raw === '') {
-    return emptyStore();
-  }
-
-  let parsed;
-  try {
-    parsed = JSON.parse(raw);
-  } catch (error) {
-    const wrapped = httpError(
-      503,
-      'data_unavailable',
-      'Attendance data could not be read.'
-    );
-    wrapped.cause = error;
-    throw wrapped;
-  }
-
-  return normalizeStore(parsed);
+  const { value, etag } = await readJsonBlob(DATA_PATHNAME);
+  return { store: normalizeStore(value), etag };
 }
 
-async function releaseDataLock(token) {
-  try {
-    const current = await redis(['GET', DATA_LOCK_KEY]);
-    if (current === token) {
-      await redis(['DEL', DATA_LOCK_KEY]);
-    }
-  } catch (_) {
-    // The lock expires on its own. Never mask the original operation error.
-  }
-}
+async function withStoreWrite(callback, session) {
+  const { store, etag } = await loadStore();
 
-async function withDataLock(callback) {
-  const token = crypto.randomBytes(16).toString('hex');
-  const acquired = await redis([
-    'SET',
-    DATA_LOCK_KEY,
-    token,
-    'NX',
-    'EX',
-    String(DATA_LOCK_SECONDS),
-  ]);
-
-  if (acquired !== 'OK') {
+  if (session && session.epoch !== store.sessionEpoch) {
     throw httpError(
-      423,
-      'update_in_progress',
-      'Another update is in progress. Try again in a moment.'
+      401,
+      'session_revoked',
+      'Session is no longer valid. Authenticate again.'
     );
   }
 
-  try {
-    const store = await loadStore();
-    const result = await callback(store);
+  const result = await callback(store);
 
-    store.version = 1;
-    store.revision += 1;
-    store.updatedAt = new Date().toISOString();
+  store.version = 1;
+  store.revision += 1;
+  store.updatedAt = new Date().toISOString();
 
-    const json = JSON.stringify(store);
-    if (Buffer.byteLength(json, 'utf8') > MAX_STORE_BYTES) {
-      throw httpError(
-        413,
-        'data_too_large',
-        'Attendance data is too large to save.'
-      );
-    }
-
-    await redis(['SET', DATA_KEY, json]);
-    return { store, result };
-  } finally {
-    await releaseDataLock(token);
-  }
+  await writeJsonBlob(DATA_PATHNAME, store, etag);
+  return { store, result };
 }
 
 function requireRevision(store, expected) {
@@ -752,12 +764,11 @@ function serializeCookie(req, name, value, maxAge) {
   return parts.join('; ');
 }
 
-function setSessionCookie(req, res, sid) {
-  // Session cookie: cleared when the browser closes. The server-side Redis
-  // TTL still enforces the configured 4-hour (default) maximum.
+function setSessionCookie(req, res, token) {
+  // Browser-session cookie; the signed token's expiry enforces the max TTL.
   res.setHeader(
     'Set-Cookie',
-    serializeCookie(req, sessionCookieName(req), sid, null)
+    serializeCookie(req, sessionCookieName(req), token, null)
   );
 }
 
@@ -784,41 +795,87 @@ function readCookie(req, name) {
   return null;
 }
 
-async function getSession(req) {
-  const sid = readCookie(req, sessionCookieName(req));
-  if (!sid || !/^[A-Za-z0-9_-]{43}$/.test(sid)) return null;
+function sessionSigningKey() {
+  const material = passwordMaterial();
+  return crypto
+    .createHash('sha256')
+    .update(
+      `cylabs-console-session:${material.kind}:${
+        material.value || 'unconfigured'
+      }`
+    )
+    .digest();
+}
 
-  const key = `${SESSION_PREFIX}${sid}`;
-  const raw = await redis(['GET', key]);
-  if (!raw) return null;
+function createSession(epoch) {
+  const csrf = crypto.randomBytes(32).toString('base64url');
+  const exp = Date.now() + SESSION_TTL_SECONDS * 1000;
+  const payload = {
+    v: 1,
+    exp,
+    csrf,
+    epoch,
+    auth: authFingerprint(),
+    n: crypto.randomBytes(12).toString('base64url'),
+  };
+  const encoded = Buffer.from(JSON.stringify(payload), 'utf8').toString(
+    'base64url'
+  );
+  const signature = crypto
+    .createHmac('sha256', sessionSigningKey())
+    .update(encoded)
+    .digest('base64url');
+  return {
+    token: `${encoded}.${signature}`,
+    csrf,
+    exp,
+    epoch,
+  };
+}
+
+function getSession(req) {
+  if (!passwordConfigured()) return null;
+
+  const token = readCookie(req, sessionCookieName(req));
+  if (!token) return null;
+
+  const parts = token.split('.');
+  if (parts.length !== 2) return null;
+  const [encoded, signature] = parts;
+  if (!encoded || !signature) return null;
+
+  const expected = crypto
+    .createHmac('sha256', sessionSigningKey())
+    .update(encoded)
+    .digest('base64url');
+  if (!safeEqual(signature, expected)) return null;
 
   let session;
   try {
-    session = JSON.parse(raw);
+    session = JSON.parse(
+      Buffer.from(encoded, 'base64url').toString('utf8')
+    );
   } catch (_) {
-    await redis(['DEL', key]);
     return null;
   }
 
   if (
     !session ||
+    session.v !== 1 ||
     typeof session.csrf !== 'string' ||
     typeof session.exp !== 'number' ||
     session.exp <= Date.now() ||
+    !Number.isSafeInteger(session.epoch) ||
+    session.epoch < 0 ||
     session.auth !== authFingerprint()
   ) {
-    try {
-      await redis(['DEL', key]);
-    } catch (_) {
-      // Ignore cleanup failure.
-    }
     return null;
   }
 
   return {
-    sid,
     csrf: session.csrf,
     exp: session.exp,
+    epoch: session.epoch,
   };
 }
 
@@ -848,7 +905,8 @@ function assertSameOrigin(req) {
     } catch (_) {
       throw httpError(403, 'origin_failed', 'Request origin rejected.');
     }
-    if (parsed.host !== req.headers.host) {
+    const requestHost = String(req.headers.host || '').toLowerCase();
+    if (parsed.host.toLowerCase() !== requestHost) {
       throw httpError(403, 'origin_failed', 'Request origin rejected.');
     }
   }
@@ -873,22 +931,128 @@ function clientIp(req) {
   );
 }
 
-async function bumpLoginRate(req) {
+function rateFingerprint(req) {
   const pepper = passwordMaterial().value || 'cylab-console';
-  const fingerprint = crypto
+  return crypto
     .createHmac('sha256', pepper)
     .update(clientIp(req))
     .digest('hex')
     .slice(0, 32);
-  const windowId = Math.floor(
-    Date.now() / (LOGIN_WINDOW_SECONDS * 1000)
+}
+
+function normalizeRateEntries(value, now) {
+  const entries = Object.create(null);
+  const source =
+    value &&
+    typeof value === 'object' &&
+    value.entries &&
+    typeof value.entries === 'object'
+      ? value.entries
+      : {};
+
+  for (const [key, item] of Object.entries(source)) {
+    if (typeof key !== 'string' || key.length > 64) continue;
+    if (
+      !item ||
+      typeof item.count !== 'number' ||
+      typeof item.reset !== 'number' ||
+      !Number.isFinite(item.reset) ||
+      item.reset <= now
+    ) {
+      continue;
+    }
+    entries[key] = {
+      count: Math.max(0, Math.floor(item.count)),
+      reset: item.reset,
+    };
+  }
+
+  return entries;
+}
+
+function pruneRateEntries(entries) {
+  const keys = Object.keys(entries);
+  if (keys.length <= MAX_RATE_ENTRIES) return;
+  keys.sort((a, b) => entries[a].reset - entries[b].reset);
+  const removeCount = keys.length - MAX_RATE_ENTRIES;
+  for (let index = 0; index < removeCount; index += 1) {
+    delete entries[keys[index]];
+  }
+}
+
+async function bumpLoginRate(req) {
+  const key = rateFingerprint(req);
+  const now = Date.now();
+
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    const { value, etag } = await readJsonBlob(RATE_PATHNAME);
+    const entries = normalizeRateEntries(value, now);
+    const current = entries[key];
+
+    if (current && current.count >= LOGIN_MAX_ATTEMPTS) {
+      return {
+        allowed: false,
+        key,
+        retryAfter: Math.max(
+          1,
+          Math.ceil((current.reset - now) / 1000)
+        ),
+      };
+    }
+
+    const reset =
+      current && current.reset > now
+        ? current.reset
+        : now + LOGIN_WINDOW_SECONDS * 1000;
+    const count = (current ? current.count : 0) + 1;
+    entries[key] = { count, reset };
+    pruneRateEntries(entries);
+
+    try {
+      await writeJsonBlob(
+        RATE_PATHNAME,
+        { version: 1, entries },
+        etag
+      );
+      return {
+        allowed: true,
+        key,
+        count,
+        retryAfter: Math.max(1, Math.ceil((reset - now) / 1000)),
+      };
+    } catch (error) {
+      if (error && error.status === 409) continue;
+      throw error;
+    }
+  }
+
+  throw httpError(
+    503,
+    'storage_busy',
+    'Login verification is busy. Try again in a moment.'
   );
-  const key = `${RATE_PREFIX}login:${windowId}:${fingerprint}`;
-  const count = Number(await redis(['INCR', key]));
-  // Time-bucketed keys make a failed EXPIRE harmless: the next window uses a
-  // new key, so an IP can never be permanently locked out.
-  await redis(['EXPIRE', key, String(LOGIN_WINDOW_SECONDS * 2)]);
-  return { key, count };
+}
+
+async function clearLoginRate(key) {
+  if (!key) return;
+
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      const { value, etag } = await readJsonBlob(RATE_PATHNAME);
+      const entries = normalizeRateEntries(value, Date.now());
+      if (!entries[key]) return;
+      delete entries[key];
+      await writeJsonBlob(
+        RATE_PATHNAME,
+        { version: 1, entries },
+        etag
+      );
+      return;
+    } catch (error) {
+      if (error && error.status === 409) continue;
+      return;
+    }
+  }
 }
 
 function sleep(ms) {
@@ -940,13 +1104,27 @@ async function readBody(req) {
 /* ------------------------------------------------------------------ */
 
 async function handleGet(req, res) {
-  const session = await getSession(req);
+  const session = getSession(req);
   if (!session) {
     clearSessionCookie(req, res);
     throw httpError(401, 'unauthorized', 'Authentication required.');
   }
 
-  const [roster, store] = await Promise.all([loadRoster(), loadStore()]);
+  const [roster, loaded] = await Promise.all([
+    loadRoster(),
+    loadStore(),
+  ]);
+  const store = loaded.store;
+
+  if (session.epoch !== store.sessionEpoch) {
+    clearSessionCookie(req, res);
+    throw httpError(
+      401,
+      'session_revoked',
+      'Session is no longer valid. Authenticate again.'
+    );
+  }
+
   sendJson(
     res,
     200,
@@ -964,8 +1142,11 @@ async function handleLogin(req, res, body) {
   }
 
   const rate = await bumpLoginRate(req);
-  if (rate.count > LOGIN_MAX_ATTEMPTS) {
-    res.setHeader('Retry-After', String(LOGIN_WINDOW_SECONDS));
+  if (!rate.allowed) {
+    res.setHeader(
+      'Retry-After',
+      String(rate.retryAfter || LOGIN_WINDOW_SECONDS)
+    );
     throw httpError(
       429,
       'rate_limited',
@@ -989,51 +1170,62 @@ async function handleLogin(req, res, body) {
     throw httpError(401, 'invalid_credentials', 'Invalid credentials.');
   }
 
-  try {
-    await redis(['DEL', rate.key]);
-  } catch (_) {
-    // Not worth failing a valid login over rate-limit cleanup.
-  }
+  await clearLoginRate(rate.key);
 
-  const [roster, store] = await Promise.all([loadRoster(), loadStore()]);
-
-  const sid = crypto.randomBytes(32).toString('base64url');
-  const csrf = crypto.randomBytes(32).toString('base64url');
-  const exp = Date.now() + SESSION_TTL_SECONDS * 1000;
-
-  await redis([
-    'SET',
-    `${SESSION_PREFIX}${sid}`,
-    JSON.stringify({
-      csrf,
-      exp,
-      auth: authFingerprint(),
-    }),
-    'EX',
-    String(SESSION_TTL_SECONDS),
+  const [roster, loaded] = await Promise.all([
+    loadRoster(),
+    loadStore(),
   ]);
+  const store = loaded.store;
+  const session = createSession(store.sessionEpoch);
 
-  setSessionCookie(req, res, sid);
+  setSessionCookie(req, res, session.token);
   sendJson(
     res,
     200,
-    buildClientPayload(store, roster, {
-      csrf,
-      exp,
-    })
+    buildClientPayload(store, roster, session)
   );
 }
 
 async function handleLogout(req, res, session) {
+  let revoked = false;
+  let failure = null;
+
   if (session) {
-    try {
-      await redis(['DEL', `${SESSION_PREFIX}${session.sid}`]);
-    } catch (_) {
-      // The cookie is still cleared. The server session expires on its own.
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      try {
+        await withStoreWrite(async (store) => {
+          store.sessionEpoch = (store.sessionEpoch || 0) + 1;
+          return {};
+        }, session);
+        revoked = true;
+        break;
+      } catch (error) {
+        failure = error;
+        if (error && error.status === 409) continue;
+        break;
+      }
     }
+  } else {
+    revoked = true;
   }
+
   clearSessionCookie(req, res);
-  sendJson(res, 200, { ok: true });
+
+  // A 401 means the session epoch already invalidated this cookie. Anything
+  // else means we cleared the browser cookie but could not revoke the token
+  // server-side; tell the client so it can warn instead of claiming success.
+  if (session && !revoked && (!failure || failure.status !== 401)) {
+    sendJson(res, 503, {
+      ok: false,
+      error: 'logout_incomplete',
+      message:
+        'Locked locally, but the server could not revoke the session. It will expire automatically.',
+    });
+    return;
+  }
+
+  sendJson(res, 200, { ok: true, revoked });
 }
 
 async function handleAddMeeting(req, res, body, session) {
@@ -1042,7 +1234,7 @@ async function handleAddMeeting(req, res, body, session) {
   const expected = parseRevision(body.expectedRevision);
   const roster = await loadRoster();
 
-  const { store, result } = await withDataLock(async (draft) => {
+  const { store, result } = await withStoreWrite(async (draft) => {
     requireRevision(draft, expected);
 
     if (draft.meetings.some((meeting) => meeting.date === date)) {
@@ -1071,7 +1263,7 @@ async function handleAddMeeting(req, res, body, session) {
     draft.meetings.push(meeting);
     draft.records[meeting.id] = {};
     return { meetingId: meeting.id };
-  });
+  }, session);
 
   sendJson(
     res,
@@ -1087,7 +1279,7 @@ async function handleUpdateMeeting(req, res, body, session) {
   const expected = parseRevision(body.expectedRevision);
   const roster = await loadRoster();
 
-  const { store, result } = await withDataLock(async (draft) => {
+  const { store, result } = await withStoreWrite(async (draft) => {
     requireRevision(draft, expected);
 
     const meeting = draft.meetings.find((item) => item.id === meetingId);
@@ -1111,7 +1303,7 @@ async function handleUpdateMeeting(req, res, body, session) {
     meeting.label = label;
     meeting.updatedAt = new Date().toISOString();
     return { meetingId: meeting.id };
-  });
+  }, session);
 
   sendJson(
     res,
@@ -1125,7 +1317,7 @@ async function handleDeleteMeeting(req, res, body, session) {
   const expected = parseRevision(body.expectedRevision);
   const roster = await loadRoster();
 
-  const { store, result } = await withDataLock(async (draft) => {
+  const { store, result } = await withStoreWrite(async (draft) => {
     requireRevision(draft, expected);
 
     const index = draft.meetings.findIndex(
@@ -1138,7 +1330,7 @@ async function handleDeleteMeeting(req, res, body, session) {
     draft.meetings.splice(index, 1);
     delete draft.records[meetingId];
     return { deletedMeetingId: meetingId };
-  });
+  }, session);
 
   sendJson(
     res,
@@ -1179,7 +1371,7 @@ async function handleSaveAttendance(req, res, body, session) {
   const roster = await loadRoster();
   const marks = normalizeMarks(body.marks, roster);
 
-  const { store, result } = await withDataLock(async (draft) => {
+  const { store, result } = await withStoreWrite(async (draft) => {
     requireRevision(draft, expected);
 
     const meeting = draft.meetings.find((item) => item.id === meetingId);
@@ -1193,7 +1385,7 @@ async function handleSaveAttendance(req, res, body, session) {
       meetingId,
       saved: Object.keys(marks).length,
     };
-  });
+  }, session);
 
   sendJson(
     res,
@@ -1213,13 +1405,13 @@ async function handlePost(req, res) {
   }
 
   if (action === 'logout') {
-    const session = await getSession(req);
+    const session = getSession(req);
     if (session) assertCsrf(req, session);
     await handleLogout(req, res, session);
     return;
   }
 
-  const session = requireSession(await getSession(req));
+  const session = requireSession(getSession(req));
   assertCsrf(req, session);
 
   switch (action) {
