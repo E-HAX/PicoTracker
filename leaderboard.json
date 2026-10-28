@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-28T07:34:00.663601+00:00",
+  "last_updated": "2026-10-28T11:06:05.270811+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -21,9 +21,9 @@
       "username": "reedhanG",
       "name": "Reedhan Garg",
       "easy": 99,
-      "medium": 72,
+      "medium": 75,
       "hard": 5,
-      "total": 345
+      "total": 354
     },
     {
       "username": "Kartikey191108",
@@ -66,20 +66,20 @@
       "total": 188
     },
     {
+      "username": "mayank18",
+      "name": "Mayank Panchal",
+      "easy": 97,
+      "medium": 29,
+      "hard": 0,
+      "total": 184
+    },
+    {
       "username": "imightlose",
       "name": "Shobhit Pandey",
       "easy": 78,
       "medium": 30,
       "hard": 2,
       "total": 180
-    },
-    {
-      "username": "mayank18",
-      "name": "Mayank Panchal",
-      "easy": 97,
-      "medium": 27,
-      "hard": 0,
-      "total": 178
     },
     {
       "username": "SilentNinj4",
@@ -173,9 +173,9 @@
       "username": "saarzka",
       "name": "Saarika Parveen",
       "easy": 59,
-      "medium": 24,
+      "medium": 25,
       "hard": 0,
-      "total": 131
+      "total": 134
     },
     {
       "username": "RandomBruh",
@@ -218,6 +218,14 @@
       "total": 112
     },
     {
+      "username": "baldev1408singh",
+      "name": "Baldev Singh",
+      "easy": 61,
+      "medium": 16,
+      "hard": 0,
+      "total": 109
+    },
+    {
       "username": "Untr4ced",
       "name": "Palak",
       "easy": 30,
@@ -240,14 +248,6 @@
       "medium": 16,
       "hard": 1,
       "total": 104
-    },
-    {
-      "username": "baldev1408singh",
-      "name": "Baldev Singh",
-      "easy": 61,
-      "medium": 14,
-      "hard": 0,
-      "total": 103
     },
     {
       "username": "SampadaSnehi",
@@ -292,10 +292,10 @@
     {
       "username": "Mehulgarg23",
       "name": "Mehul garg",
-      "easy": 64,
+      "easy": 67,
       "medium": 5,
       "hard": 0,
-      "total": 79
+      "total": 82
     },
     {
       "username": "smoothbrain01",
@@ -324,10 +324,10 @@
     {
       "username": "merrymerry",
       "name": "Nipun Bhatia",
-      "easy": 32,
-      "medium": 10,
+      "easy": 33,
+      "medium": 12,
       "hard": 0,
-      "total": 62
+      "total": 69
     },
     {
       "username": "Sairese",
@@ -400,6 +400,14 @@
       "medium": 4,
       "hard": 0,
       "total": 39
+    },
+    {
+      "username": "Carnivalerious45",
+      "name": "Lakshit Jangid",
+      "easy": 18,
+      "medium": 6,
+      "hard": 0,
+      "total": 36
     },
     {
       "username": "Ashtami02",
