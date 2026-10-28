@@ -4,9 +4,14 @@ __pycache__/
 *$py.class
 *.so
 .env
+.env.*
+!.env.example
 *.env
 venv/
 .venv/
+
+# Local deployment tooling
+.vercel/
 
 # Ignore loose JSON files while preserving web & configuration JSON
 *.json

@@ -1,9 +1,14 @@
-fetch_stats.py
-patch_html.py
-requirements.txt
-roster.txt
+*.py
+*.pyc
+__pycache__/
 *.csv
-Cylab Username - Sheet1.csv
+roster.txt
+requirements.txt
+README.md
+scripts/
+.env
+.env.*
+.vercel/
 .github/
 .git/
-
+.DS_Store

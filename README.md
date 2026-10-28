@@ -21,9 +21,137 @@ A high-performance, secure, static cybersecurity leaderboard and automated track
   - Instant client-side search with match counter and keyboard navigation.
 - **Hardened Architecture**:
   - Strict Content Security Policy (CSP), anti-MIME sniffing, no-referrer privacy, and DOM-safe encoding.
-  - Zero sensitive backend endpoints exposed to the browser.
-- **Automated Hourly Updates**:
-  - GitHub Actions runs every hour or instantly when `Cylab Username - Sheet1.csv` is updated.
+  - The public leaderboard stays static; the private console uses a separately authenticated serverless API.
+- **Automated Updates**:
+  - GitHub Actions runs every 15 minutes or instantly when `Cylab Username - Sheet1.csv` is updated.
+
+---
+
+## 🔐 Private Attendance Console (Owner Only)
+
+The attendance console is deliberately **not linked anywhere on the public
+leaderboard**. It has no attendance data in the static HTML, CSS, JS,
+`leaderboard.json`, or any other public asset.
+
+- Console URL: `/console` (or `/console.html`)
+- It shows only a password gate until the admin authenticates.
+- The roster is loaded from `leaderboard.json`, so usernames and real names
+  always match the leaderboard.
+- Meetings and marks are stored server-side in Upstash Redis / Vercel KV.
+- The console is marked `noindex`, `noarchive`, and `no-store`.
+
+### Security model
+
+- **Password**: stored only as a scrypt hash in a Vercel environment variable.
+  The plaintext password is never committed and never leaves the browser
+  except in the login request over HTTPS.
+- **Sessions**: opaque 256-bit random session IDs stored server-side in Redis.
+  The cookie is `HttpOnly`, `Secure` in production, `SameSite=Strict`, and
+  uses the `__Host-` prefix.
+- **CSRF**: every authenticated state-changing request needs a session-bound
+  CSRF token. Same-origin checks are enforced for all POST requests, including
+  login.
+- **Brute force**: login attempts are rate limited per IP.
+- **Password rotation**: changing the password hash immediately invalidates
+  all existing admin sessions.
+- **Data integrity**: optimistic revisions plus a short Redis write lock
+  prevent two tabs from silently overwriting each other.
+- **No client storage**: the console keeps attendance data in memory only.
+  It is wiped from the DOM when the session expires or is locked.
+- **Export**: CSV export happens locally in the browser.
+
+### One-time deployment setup
+
+1. **Create the database**
+
+   In Vercel, open **Storage / Marketplace** and create an **Upstash Redis**
+   database. Connect it to this project. The integration adds either:
+
+   - `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`, or
+   - `KV_REST_API_URL` + `KV_REST_API_TOKEN`
+
+   Both naming styles are supported.
+
+2. **Generate the admin password hash**
+
+   ```bash
+   read -s PW
+   printf '%s' "$PW" | node scripts/hash-password.mjs
+   unset PW
+   ```
+
+   Or use the Python helper (same hash format):
+
+   ```bash
+   read -s PW
+   printf '%s' "$PW" | python3 scripts/hash_password.py
+   unset PW
+   ```
+
+   Copy the printed `ATTENDANCE_ADMIN_PASSWORD_HASH=...` value.
+
+3. **Add Vercel environment variables**
+
+   In **Project → Settings → Environment Variables**, add:
+
+   | Variable | Required | Purpose |
+   |---|---|---|
+   | `ATTENDANCE_ADMIN_PASSWORD_HASH` | Yes | scrypt password hash |
+   | `UPSTASH_REDIS_REST_URL` | Yes* | Redis REST endpoint |
+   | `UPSTASH_REDIS_REST_TOKEN` | Yes* | Redis REST token |
+   | `ATTENDANCE_SESSION_HOURS` | No | Session lifetime, default `4`, max `24` |
+   | `ATTENDANCE_DATA_KEY` | No | Override the Redis data key/namespace |
+
+   \* Or use the equivalent `KV_REST_API_URL` / `KV_REST_API_TOKEN` names.
+
+   Use a long, unique password (20+ characters). For a quick temporary setup
+   only, `ATTENDANCE_ADMIN_PASSWORD` is also accepted, but the hash is the
+   recommended production option.
+
+4. **Redeploy** and open `/console`.
+
+If `ATTENDANCE_ADMIN_PASSWORD_HASH` or Redis is missing, the console fails
+closed with a configuration error instead of falling back to an insecure mode.
+
+### Day-to-day use
+
+1. Open `/console` and authenticate.
+2. Press **+ NEW DATE**, choose the meeting date, and optionally add a label.
+3. Search for an operator by username or real name.
+4. Use **P** for present, **R** for the third status, or **A** for absent.
+   New dates start as all **A**.
+5. Press **DONE / SAVE** to commit the date.
+6. **OVERVIEW / TOTALS** shows `P / total meetings` per operator, plus P, R,
+   and A counts. It can export a CSV report.
+7. **EDIT DATE** and **DELETE** can be used at any time.
+
+### Wiping or moving attendance data
+
+- The data lives in the Redis key
+  `cylab:attendance:<VERCEL_ENV>:v1` (or `ATTENDANCE_DATA_KEY`).
+- Delete that key in the Upstash console to wipe all attendance.
+- Changing `ATTENDANCE_DATA_KEY` starts a separate namespace; it does not
+  migrate existing data.
+- Changing the password hash invalidates sessions but does **not** delete
+  attendance data.
+
+### Local development
+
+The public leaderboard still works with a plain static server:
+
+```bash
+python3 -m http.server 8080
+```
+
+The console API requires the Vercel serverless runtime and Redis. Use the
+Vercel CLI with the environment variables exported in your shell:
+
+```bash
+export ATTENDANCE_ADMIN_PASSWORD_HASH='scrypt$...'
+export UPSTASH_REDIS_REST_URL='https://...'
+export UPSTASH_REDIS_REST_TOKEN='...'
+vercel dev
+```
 
 ---
 
@@ -33,6 +161,14 @@ A high-performance, secure, static cybersecurity leaderboard and automated track
 ├── index.html                   # Main leaderboard frontend
 ├── styles.css                   # Cyber dark-mode stylesheet & 3D animations
 ├── script.js                    # Web Audio, 3D particles, and client-side rendering
+├── console.html                 # Owner-only console shell (not linked publicly)
+├── console.css                  # Private console styling
+├── console.js                   # Private console client logic
+├── api/
+│   └── console.js               # Authenticated attendance API + Redis storage
+├── scripts/
+│   ├── hash-password.mjs        # scrypt admin-password hash generator (Node)
+│   └── hash_password.py         # same generator (Python)
 ├── ehax-wordmark.png            # Transparent brand wordmark
 ├── logo.png                     # Brand asset
 ├── leaderboard.json             # Live scored leaderboard data snapshot
@@ -40,7 +176,9 @@ A high-performance, secure, static cybersecurity leaderboard and automated track
 ├── roster.txt                   # Participant usernames roster
 ├── fetch_stats.py               # Automated stats scraper & weighted points engine
 ├── requirements.txt             # Python dependencies
-├── vercel.json                  # Production security headers and route guards
+├── package.json                 # Node metadata / hash-password helper
+├── .env.example                 # Console environment variable template
+├── vercel.json                  # Security headers, route guards, API bundle
 ├── .vercelignore                # Prevents deployment of backend scripts & raw CSV
 ├── .github/
 │   └── workflows/
@@ -53,7 +191,7 @@ A high-performance, secure, static cybersecurity leaderboard and automated track
 ## ⚙️ GitHub Actions Automation Setup
 
 The repository is configured to automatically fetch challenge stats and update `leaderboard.json`:
-1. **Every Hour**: On a scheduled cron (`0 * * * *`).
+1. **Every 15 Minutes**: On a scheduled cron (`7,22,37,52 * * * *`).
 2. **On Roster Changes**: Automatically triggers whenever usernames are added or removed in `Cylab Username - Sheet1.csv`.
 3. **Manual Trigger**: Can be run anytime via the "Run workflow" button in the GitHub Actions tab.
 
@@ -111,4 +249,5 @@ The site is production-ready for deployment on [Vercel](https://vercel.com):
 - Connect the `E-HAX/PicoTracker` repository to Vercel.
 - Framework Preset: **Other**.
 - Root Directory: `./`.
-- The bundled `vercel.json` applies strict security headers (`nosniff`, `DENY`, `no-referrer`, strict CSP) and blocks direct public access to backend scripts (`fetch_stats.py`, `*.csv`).
+- The bundled `vercel.json` applies strict security headers (`nosniff`, `DENY`, `no-referrer`, strict CSP) and blocks direct public access to backend scripts (`*.py`, `*.csv`).
+- The owner-only console also needs the one-time Redis + password setup described above. Without it, the console fails closed while the public leaderboard continues to work.

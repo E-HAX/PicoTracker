@@ -1,0 +1,13 @@
+{
+  "name": "pico-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "EHAX x CyLab Academy leaderboard",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "hash-password": "node scripts/hash-password.mjs"
+  }
+}

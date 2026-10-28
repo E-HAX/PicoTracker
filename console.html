@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Restricted Console</title>
+    <meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
+    <meta name="referrer" content="no-referrer">
+    <meta name="theme-color" content="#0a0a09">
+    <meta name="color-scheme" content="dark">
+    <link rel="icon" type="image/png" href="/logo.png">
+    <link rel="shortcut icon" type="image/png" href="/logo.png">
+    <link rel="apple-touch-icon" href="/logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/console.css?v=1.0">
+</head>
+<body>
+
+    <div class="att-backdrop" aria-hidden="true">
+        <div class="att-backdrop-grid"></div>
+        <div class="att-backdrop-glow"></div>
+    </div>
+
+    <!-- ================= SESSION CHECK ================= -->
+    <section id="boot-view" class="att-boot" aria-live="polite">
+        <span class="att-boot-spinner" aria-hidden="true"></span>
+        <p>VERIFYING SESSION</p>
+    </section>
+
+    <!-- ================= LOGIN GATE ================= -->
+    <section id="login-view" class="att-gate" hidden>
+        <div class="att-gate-card">
+            <div class="att-gate-mark" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="9" y="21" width="30" height="21" rx="4" stroke="currentColor" stroke-width="1.6"/>
+                    <path d="M16 21v-6a8 8 0 0 1 16 0v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                    <circle cx="24" cy="31" r="2.4" fill="currentColor"/>
+                    <path d="M24 33.5V37" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+            </div>
+
+            <p class="att-kicker"><span class="att-pulse"></span> RESTRICTED ACCESS</p>
+            <h1 class="att-gate-title">Secure Console</h1>
+            <p class="att-gate-copy">
+                This terminal is restricted to the academy administrator.
+                Authentication is required to continue.
+            </p>
+
+            <form id="login-form" class="att-login-form" autocomplete="off" novalidate>
+                <label class="att-field-label" for="admin-password">MASTER KEY</label>
+                <div class="att-secret-wrap">
+                    <input
+                        id="admin-password"
+                        name="password"
+                        type="password"
+                        class="att-input att-secret-input"
+                        placeholder="Enter master key"
+                        autocomplete="current-password"
+                        autocapitalize="off"
+                        autocorrect="off"
+                        spellcheck="false"
+                        maxlength="256"
+                        required
+                    >
+                    <button type="button" id="toggle-password" class="att-reveal" aria-pressed="false">SHOW</button>
+                </div>
+
+                <button type="submit" id="login-submit" class="att-primary att-wide">AUTHENTICATE</button>
+                <p id="login-error" class="att-error" role="alert" aria-live="polite"></p>
+            </form>
+
+            <p class="att-gate-foot">
+                AUTHORIZED PERSONNEL ONLY &middot; ATTEMPTS ARE RATE-LIMITED
+            </p>
+        </div>
+    </section>
+
+    <!-- ================= PRIVATE CONSOLE ================= -->
+    <div id="console-view" class="att-console" hidden>
+        <header class="att-topbar">
+            <div class="att-brand">
+                <span class="att-brand-mark" aria-hidden="true"></span>
+                <span class="att-brand-word">CYLAB<span class="att-brand-accent">CONTROL</span></span>
+            </div>
+            <div class="att-topbar-actions">
+                <span class="att-session-state"><span class="att-live-dot"></span> SECURE SESSION</span>
+                <button type="button" id="lock-btn" class="att-ghost">LOCK</button>
+            </div>
+        </header>
+
+        <div class="att-layout">
+            <aside class="att-sidebar">
+                <div class="att-sidebar-head">
+                    <div>
+                        <p class="att-kicker">RECORDS</p>
+                        <h2 class="att-sidebar-title">Meetings</h2>
+                    </div>
+                    <button type="button" id="add-meeting-btn" class="att-add-btn" title="Add a meeting date">+ NEW DATE</button>
+                </div>
+
+                <button type="button" id="overview-btn" class="att-nav-btn">
+                    <span class="att-nav-icon" aria-hidden="true">&#9632;</span>
+                    <span>Overview / Totals</span>
+                </button>
+
+                <div id="meeting-list" class="att-meeting-list" aria-label="Meeting dates"></div>
+
+                <div class="att-sidebar-foot">
+                    <span>PRIVATE STORAGE</span>
+                    <span id="session-expiry">SESSION &mdash;</span>
+                </div>
+            </aside>
+
+            <main class="att-main">
+
+                <!-- ---------- OVERVIEW ---------- -->
+                <section id="overview-panel" class="att-panel" hidden>
+                    <div class="att-panel-head">
+                        <div>
+                            <p class="att-kicker">AGGREGATE</p>
+                            <h1 class="att-panel-title">Attendance Overview</h1>
+                            <p id="overview-sub" class="att-muted">&mdash;</p>
+                        </div>
+                        <button type="button" id="export-csv" class="att-ghost">EXPORT CSV</button>
+                    </div>
+
+                    <div id="overview-empty" class="att-empty" hidden>
+                        <div class="att-empty-mark" aria-hidden="true">00</div>
+                        <h2>No meetings recorded yet</h2>
+                        <p>Add the first meeting date, then mark who was present.</p>
+                        <button type="button" id="empty-add-btn" class="att-primary">+ ADD FIRST DATE</button>
+                    </div>
+
+                    <div id="overview-content" hidden>
+                        <div class="att-stat-grid">
+                            <div class="att-stat-card">
+                                <span class="att-stat-label">MEETINGS</span>
+                                <span id="stat-meetings" class="att-stat-value">0</span>
+                            </div>
+                            <div class="att-stat-card">
+                                <span class="att-stat-label">OPERATORS</span>
+                                <span id="stat-operators" class="att-stat-value">0</span>
+                            </div>
+                            <div class="att-stat-card">
+                                <span class="att-stat-label">AVG PRESENT</span>
+                                <span id="stat-rate" class="att-stat-value">0%</span>
+                            </div>
+                            <div class="att-stat-card">
+                                <span class="att-stat-label">PERFECT RECORD</span>
+                                <span id="stat-perfect" class="att-stat-value">0</span>
+                            </div>
+                        </div>
+
+                        <div class="att-toolbar">
+                            <div class="att-search-wrap">
+                                <input
+                                    type="search"
+                                    id="overview-search"
+                                    class="att-input att-search"
+                                    placeholder="Search operator or name..."
+                                    autocomplete="off"
+                                    spellcheck="false"
+                                    aria-label="Search overview by operator or name"
+                                >
+                            </div>
+                            <span id="overview-count" class="att-result-count"></span>
+                        </div>
+
+                        <div class="att-table-wrap">
+                            <table class="att-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">OPERATOR</th>
+                                        <th scope="col">NAME</th>
+                                        <th scope="col" class="att-center">P</th>
+                                        <th scope="col" class="att-center">R</th>
+                                        <th scope="col" class="att-center">A</th>
+                                        <th scope="col">ATTENDED</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="overview-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ---------- MARK ATTENDANCE ---------- -->
+                <section id="meeting-panel" class="att-panel" hidden>
+                    <div class="att-panel-head att-meeting-head">
+                        <div>
+                            <p class="att-kicker">MARK ATTENDANCE</p>
+                            <h1 id="meeting-title" class="att-panel-title">&mdash;</h1>
+                            <p id="meeting-meta" class="att-muted">&mdash;</p>
+                        </div>
+                        <div class="att-head-buttons">
+                            <button type="button" id="edit-meeting-btn" class="att-ghost">EDIT DATE</button>
+                            <button type="button" id="delete-meeting-btn" class="att-danger-ghost">DELETE</button>
+                        </div>
+                    </div>
+
+                    <div class="att-toolbar att-toolbar-mark">
+                        <div class="att-search-wrap">
+                            <input
+                                type="search"
+                                id="mark-search"
+                                class="att-input att-search"
+                                placeholder="Search operator or name..."
+                                autocomplete="off"
+                                spellcheck="false"
+                                aria-label="Search roster by operator or name"
+                            >
+                        </div>
+
+                        <div class="att-bulk">
+                            <span class="att-bulk-label">MARK VISIBLE</span>
+                            <button type="button" class="att-bulk-btn att-bulk-p" data-bulk="P" title="Mark visible operators present">P</button>
+                            <button type="button" class="att-bulk-btn att-bulk-r" data-bulk="R" title="Mark visible operators R">R</button>
+                            <button type="button" class="att-bulk-btn att-bulk-a" data-bulk="A" title="Reset visible operators to absent">A</button>
+                        </div>
+
+                        <button type="button" id="save-btn" class="att-primary att-save-btn" disabled>DONE / SAVE</button>
+                    </div>
+
+                    <div class="att-toolbar-sub">
+                        <span id="mark-count" class="att-result-count"></span>
+                        <p id="save-note" class="att-save-note"></p>
+                    </div>
+
+                    <div class="att-legend" aria-hidden="true">
+                        <span><b class="att-p">P</b> present</span>
+                        <span><b class="att-r">R</b> third status</span>
+                        <span><b class="att-a">A</b> absent (default)</span>
+                    </div>
+
+                    <div class="att-table-wrap">
+                        <table class="att-table att-mark-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">OPERATOR</th>
+                                    <th scope="col">NAME</th>
+                                    <th scope="col">ATTENDED</th>
+                                    <th scope="col" class="att-status-col">STATUS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mark-body"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- ================= MEETING DIALOG ================= -->
+    <dialog id="meeting-modal" class="att-dialog">
+        <form id="meeting-form" class="att-dialog-form" novalidate>
+            <div class="att-dialog-head">
+                <p id="modal-kicker" class="att-kicker">NEW DATE</p>
+                <button type="button" id="modal-close" class="att-dialog-close" aria-label="Close">&times;</button>
+            </div>
+            <h2 id="modal-title" class="att-dialog-title">Add a meeting date</h2>
+
+            <label class="att-field-label" for="meeting-date">DATE</label>
+            <input type="date" id="meeting-date" class="att-input" min="2000-01-01" max="2100-12-31" required>
+
+            <label class="att-field-label" for="meeting-label">LABEL <span class="att-optional">OPTIONAL</span></label>
+            <input type="text" id="meeting-label" class="att-input" maxlength="80" placeholder="Weekly meet, session name..." autocomplete="off" spellcheck="false">
+
+            <p id="modal-error" class="att-error" role="alert" aria-live="polite"></p>
+
+            <div class="att-dialog-actions">
+                <button type="button" id="modal-cancel" class="att-ghost">CANCEL</button>
+                <button type="submit" id="modal-submit" class="att-primary">ADD DATE</button>
+            </div>
+        </form>
+    </dialog>
+
+    <div id="toast" class="att-toast" role="status" aria-live="polite" hidden></div>
+
+    <noscript>
+        <p class="att-noscript">JavaScript is required for the secure console.</p>
+    </noscript>
+
+    <script src="/console.js?v=1.0"></script>
+</body>
+</html>
