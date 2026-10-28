@@ -3,9 +3,11 @@
 
 Usage:
     python3 scripts/hash_password.py
-    read -s PW; printf '%s' "$PW" | python3 scripts/hash_password.py
+    printf '%s' 'your-long-password' | python3 scripts/hash_password.py
 
-The Node version in scripts/hash-password.mjs produces the same format.
+Running it directly opens a hidden prompt. The password is not echoed to the
+terminal. The Node version in scripts/hash-password.mjs produces the same hash
+format.
 """
 
 import base64
@@ -35,7 +37,11 @@ def read_password() -> str:
 def main() -> int:
     password = read_password()
     if not password:
-        print("Password is empty. Nothing generated.", file=sys.stderr)
+        print(
+            "Password is empty. Run the command again and type your password "
+            "when prompted (nothing will appear while typing).",
+            file=sys.stderr,
+        )
         return 1
 
     if len(password) < 16:

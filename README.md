@@ -77,20 +77,18 @@ leaderboard**. It has no attendance data in the static HTML, CSS, JS,
 2. **Generate the admin password hash**
 
    ```bash
-   read -s PW
-   printf '%s' "$PW" | node scripts/hash-password.mjs
-   unset PW
+   node scripts/hash-password.mjs
    ```
+
+   It will prompt `Admin password:`. Type your password and press Enter.
+   Nothing will appear on screen while you type; that is intentional. Then copy
+   the printed `ATTENDANCE_ADMIN_PASSWORD_HASH=...` value.
 
    Or use the Python helper (same hash format):
 
    ```bash
-   read -s PW
-   printf '%s' "$PW" | python3 scripts/hash_password.py
-   unset PW
+   python3 scripts/hash_password.py
    ```
-
-   Copy the printed `ATTENDANCE_ADMIN_PASSWORD_HASH=...` value.
 
 3. **Add Vercel environment variables**
 
@@ -154,6 +152,7 @@ development, copy `BLOB_READ_WRITE_TOKEN` from the Blob store and export it
 with your password hash, then run:
 
 ```bash
+# Generate the hash once with: node scripts/hash-password.mjs
 export ATTENDANCE_ADMIN_PASSWORD_HASH='scrypt$...'
 export BLOB_READ_WRITE_TOKEN='vercel_blob_rw_...'
 vercel dev
