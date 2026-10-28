@@ -14,6 +14,7 @@
     draft: new Map(),
     dirty: false,
     saving: false,
+    deleting: false,
     loggingIn: false,
     modalMode: 'add',
     modalMeetingId: null,
@@ -437,6 +438,7 @@
     state.draft.clear();
     state.dirty = false;
     state.saving = false;
+    state.deleting = false;
     state.loggingIn = false;
     state.modalBusy = false;
     state.modalMeetingId = null;
@@ -1255,6 +1257,8 @@
   }
 
   async function deleteMeeting() {
+    if (state.deleting) return;
+
     const meeting = getMeeting(state.selectedId);
     if (!meeting) return;
 
@@ -1268,36 +1272,62 @@
     );
     if (!confirmed) return;
 
-    const result = await authenticatedPost({
-      action: 'delete-meeting',
-      meetingId: meeting.id,
-      expectedRevision: state.data.revision,
-    });
-
-    if (result.status === 401) return;
-
-    if (result.status === 409) {
-      await refreshData('Data changed elsewhere. Reloaded.');
-      return;
-    }
-
-    if (!result.ok) {
-      toast(
-        (result.payload && result.payload.message) ||
-          'Could not delete the meeting.',
-        'error'
-      );
-      return;
-    }
+    state.deleting = true;
+    dom.deleteMeetingBtn.disabled = true;
 
     try {
-      applyPayload(result.payload);
-    } catch (_) {
-      toast('Console response was invalid.', 'error');
-      return;
-    }
+      let result = await authenticatedPost({
+        action: 'delete-meeting',
+        meetingId: meeting.id,
+      });
 
-    toast('Meeting and its attendance were deleted.', 'success');
+      if (result.status === 401) return;
+
+      if (result.status === 409) {
+        await refreshData('The date list changed. Reloaded.');
+
+        if (!state.data) return;
+        if (!getMeeting(meeting.id)) {
+          toast('Meeting already deleted.', 'success');
+          return;
+        }
+
+        result = await authenticatedPost({
+          action: 'delete-meeting',
+          meetingId: meeting.id,
+        });
+
+        if (result.status === 401) return;
+
+        if (!result.ok) {
+          toast(
+            (result.payload && result.payload.message) ||
+              'Could not delete the meeting.',
+            'error'
+          );
+          return;
+        }
+      } else if (!result.ok) {
+        toast(
+          (result.payload && result.payload.message) ||
+            'Could not delete the meeting.',
+          'error'
+        );
+        return;
+      }
+
+      try {
+        applyPayload(result.payload);
+      } catch (_) {
+        toast('Console response was invalid.', 'error');
+        return;
+      }
+
+      toast('Meeting and its attendance were deleted.', 'success');
+    } finally {
+      state.deleting = false;
+      dom.deleteMeetingBtn.disabled = false;
+    }
   }
 
   async function refreshData(message) {

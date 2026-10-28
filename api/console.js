@@ -1314,28 +1314,50 @@ async function handleUpdateMeeting(req, res, body, session) {
 
 async function handleDeleteMeeting(req, res, body, session) {
   const meetingId = normalizeId(body.meetingId);
-  const expected = parseRevision(body.expectedRevision);
   const roster = await loadRoster();
 
-  const { store, result } = await withStoreWrite(async (draft) => {
-    requireRevision(draft, expected);
+  // Deletion is intentionally idempotent: if another tab already removed the
+  // meeting, or the client's revision is stale, the requested end state is
+  // still "this meeting does not exist". Retry only on Blob ETag conflicts.
+  let finalStore = null;
+  let finalResult = null;
 
-    const index = draft.meetings.findIndex(
-      (meeting) => meeting.id === meetingId
-    );
-    if (index === -1) {
-      throw httpError(404, 'meeting_not_found', 'Meeting not found.');
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      const { store, result } = await withStoreWrite(async (draft) => {
+        const index = draft.meetings.findIndex(
+          (meeting) => meeting.id === meetingId
+        );
+        if (index === -1) {
+          return { deletedMeetingId: meetingId, alreadyDeleted: true };
+        }
+
+        draft.meetings.splice(index, 1);
+        delete draft.records[meetingId];
+        return { deletedMeetingId: meetingId, alreadyDeleted: false };
+      }, session);
+
+      finalStore = store;
+      finalResult = result;
+      break;
+    } catch (error) {
+      if (error && error.status === 409 && attempt < 2) continue;
+      throw error;
     }
+  }
 
-    draft.meetings.splice(index, 1);
-    delete draft.records[meetingId];
-    return { deletedMeetingId: meetingId };
-  }, session);
+  if (!finalStore) {
+    throw httpError(
+      503,
+      'delete_incomplete',
+      'Could not delete the meeting. Try again.'
+    );
+  }
 
   sendJson(
     res,
     200,
-    buildClientPayload(store, roster, session, result)
+    buildClientPayload(finalStore, roster, session, finalResult)
   );
 }
 
