@@ -309,6 +309,14 @@ button:disabled {
   font-size: 8px;
 }
 
+.att-field-hint {
+  margin: -6px 0 16px;
+  color: var(--muted-2);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  line-height: 1.5;
+}
+
 .att-input {
   width: 100%;
   padding: 13px 14px;
@@ -652,7 +660,6 @@ button:disabled {
   min-height: 0;
   margin: 10px 0 16px;
   overflow-y: auto;
-  overscroll-behavior: contain;
 }
 
 .att-meeting-item {
@@ -976,6 +983,20 @@ button:disabled {
   letter-spacing: 0.04em;
 }
 
+.att-mark-help {
+  margin: -2px 0 12px;
+  color: var(--muted-2);
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  line-height: 1.7;
+}
+
+.att-mark-help b {
+  display: inline-block;
+  min-width: 9px;
+  font-weight: 600;
+}
+
 .att-legend b {
   display: inline-block;
   min-width: 15px;
@@ -989,7 +1010,8 @@ button:disabled {
   border: 1px solid var(--line);
   background: #0a0a0a;
   overflow-x: auto;
-  overscroll-behavior: contain;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .att-table {
@@ -1103,7 +1125,70 @@ button:disabled {
 /* ---------- Mark table / status control ---------- */
 
 .att-mark-table {
-  min-width: 720px;
+  min-width: 0;
+}
+
+.att-mark-table .att-status-cell {
+  width: 170px;
+  white-space: nowrap;
+}
+
+.att-operator-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.att-operator-cell .att-operator {
+  display: block;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.att-mark-history {
+  color: var(--muted-2);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.att-mark-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 14px;
+  padding: 12px 0 calc(12px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(9, 9, 9, 0.86), #090909 35%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.att-mark-footer-count {
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+}
+
+.att-mark-footer-note {
+  margin-left: 10px;
+  color: var(--muted-2);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.04em;
+}
+
+.att-mark-footer .att-primary {
+  min-width: 170px;
 }
 
 .att-status-col {
@@ -1141,7 +1226,7 @@ button:disabled {
 
 .att-status-btn {
   width: 44px;
-  height: 34px;
+  height: 36px;
   border: 0;
   border-right: 1px solid var(--line);
   background: transparent;
@@ -1485,6 +1570,19 @@ button:disabled {
 
   .att-save-note {
     text-align: left;
+  }
+
+  .att-mark-footer {
+    flex-wrap: wrap;
+  }
+
+  .att-mark-footer > div,
+  .att-mark-footer .att-primary {
+    width: 100%;
+  }
+
+  .att-mark-footer .att-primary {
+    min-width: 0;
   }
 
   .att-meeting-list {

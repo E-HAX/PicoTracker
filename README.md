@@ -121,9 +121,12 @@ insecure mode.
 1. Open `/console` and authenticate.
 2. Press **+ NEW DATE**, choose the meeting date, and optionally add a label.
 3. Search for an operator by username or real name.
-4. Use **P** for present, **R** for the third status, or **A** for absent.
-   New dates start as all **A**.
-5. Press **DONE / SAVE** to commit the date.
+4. Use the **P / R / A** buttons on each person's row. New dates start as
+   all **A**, so pressing **A** again unmarks anyone marked by mistake.
+   Bulk buttons affect only the rows currently visible in the search and ask
+   for confirmation.
+5. Press **DONE / SAVE** — either at the top or in the sticky bottom bar — to
+   commit the date.
 6. **OVERVIEW / TOTALS** shows `P / total meetings` per operator, plus P, R,
    and A counts. It can export a CSV report.
 7. **EDIT DATE** and **DELETE** can be used at any time.

@@ -216,10 +216,10 @@
                         </div>
 
                         <div class="att-bulk">
-                            <span class="att-bulk-label">MARK VISIBLE</span>
-                            <button type="button" class="att-bulk-btn att-bulk-p" data-bulk="P" title="Mark visible operators present">P</button>
-                            <button type="button" class="att-bulk-btn att-bulk-r" data-bulk="R" title="Mark visible operators R">R</button>
-                            <button type="button" class="att-bulk-btn att-bulk-a" data-bulk="A" title="Reset visible operators to absent">A</button>
+                            <span class="att-bulk-label">BULK &middot; VISIBLE ONLY</span>
+                            <button type="button" class="att-bulk-btn att-bulk-p" data-bulk="P" title="Mark all visible operators present">P</button>
+                            <button type="button" class="att-bulk-btn att-bulk-r" data-bulk="R" title="Mark all visible operators R">R</button>
+                            <button type="button" class="att-bulk-btn att-bulk-a" data-bulk="A" title="Reset all visible operators to absent">A</button>
                         </div>
 
                         <button type="button" id="save-btn" class="att-primary att-save-btn" disabled>DONE / SAVE</button>
@@ -229,6 +229,12 @@
                         <span id="mark-count" class="att-result-count"></span>
                         <p id="save-note" class="att-save-note"></p>
                     </div>
+
+                    <p class="att-mark-help">
+                        Mark each person individually with the <b class="att-p">P</b> /
+                        <b class="att-r">R</b> / <b class="att-a">A</b> buttons on their row.
+                        Bulk buttons only change the rows currently visible in the search.
+                    </p>
 
                     <div class="att-legend" aria-hidden="true">
                         <span><b class="att-p">P</b> present</span>
@@ -241,13 +247,19 @@
                             <thead>
                                 <tr>
                                     <th scope="col">OPERATOR</th>
-                                    <th scope="col">NAME</th>
-                                    <th scope="col">ATTENDED</th>
                                     <th scope="col" class="att-status-col">STATUS</th>
                                 </tr>
                             </thead>
                             <tbody id="mark-body"></tbody>
                         </table>
+                    </div>
+
+                    <div class="att-mark-footer">
+                        <div>
+                            <span id="mark-footer-count" class="att-mark-footer-count"></span>
+                            <span id="mark-footer-note" class="att-mark-footer-note"></span>
+                        </div>
+                        <button type="button" id="save-btn-bottom" class="att-primary att-save-btn" disabled>DONE / SAVE</button>
                     </div>
                 </section>
             </main>
@@ -265,6 +277,7 @@
 
             <label class="att-field-label" for="meeting-date">DATE</label>
             <input type="date" id="meeting-date" class="att-input" min="2000-01-01" max="2100-12-31" required>
+            <p id="meeting-date-hint" class="att-field-hint">Choose the date of the meeting. Nothing is pre-filled.</p>
 
             <label class="att-field-label" for="meeting-label">LABEL <span class="att-optional">OPTIONAL</span></label>
             <input type="text" id="meeting-label" class="att-input" maxlength="80" placeholder="Weekly meet, session name..." autocomplete="off" spellcheck="false">

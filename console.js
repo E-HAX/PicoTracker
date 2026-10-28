@@ -75,7 +75,10 @@
       markSearch: 'mark-search',
       markCount: 'mark-count',
       saveBtn: 'save-btn',
+      saveBtnBottom: 'save-btn-bottom',
       saveNote: 'save-note',
+      markFooterCount: 'mark-footer-count',
+      markFooterNote: 'mark-footer-note',
       markBody: 'mark-body',
       meetingModal: 'meeting-modal',
       meetingForm: 'meeting-form',
@@ -86,6 +89,7 @@
       modalSubmit: 'modal-submit',
       modalError: 'modal-error',
       meetingDate: 'meeting-date',
+      meetingDateHint: 'meeting-date-hint',
       meetingLabel: 'meeting-label',
       toast: 'toast',
     };
@@ -138,6 +142,7 @@
     });
 
     dom.saveBtn.addEventListener('click', saveAttendance);
+    dom.saveBtnBottom.addEventListener('click', saveAttendance);
     dom.editMeetingBtn.addEventListener('click', () => openMeetingModal('edit'));
     dom.deleteMeetingBtn.addEventListener('click', deleteMeeting);
     dom.exportCsv.addEventListener('click', exportCsv);
@@ -450,6 +455,10 @@
     dom.saveNote.classList.remove('dirty');
     dom.saveBtn.disabled = true;
     dom.saveBtn.textContent = 'DONE / SAVE';
+    dom.saveBtnBottom.disabled = true;
+    dom.saveBtnBottom.textContent = 'DONE / SAVE';
+    dom.markFooterCount.textContent = '';
+    dom.markFooterNote.textContent = '';
     dom.sessionExpiry.textContent = 'SESSION \u2014';
     dom.overviewPanel.hidden = true;
     dom.meetingPanel.hidden = true;
@@ -764,7 +773,7 @@
     if (filtered.length === 0) {
       const row = document.createElement('tr');
       const cell = document.createElement('td');
-      cell.colSpan = 4;
+      cell.colSpan = 2;
       cell.className = 'att-table-empty';
       cell.textContent = 'NO OPERATOR MATCHES THAT SEARCH';
       row.append(cell);
@@ -786,31 +795,25 @@
       row.className = `att-status-${status}`;
       row.dataset.username = person.username;
 
-      const operator = document.createElement('td');
+      const operatorCell = document.createElement('td');
+      operatorCell.className = 'att-operator-cell';
+
+      const operator = document.createElement('span');
       operator.className = 'att-operator';
       operator.textContent = person.username;
 
-      const name = document.createElement('td');
+      const name = document.createElement('span');
       name.className = 'att-realname';
       name.textContent = person.name || '\u2014';
 
-      const attended = document.createElement('td');
-      attended.className = 'att-attended-cell';
+      const history = document.createElement('span');
+      history.className = 'att-mark-history';
+      history.textContent = `${stats.p} / ${stats.total} meets \u00b7 ${stats.rate}% attended`;
 
-      const fraction = document.createElement('span');
-      fraction.className = 'att-fraction';
-      fraction.append(document.createTextNode(String(stats.p)));
-      const total = document.createElement('span');
-      total.textContent = ` / ${stats.total}`;
-      fraction.append(total);
-
-      const percent = document.createElement('span');
-      percent.className = 'att-rate-pct';
-      percent.textContent = `${stats.rate}% ATTENDED`;
-
-      attended.append(fraction, percent);
+      operatorCell.append(operator, name, history);
 
       const statusCell = document.createElement('td');
+      statusCell.className = 'att-status-cell';
       const group = document.createElement('div');
       group.className = 'att-status-group';
 
@@ -835,7 +838,7 @@
       }
 
       statusCell.append(group);
-      row.append(operator, name, attended, statusCell);
+      row.append(operatorCell, statusCell);
       fragment.append(row);
     }
 
@@ -872,14 +875,18 @@
         : 'NOT SAVED YET';
     }
     dom.saveNote.classList.toggle('dirty', state.dirty);
+    dom.markFooterCount.textContent = `${present} P \u00b7 ${reserved} R \u00b7 ${absent} A`;
+    dom.markFooterNote.textContent = state.dirty ? 'UNSAVED' : 'SAVED';
     updateSaveButton();
   }
 
   function updateSaveButton() {
-    dom.saveBtn.disabled = !state.dirty || state.saving;
-    dom.saveBtn.textContent = state.saving
-      ? 'SAVING\u2026'
-      : 'DONE / SAVE';
+    const disabled = !state.dirty || state.saving;
+    const label = state.saving ? 'SAVING\u2026' : 'DONE / SAVE';
+    dom.saveBtn.disabled = disabled;
+    dom.saveBtn.textContent = label;
+    dom.saveBtnBottom.disabled = disabled;
+    dom.saveBtnBottom.textContent = label;
   }
 
   /* ------------------------------------------------------------------ */
@@ -994,6 +1001,17 @@
       return;
     }
 
+    if (
+      rows.length > 1 &&
+      !window.confirm(
+        `This will ${
+          status === 'A' ? 'reset' : 'mark'
+        } all ${rows.length} visible operators as ${status}. You can still change individuals afterward. Continue?`
+      )
+    ) {
+      return;
+    }
+
     let changed = false;
     for (const row of rows) {
       const username = row.dataset.username;
@@ -1010,7 +1028,12 @@
     if (changed) {
       state.dirty = true;
       updateMeetingLiveStats();
-      toast(`Visible operators marked ${status}.`, 'info');
+      toast(
+        status === 'A'
+          ? 'Visible operators reset to absent.'
+          : `Visible operators marked ${status}.`,
+        'info'
+      );
     }
   }
 
@@ -1100,13 +1123,17 @@
       dom.modalKicker.textContent = 'EDIT DATE';
       dom.modalTitle.textContent = 'Edit meeting date';
       dom.modalSubmit.textContent = 'SAVE CHANGES';
+      dom.meetingDateHint.textContent =
+        'Change the date or label, then save.';
       dom.meetingDate.value = meeting.date;
       dom.meetingLabel.value = meeting.label;
     } else {
       dom.modalKicker.textContent = 'NEW DATE';
       dom.modalTitle.textContent = 'Add a meeting date';
       dom.modalSubmit.textContent = 'ADD DATE';
-      dom.meetingDate.value = todayISO();
+      dom.meetingDateHint.textContent =
+        'Choose the date of the meeting. Nothing is pre-filled.';
+      dom.meetingDate.value = '';
       dom.meetingLabel.value = '';
     }
 
