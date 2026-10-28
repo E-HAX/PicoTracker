@@ -1,6 +1,6 @@
 # EHAX &times; CyLab Academy Leaderboard
 
-A high-performance, secure, static cybersecurity leaderboard and automated tracker for CyLab Security Academy / PicoCTF challenges. Features a 3D wireframe interactive scene, custom vector podium chalices, live operator search, tactile Web Audio feedback, and automated stats aggregation.
+A high-performance, secure cybersecurity leaderboard and automated tracker for CyLab Security Academy / PicoCTF challenges. Features a 3D wireframe interactive scene, custom vector podium chalices, live operator search, attendance totals and history, tactile Web Audio feedback, and automated stats aggregation.
 
 ---
 
@@ -21,23 +21,27 @@ A high-performance, secure, static cybersecurity leaderboard and automated track
   - Instant client-side search with match counter and keyboard navigation.
 - **Hardened Architecture**:
   - Strict Content Security Policy (CSP), anti-MIME sniffing, no-referrer privacy, and DOM-safe encoding.
-  - The public leaderboard stays static; the private console uses a separately authenticated serverless API.
+  - Score data stays static; attendance is served by a read-only public API, while the admin console uses a separately authenticated API.
 - **Automated Updates**:
   - GitHub Actions runs every 15 minutes or instantly when `Cylab Username - Sheet1.csv` is updated.
 
 ---
 
-## 🔐 Private Attendance Console (Owner Only)
+## 🔐 Attendance Console + Public Attendance
 
-The attendance console is deliberately **not linked anywhere on the public
-leaderboard**. It has no attendance data in the static HTML, CSS, JS,
-`leaderboard.json`, or any other public asset.
+The admin console is deliberately **not linked anywhere on the public
+leaderboard** and remains password-protected. The leaderboard itself now shows
+each operator's total attendance and a read-only attendance history in the
+operator drawer.
 
 - Console URL: `/console` (or `/console.html`)
-- It shows only a password gate until the admin authenticates.
+- The console shows only a password gate until the admin authenticates.
 - The roster is loaded from `leaderboard.json`, so usernames and real names
   always match the leaderboard.
 - Meetings and marks are stored server-side in a **private Vercel Blob store**.
+- The public leaderboard reads a sanitized, read-only feed from
+  `/api/attendance`; it never receives meeting IDs, admin sessions, rate-limit
+  data, or the private Blob URL.
 - The console is marked `noindex`, `noarchive`, and `no-store`.
 
 ### Security model
@@ -57,11 +61,14 @@ leaderboard**. It has no attendance data in the static HTML, CSS, JS,
   record.
 - **Password rotation**: changing the password hash immediately invalidates
   all existing admin sessions.
+- **Public feed**: `/api/attendance` is GET-only and exposes only meeting dates,
+  labels, and P/R statuses for usernames on the public leaderboard. It cannot
+  mutate attendance.
 - **Data integrity**: the UI prevents double-submits, and every mutation
   reloads the latest server state. This is a single-admin console, so if two
   tabs are open, the last write wins.
-- **No client storage**: the console keeps attendance data in memory only.
-  It is wiped from the DOM when the session expires or is locked.
+- **No admin client storage**: the console keeps its working data in memory
+  only. It is wiped from the DOM when the session expires or is locked.
 - **Export**: CSV export happens locally in the browser.
 
 ### One-time deployment setup
@@ -130,7 +137,10 @@ insecure mode.
    commit the date.
 6. **OVERVIEW / TOTALS** shows `P / total meetings` per operator, plus P, R,
    and A counts. It can export a CSV report.
-7. **EDIT DATE** and **DELETE** can be used at any time.
+7. The public leaderboard shows each operator's attendance total in the
+   standings, on the podium, and in the operator drawer. The drawer also lists
+   every meeting date and label with P/R/A status.
+8. **EDIT DATE** and **DELETE** can be used at any time.
 
 ### Wiping or moving attendance data
 
@@ -151,9 +161,11 @@ The public leaderboard still works with a plain static server:
 python3 -m http.server 8080
 ```
 
-The console API requires the Vercel serverless runtime and Blob. For local
-development, copy `BLOB_READ_WRITE_TOKEN` from the Blob store and export it
-with your password hash, then run:
+The leaderboard itself loads this way, but the attendance column will show
+`—` because `/api/attendance` is not available from a plain static server.
+The console and public attendance API require the Vercel serverless runtime and
+Blob. For local development, copy `BLOB_READ_WRITE_TOKEN` from the Blob store
+and export it with your password hash, then run:
 
 ```bash
 # Generate the hash once with: node scripts/hash-password.mjs
@@ -176,7 +188,8 @@ On Vercel, the rotating OIDC credentials are used automatically instead.
 ├── console.css                  # Private console styling
 ├── console.js                   # Private console client logic
 ├── api/
-│   └── console.js               # Authenticated attendance API + Blob storage
+│   ├── console.js               # Authenticated attendance API + Blob storage
+│   └── attendance.js            # Public read-only attendance feed
 ├── scripts/
 │   ├── hash-password.mjs        # scrypt admin-password hash generator (Node)
 │   └── hash_password.py         # same generator (Python)

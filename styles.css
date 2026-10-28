@@ -352,6 +352,16 @@ body:hover .cursor-glow { opacity: 1; }
   white-space: nowrap;
 }
 
+.podium-att {
+  margin: 2px 0 6px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: clamp(0.55rem, 1.5vw, 0.68rem);
+  letter-spacing: 0.08em;
+  text-align: center;
+  white-space: nowrap;
+}
+
 .podium-block {
   width: 100%;
   background: rgba(255, 255, 255, 0.04);
@@ -701,6 +711,41 @@ body:hover .cursor-glow { opacity: 1; }
 .c-tot {
   text-align: right;
   width: 140px;
+}
+
+.c-att {
+  width: 125px;
+  text-align: right;
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+
+.board-table th.c-att {
+  text-align: right;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+}
+
+.attendance-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  padding: 4px 9px;
+  border: 1px solid rgba(16, 185, 129, 0.28);
+  border-radius: 5px;
+  background: rgba(16, 185, 129, 0.08);
+  color: #10b981;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.attendance-badge.attendance-empty {
+  border-color: var(--border);
+  background: transparent;
+  color: var(--text-muted);
 }
 
 .pts-badge {
@@ -1143,6 +1188,10 @@ tbody tr:hover .pts-badge {
   gap: 4px;
 }
 
+.drawer-stat-wide {
+  grid-column: span 2;
+}
+
 .d-label {
   font-family: var(--font-mono);
   font-size: 0.68rem;
@@ -1175,6 +1224,95 @@ tbody tr:hover .pts-badge {
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   color: var(--text-muted);
+}
+
+.attendance-summary {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.attendance-history {
+  display: flex;
+  flex-direction: column;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
+  overscroll-behavior: contain;
+}
+
+.att-history-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.att-history-row:last-child {
+  border-bottom: none;
+}
+
+.att-history-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.att-history-date {
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+}
+
+.att-history-label {
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.att-history-status {
+  flex-shrink: 0;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.att-history-status.is-p {
+  border-color: rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.att-history-status.is-r {
+  border-color: rgba(245, 158, 11, 0.3);
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+
+.att-history-status.is-a {
+  border-color: rgba(239, 68, 68, 0.28);
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444;
+}
+
+.attendance-history-empty {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: 1.6;
+  padding: 4px 0;
 }
 
 .drawer-ratio-bar {
@@ -1439,6 +1577,17 @@ tbody tr:hover .pts-badge {
   .c-tot {
     width: 95px;
     padding-right: 12px;
+  }
+
+  .c-att {
+    width: 78px;
+    padding-left: 4px;
+    padding-right: 12px;
+  }
+
+  .attendance-badge {
+    padding: 3px 6px;
+    font-size: 0.68rem;
   }
 
   .pts-badge {

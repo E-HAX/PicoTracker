@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="styles.css?v=2.3">
+    <link rel="stylesheet" href="styles.css?v=2.4">
 </head>
 <body>
 
@@ -197,6 +197,7 @@
                             </div>
                             <div class="podium-name" id="pod-2-name">--</div>
                             <div class="podium-score" id="pod-2-score">-- PTS</div>
+                            <div class="podium-att" id="pod-2-att">--</div>
                             <div class="podium-block block-2">2ND</div>
                         </div>
 
@@ -339,6 +340,7 @@
                             </div>
                             <div class="podium-name" id="pod-1-name">--</div>
                             <div class="podium-score" id="pod-1-score">-- PTS</div>
+                            <div class="podium-att" id="pod-1-att">--</div>
                             <div class="podium-block block-1">1ST</div>
                         </div>
 
@@ -481,6 +483,7 @@
                             </div>
                             <div class="podium-name" id="pod-3-name">--</div>
                             <div class="podium-score" id="pod-3-score">-- PTS</div>
+                            <div class="podium-att" id="pod-3-att">--</div>
                             <div class="podium-block block-3">3RD</div>
                         </div>
                     </div>
@@ -551,6 +554,7 @@
                             <th class="c-num col-med" title="Medium (3pts)">MEDIUM</th>
                             <th class="c-num col-hard" title="Hard (6pts)">HARD</th>
                             <th class="c-tot" title="Total Points">POINTS</th>
+                            <th class="c-att" title="Present / total meetings">ATTENDANCE</th>
                         </tr>
                     </thead>
                     <tbody id="board-body">
@@ -610,6 +614,10 @@
                     <span class="d-label">FLAGS LOGGED</span>
                     <span class="d-val" id="drawer-flags">--</span>
                 </div>
+                <div class="drawer-stat-card drawer-stat-wide">
+                    <span class="d-label">ATTENDANCE</span>
+                    <span class="d-val highlight" id="drawer-attendance">--</span>
+                </div>
             </div>
 
             <!-- Breakdown Visuals -->
@@ -642,9 +650,15 @@
                     </div>
                 </div>
             </div>
+
+            <div class="drawer-section">
+                <h4 class="drawer-section-title">ATTENDANCE HISTORY</h4>
+                <div class="attendance-summary" id="drawer-attendance-summary">--</div>
+                <div class="attendance-history" id="drawer-attendance-history"></div>
+            </div>
         </div>
     </aside>
 
-    <script src="script.js?v=2.6"></script>
+    <script src="script.js?v=2.8"></script>
 </body>
 </html>

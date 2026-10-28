@@ -559,6 +559,71 @@ document.addEventListener("DOMContentLoaded", () => {
     if (bM) bM.style.width = `${mW}%`;
     if (bH) bH.style.width = `${hW}%`;
 
+    // Attendance summary + full history
+    const attendance = user.attendance || EMPTY_ATTENDANCE;
+    const attendanceEl = document.getElementById("drawer-attendance");
+    const summaryEl = document.getElementById("drawer-attendance-summary");
+    const historyEl = document.getElementById("drawer-attendance-history");
+
+    if (attendanceEl) {
+      attendanceEl.textContent = formatAttendance(attendance);
+      attendanceEl.classList.toggle("danger", !attendance.available);
+    }
+
+    if (summaryEl && historyEl) {
+      historyEl.replaceChildren();
+
+      if (!attendance.available) {
+        summaryEl.textContent = "Attendance unavailable.";
+        const empty = document.createElement("div");
+        empty.className = "attendance-history-empty";
+        empty.textContent = "The public attendance feed could not be loaded.";
+        historyEl.append(empty);
+      } else if (!attendance.total) {
+        summaryEl.textContent = "No meetings recorded yet.";
+        const empty = document.createElement("div");
+        empty.className = "attendance-history-empty";
+        empty.textContent = "Attendance history will appear after the first meeting.";
+        historyEl.append(empty);
+      } else {
+        summaryEl.textContent = `${attendance.p} present \u00b7 ${attendance.r} R \u00b7 ${attendance.a} absent \u00b7 ${attendance.rate}% of ${attendance.total} meetings`;
+
+        const fragment = document.createDocumentFragment();
+        for (const entry of attendance.history) {
+          const row = document.createElement("div");
+          row.className = "att-history-row";
+
+          const main = document.createElement("div");
+          main.className = "att-history-main";
+
+          const date = document.createElement("span");
+          date.className = "att-history-date";
+          date.textContent = formatPublicDate(entry.date);
+
+          const label = document.createElement("span");
+          label.className = "att-history-label";
+          label.textContent = entry.label || "CyLab Meet";
+          label.title = entry.label || "CyLab Meet";
+
+          main.append(date, label);
+
+          const status = document.createElement("span");
+          const key = entry.status.toLowerCase();
+          status.className = `att-history-status is-${key}`;
+          status.textContent =
+            entry.status === "P"
+              ? "P \u00b7 PRESENT"
+              : entry.status === "R"
+                ? "R \u00b7 MARKED R"
+                : "A \u00b7 ABSENT";
+
+          row.append(main, status);
+          fragment.append(row);
+        }
+        historyEl.append(fragment);
+      }
+    }
+
     drawer.classList.add("active");
     drawerOverlay.classList.add("active");
     document.body.style.overflow = "hidden";
@@ -596,6 +661,135 @@ document.addEventListener("DOMContentLoaded", () => {
     return div.innerHTML;
   }
 
+  const EMPTY_ATTENDANCE = {
+    available: false,
+    meetings: [],
+    records: Object.create(null),
+    updatedAt: null
+  };
+
+  function normalizeAttendance(payload) {
+    if (
+      !payload ||
+      payload.ok !== true ||
+      payload.configured === false ||
+      !Array.isArray(payload.meetings)
+    ) {
+      return EMPTY_ATTENDANCE;
+    }
+
+    const seenDates = new Set();
+    const meetings = [];
+    for (const item of payload.meetings) {
+      if (!item || typeof item.date !== "string") continue;
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(item.date)) continue;
+      if (seenDates.has(item.date)) continue;
+      seenDates.add(item.date);
+      meetings.push({
+        date: item.date,
+        label: typeof item.label === "string" && item.label.trim()
+          ? item.label.replace(/[\u0000-\u001F\u007F]/g, " ").trim().slice(0, 80)
+          : "CyLab Meet"
+      });
+    }
+    meetings.sort((a, b) => b.date.localeCompare(a.date));
+
+    const records = Object.create(null);
+    if (
+      payload.records &&
+      typeof payload.records === "object" &&
+      !Array.isArray(payload.records)
+    ) {
+      for (const [username, marks] of Object.entries(payload.records)) {
+        if (!marks || typeof marks !== "object") continue;
+        const clean = Object.create(null);
+        for (const [date, status] of Object.entries(marks)) {
+          if (!seenDates.has(date)) continue;
+          if (status === "P" || status === "R") clean[date] = status;
+        }
+        records[username] = clean;
+      }
+    }
+
+    return {
+      available: true,
+      meetings,
+      records,
+      updatedAt: typeof payload.updatedAt === "string" ? payload.updatedAt : null
+    };
+  }
+
+  function buildUserAttendance(username, attendance) {
+    if (!attendance || !attendance.available) {
+      return {
+        available: false,
+        p: 0,
+        r: 0,
+        a: 0,
+        total: 0,
+        rate: 0,
+        history: []
+      };
+    }
+
+    const marks = attendance.records[username] || {};
+    let present = 0;
+    let reserved = 0;
+    const history = attendance.meetings.map((meeting) => {
+      const mark = marks[meeting.date];
+      const status = mark === "P" || mark === "R" ? mark : "A";
+      if (status === "P") present += 1;
+      else if (status === "R") reserved += 1;
+      return {
+        date: meeting.date,
+        label: meeting.label,
+        status
+      };
+    });
+
+    const total = attendance.meetings.length;
+    return {
+      available: true,
+      p: present,
+      r: reserved,
+      a: Math.max(0, total - present - reserved),
+      total,
+      rate: total ? Math.round((present / total) * 100) : 0,
+      history
+    };
+  }
+
+  function formatAttendance(attendance) {
+    if (!attendance || !attendance.available || !attendance.total) {
+      return "\u2014";
+    }
+    return `${attendance.p} / ${attendance.total}`;
+  }
+
+  function attendanceTitle(attendance) {
+    if (!attendance || !attendance.available) {
+      return "Attendance unavailable";
+    }
+    if (!attendance.total) {
+      return "No meetings recorded yet";
+    }
+    return `${attendance.p} present \u00b7 ${attendance.r} R \u00b7 ${attendance.a} absent \u00b7 ${attendance.rate}% of ${attendance.total} meetings`;
+  }
+
+  function formatPublicDate(value) {
+    if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+      return value || "\u2014";
+    }
+    const [year, month, day] = value.split("-").map(Number);
+    const date = new Date(Date.UTC(year, month - 1, day));
+    return new Intl.DateTimeFormat("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      timeZone: "UTC"
+    }).format(date).toUpperCase();
+  }
+
   function renderBoard(filter = "") {
     if (!tbody) return;
     const q = filter.trim().toLowerCase();
@@ -617,7 +811,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (matched.length === 0) {
       tbody.innerHTML = `
         <tr class="empty-row">
-          <td colspan="6" class="no-results">
+          <td colspan="7" class="no-results">
             No operator found matching "<strong id="search-term-display"></strong>"
           </td>
         </tr>
@@ -644,6 +838,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const rowDangerClass = isDanger ? "row-danger" : "";
       const nameDangerClass = isDanger ? "name-danger" : "";
       const ptsDangerClass = isDanger ? "pts-danger" : "";
+      const attendance = u.attendance || EMPTY_ATTENDANCE;
+      const attendanceText = formatAttendance(attendance);
+      const attendanceClass =
+        attendance.available && attendance.total
+          ? "attendance-badge"
+          : "attendance-badge attendance-empty";
 
       html += `
         <tr class="operator-row ${rowDangerClass}" data-username="${escapeHtml(u.username)}" data-realname="${escapeHtml(u.name || '')}" title="${escapeHtml(u.name && u.name !== 'Name not given' && u.name !== 'Busy Person' ? `${u.username} (${u.name})` : u.username)}">
@@ -669,6 +869,9 @@ document.addEventListener("DOMContentLoaded", () => {
           <td class="c-tot">
             <span class="pts-badge">${u.total} <span class="pts-unit">PTS</span></span>
           </td>
+          <td class="c-att">
+            <span class="${attendanceClass}" title="${escapeHtml(attendanceTitle(attendance))}">${escapeHtml(attendanceText)}</span>
+          </td>
         </tr>
       `;
     }
@@ -685,12 +888,38 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  fetch('leaderboard.json', { cache: 'no-store' })
+  function fetchAttendanceFeed() {
+    const controller = typeof AbortController !== "undefined"
+      ? new AbortController()
+      : null;
+    const timer = controller
+      ? window.setTimeout(() => controller.abort(), 5000)
+      : 0;
+
+    return fetch('/api/attendance', {
+      cache: 'no-store',
+      signal: controller ? controller.signal : undefined
+    }).finally(() => {
+      if (timer) window.clearTimeout(timer);
+    });
+  }
+
+  const attendancePromise = fetchAttendanceFeed()
+    .then(r => {
+      if (!r.ok) throw new Error("Attendance fetch error");
+      return r.json();
+    })
+    .then(payload => normalizeAttendance(payload))
+    .catch(() => EMPTY_ATTENDANCE);
+
+  const leaderboardPromise = fetch('leaderboard.json', { cache: 'no-store' })
     .then(r => {
       if (!r.ok) throw new Error("Data fetch error");
       return r.json();
-    })
-    .then(data => {
+    });
+
+  Promise.all([leaderboardPromise, attendancePromise])
+    .then(([data, attendance]) => {
       if (!data || !Array.isArray(data.leaderboard)) return;
 
       const sanitized = data.leaderboard
@@ -714,7 +943,11 @@ document.addEventListener("DOMContentLoaded", () => {
         b.total - a.total || b.hard - a.hard || b.medium - a.medium || b.easy - a.easy
       );
 
-      allUsers = sorted.map((u, idx) => ({ ...u, rank: idx + 1 }));
+      allUsers = sorted.map((u, idx) => ({
+        ...u,
+        rank: idx + 1,
+        attendance: buildUserAttendance(u.username, attendance)
+      }));
 
       // Populate Podium (Top 3)
       for (let i = 1; i <= 3; i++) {
@@ -722,8 +955,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (user) {
           const nameEl = document.getElementById(`pod-${i}-name`);
           const scoreEl = document.getElementById(`pod-${i}-score`);
+          const attendanceEl = document.getElementById(`pod-${i}-att`);
           if (nameEl) nameEl.textContent = user.username;
           if (scoreEl) scoreEl.textContent = `${user.total} PTS`;
+          if (attendanceEl) {
+            attendanceEl.textContent = user.attendance.available && user.attendance.total
+              ? `${user.attendance.p} / ${user.attendance.total} MEETS`
+              : "ATTENDANCE \u2014";
+          }
 
           const spotEl = document.querySelector(`.spot-${i}`);
           if (spotEl) {
@@ -764,7 +1003,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (tbody) {
         tbody.innerHTML = `
           <tr class="empty-row">
-            <td colspan="6" class="no-results">Unable to load live leaderboard. Please refresh.</td>
+            <td colspan="7" class="no-results">Unable to load live leaderboard. Please refresh.</td>
           </tr>
         `;
       }

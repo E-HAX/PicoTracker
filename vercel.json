@@ -62,6 +62,24 @@
       ]
     },
     {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, must-revalidate, max-age=0"
+        }
+      ]
+    },
+    {
+      "source": "/index.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, must-revalidate, max-age=0"
+        }
+      ]
+    },
+    {
       "source": "/console",
       "headers": [
         {
@@ -116,6 +134,9 @@
   ],
   "functions": {
     "api/console.js": {
+      "includeFiles": "leaderboard.json"
+    },
+    "api/attendance.js": {
       "includeFiles": "leaderboard.json"
     }
   }
