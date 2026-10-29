@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-29T09:50:24.133292+00:00",
+  "last_updated": "2026-10-29T16:29:41.470111+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -13,9 +13,9 @@
       "username": "boringxegotistical",
       "name": "Saiyam Chaudhary",
       "easy": 113,
-      "medium": 80,
+      "medium": 82,
       "hard": 6,
-      "total": 389
+      "total": 395
     },
     {
       "username": "reedhanG",
@@ -28,10 +28,10 @@
     {
       "username": "Kartikey191108",
       "name": "Kartikey",
-      "easy": 90,
-      "medium": 61,
+      "easy": 91,
+      "medium": 65,
       "hard": 0,
-      "total": 273
+      "total": 286
     },
     {
       "username": "Pushpit1845",
@@ -53,9 +53,9 @@
       "username": "saksyy69",
       "name": "Saksham Mittal",
       "easy": 68,
-      "medium": 44,
+      "medium": 47,
       "hard": 0,
-      "total": 200
+      "total": 209
     },
     {
       "username": "mayank18",
@@ -114,6 +114,14 @@
       "total": 164
     },
     {
+      "username": "Dhruv3142",
+      "name": "Dhruv Sharma",
+      "easy": 91,
+      "medium": 23,
+      "hard": 0,
+      "total": 160
+    },
+    {
       "username": "AkshatJairath",
       "name": "Name not given",
       "easy": 102,
@@ -136,14 +144,6 @@
       "medium": 32,
       "hard": 0,
       "total": 147
-    },
-    {
-      "username": "Dhruv3142",
-      "name": "Dhruv Sharma",
-      "easy": 91,
-      "medium": 18,
-      "hard": 0,
-      "total": 145
     },
     {
       "username": "shivanshuuu67",
@@ -340,10 +340,10 @@
     {
       "username": "Karasuke",
       "name": "Anshul",
-      "easy": 30,
+      "easy": 32,
       "medium": 6,
       "hard": 1,
-      "total": 54
+      "total": 56
     },
     {
       "username": "hetainhack",
