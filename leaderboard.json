@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-29T21:24:17.122126+00:00",
+  "last_updated": "2026-10-30T01:20:30.028392+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -346,6 +346,14 @@
       "total": 56
     },
     {
+      "username": "nineteen",
+      "name": "Shashank Shekhar",
+      "easy": 43,
+      "medium": 3,
+      "hard": 0,
+      "total": 52
+    },
+    {
       "username": "hetainhack",
       "name": "Hetain Arora",
       "easy": 25,
@@ -376,14 +384,6 @@
       "medium": 4,
       "hard": 0,
       "total": 48
-    },
-    {
-      "username": "nineteen",
-      "name": "Shashank Shekhar",
-      "easy": 38,
-      "medium": 3,
-      "hard": 0,
-      "total": 47
     },
     {
       "username": "Nmn007",
