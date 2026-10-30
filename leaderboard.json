@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-30T01:20:30.028392+00:00",
+  "last_updated": "2026-10-30T07:20:35.366120+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -74,6 +74,14 @@
       "total": 191
     },
     {
+      "username": "aayushk79",
+      "name": "Aayush Kumar",
+      "easy": 105,
+      "medium": 27,
+      "hard": 0,
+      "total": 186
+    },
+    {
       "username": "Dhruv3142",
       "name": "Dhruv Sharma",
       "easy": 91,
@@ -104,14 +112,6 @@
       "medium": 15,
       "hard": 0,
       "total": 172
-    },
-    {
-      "username": "aayushk79",
-      "name": "Aayush Kumar",
-      "easy": 105,
-      "medium": 22,
-      "hard": 0,
-      "total": 171
     },
     {
       "username": "rakshaa",
