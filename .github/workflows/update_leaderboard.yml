@@ -84,7 +84,37 @@ jobs:
 
           if ! git diff --staged --quiet; then
             git commit -m "Auto-update leaderboard data [skip ci]"
-            git push origin HEAD:main
+
+            pushed=0
+            for attempt in 1 2 3 4 5; do
+              echo "Push attempt $attempt of 5..."
+
+              if [ "$attempt" -gt 1 ]; then
+                echo "Syncing with latest remote changes before retry..."
+                git fetch origin main
+                git rebase -X ours origin/main || {
+                  echo "Rebase failed, aborting..."
+                  git rebase --abort || true
+                }
+              fi
+
+              if git push origin HEAD:main; then
+                echo "Leaderboard successfully committed and pushed to main."
+                pushed=1
+                break
+              fi
+
+              if [ "$attempt" -lt 5 ]; then
+                wait_time=$((attempt * 5))
+                echo "Push failed (transient remote error or rejected). Retrying in ${wait_time}s..."
+                sleep $wait_time
+              fi
+            done
+
+            if [ "$pushed" -ne 1 ]; then
+              echo "::error::Failed to push updated leaderboard after 5 attempts."
+              exit 1
+            fi
           else
             echo "Leaderboard data is already up to date. No commit needed."
           fi
