@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-31T08:50:51.651963+00:00",
+  "last_updated": "2026-10-31T14:53:54.873471+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -20,26 +20,26 @@
     {
       "username": "reedhanG",
       "name": "Reedhan Garg",
-      "easy": 99,
-      "medium": 83,
+      "easy": 100,
+      "medium": 85,
       "hard": 7,
-      "total": 390
+      "total": 397
     },
     {
       "username": "Kartikey191108",
       "name": "Kartikey",
       "easy": 91,
-      "medium": 72,
+      "medium": 73,
       "hard": 0,
-      "total": 307
+      "total": 310
     },
     {
       "username": "saksyy69",
       "name": "Saksham Mittal",
       "easy": 72,
-      "medium": 57,
+      "medium": 61,
       "hard": 0,
-      "total": 243
+      "total": 255
     },
     {
       "username": "Pushpit1845",
@@ -47,6 +47,14 @@
       "easy": 28,
       "medium": 57,
       "hard": 3,
+      "total": 217
+    },
+    {
+      "username": "aayushk79",
+      "name": "Aayush Kumar",
+      "easy": 115,
+      "medium": 34,
+      "hard": 0,
       "total": 217
     },
     {
@@ -58,20 +66,12 @@
       "total": 212
     },
     {
-      "username": "aayushk79",
-      "name": "Aayush Kumar",
-      "easy": 105,
-      "medium": 34,
-      "hard": 0,
-      "total": 207
-    },
-    {
       "username": "mayank18",
       "name": "Mayank Panchal",
       "easy": 97,
-      "medium": 32,
+      "medium": 35,
       "hard": 0,
-      "total": 193
+      "total": 202
     },
     {
       "username": "pointbreak007",
@@ -79,6 +79,14 @@
       "easy": 77,
       "medium": 24,
       "hard": 7,
+      "total": 191
+    },
+    {
+      "username": "hackernull1",
+      "name": "Rishabh Sakhuja",
+      "easy": 62,
+      "medium": 31,
+      "hard": 6,
       "total": 191
     },
     {
@@ -112,14 +120,6 @@
       "medium": 31,
       "hard": 0,
       "total": 178
-    },
-    {
-      "username": "hackernull1",
-      "name": "Rishabh Sakhuja",
-      "easy": 62,
-      "medium": 31,
-      "hard": 3,
-      "total": 173
     },
     {
       "username": "SilentNinj4",
@@ -156,10 +156,10 @@
     {
       "username": "Sakshamm",
       "name": "Saksham Garg",
-      "easy": 51,
+      "easy": 53,
       "medium": 32,
       "hard": 0,
-      "total": 147
+      "total": 149
     },
     {
       "username": "shivanshuuu67",
