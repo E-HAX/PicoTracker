@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-01T14:27:50.816630+00:00",
+  "last_updated": "2026-11-01T19:07:16.191413+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -21,9 +21,9 @@
       "username": "reedhanG",
       "name": "Reedhan Garg",
       "easy": 100,
-      "medium": 86,
+      "medium": 88,
       "hard": 7,
-      "total": 400
+      "total": 406
     },
     {
       "username": "Kartikey191108",
@@ -61,9 +61,9 @@
       "username": "Shikhar2904",
       "name": "Shikhar Singh",
       "easy": 116,
-      "medium": 37,
+      "medium": 40,
       "hard": 0,
-      "total": 227
+      "total": 236
     },
     {
       "username": "Pushpit1845",
@@ -98,6 +98,14 @@
       "total": 191
     },
     {
+      "username": "rushilarora",
+      "name": "Rushil Arora",
+      "easy": 85,
+      "medium": 34,
+      "hard": 0,
+      "total": 187
+    },
+    {
       "username": "Dhruv3142",
       "name": "Dhruv Sharma",
       "easy": 91,
@@ -112,14 +120,6 @@
       "medium": 30,
       "hard": 2,
       "total": 180
-    },
-    {
-      "username": "rushilarora",
-      "name": "Rushil Arora",
-      "easy": 85,
-      "medium": 31,
-      "hard": 0,
-      "total": 178
     },
     {
       "username": "SilentNinj4",
@@ -218,6 +218,14 @@
       "total": 121
     },
     {
+      "username": "hardik1200",
+      "name": "Hardik Bansal",
+      "easy": 24,
+      "medium": 30,
+      "hard": 1,
+      "total": 120
+    },
+    {
       "username": "Ananya0501",
       "name": "Ananya",
       "easy": 81,
@@ -228,10 +236,10 @@
     {
       "username": "Himank",
       "name": "Himank",
-      "easy": 82,
+      "easy": 84,
       "medium": 10,
       "hard": 0,
-      "total": 112
+      "total": 114
     },
     {
       "username": "Untr4ced",
@@ -312,14 +320,6 @@
       "medium": 12,
       "hard": 0,
       "total": 78
-    },
-    {
-      "username": "hardik1200",
-      "name": "Hardik Bansal",
-      "easy": 24,
-      "medium": 15,
-      "hard": 1,
-      "total": 75
     },
     {
       "username": "prabk55",
