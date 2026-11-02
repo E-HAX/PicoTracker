@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-02T16:33:42.938756+00:00",
+  "last_updated": "2026-11-02T19:36:26.151748+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -30,8 +30,8 @@
       "name": "Kartikey",
       "easy": 92,
       "medium": 77,
-      "hard": 0,
-      "total": 323
+      "hard": 2,
+      "total": 335
     },
     {
       "username": "saksyy69",
@@ -186,6 +186,14 @@
       "total": 130
     },
     {
+      "username": "Akshatt07",
+      "name": "Akshat Budhori",
+      "easy": 94,
+      "medium": 12,
+      "hard": 0,
+      "total": 130
+    },
+    {
       "username": "n1flheim",
       "name": "aarnav",
       "easy": 60,
@@ -198,14 +206,6 @@
       "name": "Name not given",
       "easy": 80,
       "medium": 15,
-      "hard": 0,
-      "total": 125
-    },
-    {
-      "username": "Akshatt07",
-      "name": "Akshat Budhori",
-      "easy": 89,
-      "medium": 12,
       "hard": 0,
       "total": 125
     },
@@ -338,6 +338,22 @@
       "total": 69
     },
     {
+      "username": "vrindam667",
+      "name": "Name not given",
+      "easy": 37,
+      "medium": 10,
+      "hard": 0,
+      "total": 67
+    },
+    {
+      "username": "Nmn007",
+      "name": "Naman",
+      "easy": 16,
+      "medium": 7,
+      "hard": 4,
+      "total": 61
+    },
+    {
       "username": "nineteen",
       "name": "Shashank Shekhar",
       "easy": 43,
@@ -384,22 +400,6 @@
       "medium": 9,
       "hard": 0,
       "total": 48
-    },
-    {
-      "username": "vrindam667",
-      "name": "Name not given",
-      "easy": 36,
-      "medium": 4,
-      "hard": 0,
-      "total": 48
-    },
-    {
-      "username": "Nmn007",
-      "name": "Naman",
-      "easy": 16,
-      "medium": 6,
-      "hard": 2,
-      "total": 46
     }
   ]
 }
