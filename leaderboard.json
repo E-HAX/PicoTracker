@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-03T10:00:20.186083+00:00",
+  "last_updated": "2026-11-03T17:46:04.369864+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -28,10 +28,10 @@
     {
       "username": "Kartikey191108",
       "name": "Kartikey",
-      "easy": 92,
+      "easy": 94,
       "medium": 77,
       "hard": 2,
-      "total": 335
+      "total": 337
     },
     {
       "username": "Shikhar2904",
@@ -82,6 +82,14 @@
       "total": 217
     },
     {
+      "username": "vrindam667",
+      "name": "Name not given",
+      "easy": 40,
+      "medium": 34,
+      "hard": 10,
+      "total": 202
+    },
+    {
       "username": "rushilarora",
       "name": "Rushil Arora",
       "easy": 86,
@@ -108,10 +116,10 @@
     {
       "username": "Dhruv3142",
       "name": "Dhruv Sharma",
-      "easy": 91,
+      "easy": 92,
       "medium": 30,
       "hard": 0,
-      "total": 181
+      "total": 182
     },
     {
       "username": "imightlose",
@@ -226,14 +234,6 @@
       "total": 120
     },
     {
-      "username": "vrindam667",
-      "name": "Name not given",
-      "easy": 40,
-      "medium": 26,
-      "hard": 0,
-      "total": 118
-    },
-    {
       "username": "Ananya0501",
       "name": "Ananya",
       "easy": 81,
@@ -338,6 +338,14 @@
       "total": 74
     },
     {
+      "username": "vjiking",
+      "name": "Vaibhav Joshi",
+      "easy": 40,
+      "medium": 10,
+      "hard": 0,
+      "total": 70
+    },
+    {
       "username": "merrymerry",
       "name": "Nipun Bhatia",
       "easy": 33,
@@ -362,20 +370,12 @@
       "total": 61
     },
     {
-      "username": "vjiking",
-      "name": "Vaibhav Joshi",
-      "easy": 33,
-      "medium": 9,
-      "hard": 0,
-      "total": 60
-    },
-    {
       "username": "Sairese",
       "name": "Sarra Sharma",
-      "easy": 46,
+      "easy": 48,
       "medium": 2,
       "hard": 1,
-      "total": 58
+      "total": 60
     },
     {
       "username": "Karasuke",
@@ -389,9 +389,9 @@
       "username": "Carnivalerious45",
       "name": "Lakshit Jangid",
       "easy": 21,
-      "medium": 10,
+      "medium": 11,
       "hard": 0,
-      "total": 51
+      "total": 54
     },
     {
       "username": "hetainhack",
