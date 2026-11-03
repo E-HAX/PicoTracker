@@ -534,6 +534,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const pct = Math.max(1, Math.round((user.rank / allUsers.length) * 100));
     document.getElementById("drawer-percentile").textContent = `TOP ${pct}%`;
 
+    const daysEl = document.getElementById("drawer-days");
+    if (daysEl) {
+      const daysLeft = user.daysLeft;
+      daysEl.textContent = daysLeft === null ? "\u2014" : `${daysLeft} DAYS`;
+      daysEl.className = `d-val ${daysTone(daysLeft)}`;
+      daysEl.title = daysLeft === null
+        ? "No subscription data"
+        : `${daysLeft} day${daysLeft === 1 ? "" : "s"} left in CyLab subscription`;
+    }
+
     const avatarChar = user.username ? user.username.charAt(0).toUpperCase() : ">";
     document.getElementById("drawer-avatar-icon").textContent = avatarChar;
 
@@ -668,6 +678,11 @@ document.addEventListener("DOMContentLoaded", () => {
     updatedAt: null
   };
 
+  const EMPTY_SUBSCRIPTION = {
+    asOf: null,
+    days: Object.create(null)
+  };
+
   function normalizeAttendance(payload) {
     if (
       !payload ||
@@ -717,6 +732,55 @@ document.addEventListener("DOMContentLoaded", () => {
       records,
       updatedAt: typeof payload.updatedAt === "string" ? payload.updatedAt : null
     };
+  }
+
+  function normalizeSubscription(payload) {
+    if (!payload || typeof payload !== "object") return EMPTY_SUBSCRIPTION;
+
+    const days = Object.create(null);
+    if (
+      payload.days_left &&
+      typeof payload.days_left === "object" &&
+      !Array.isArray(payload.days_left)
+    ) {
+      for (const [username, value] of Object.entries(payload.days_left)) {
+        if (typeof username !== "string" || username.length > 64) continue;
+        const parsed = Number(value);
+        if (!Number.isFinite(parsed) || parsed < 0) continue;
+        days[username.toLowerCase()] = Math.floor(parsed);
+      }
+    }
+
+    return {
+      asOf: typeof payload.as_of === "string" && /^\d{4}-\d{2}-\d{2}$/.test(payload.as_of)
+        ? payload.as_of
+        : null,
+      days
+    };
+  }
+
+  function daysElapsedSince(asOf) {
+    if (!asOf) return 0;
+    const [year, month, day] = asOf.split("-").map(Number);
+    const start = new Date(year, month - 1, day);
+    if (Number.isNaN(start.getTime())) return 0;
+    start.setHours(0, 0, 0, 0);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return Math.max(0, Math.floor((today.getTime() - start.getTime()) / 86400000));
+  }
+
+  function getDaysLeft(username, subscription) {
+    const base = subscription.days[username.toLowerCase()];
+    if (base === undefined) return null;
+    return Math.max(0, base - daysElapsedSince(subscription.asOf));
+  }
+
+  function daysTone(daysLeft) {
+    if (daysLeft === null) return "days-empty";
+    if (daysLeft <= 2) return "days-critical";
+    if (daysLeft <= 10) return "days-warn";
+    return "days-safe";
   }
 
   function buildUserAttendance(username, attendance) {
@@ -811,7 +875,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (matched.length === 0) {
       tbody.innerHTML = `
         <tr class="empty-row">
-          <td colspan="7" class="no-results">
+          <td colspan="8" class="no-results">
             No operator found matching "<strong id="search-term-display"></strong>"
           </td>
         </tr>
@@ -844,6 +908,12 @@ document.addEventListener("DOMContentLoaded", () => {
         attendance.available && attendance.total
           ? "attendance-badge"
           : "attendance-badge attendance-empty";
+      const daysLeft = u.daysLeft;
+      const daysClass = daysTone(daysLeft);
+      const daysText = daysLeft === null ? "\u2014" : `${daysLeft}d`;
+      const daysTitle = daysLeft === null
+        ? "No subscription data"
+        : `${daysLeft} day${daysLeft === 1 ? "" : "s"} left in CyLab subscription`;
 
       html += `
         <tr class="operator-row ${rowDangerClass}" data-username="${escapeHtml(u.username)}" data-realname="${escapeHtml(u.name || '')}" title="${escapeHtml(u.name && u.name !== 'Name not given' && u.name !== 'Busy Person' ? `${u.username} (${u.name})` : u.username)}">
@@ -868,6 +938,9 @@ document.addEventListener("DOMContentLoaded", () => {
           <td class="c-num col-hard">${u.hard}</td>
           <td class="c-tot">
             <span class="pts-badge">${u.total} <span class="pts-unit">PTS</span></span>
+          </td>
+          <td class="c-days">
+            <span class="days-badge ${daysClass}" title="${escapeHtml(daysTitle)}">${daysText}</span>
           </td>
           <td class="c-att">
             <span class="${attendanceClass}" title="${escapeHtml(attendanceTitle(attendance))}">${escapeHtml(attendanceText)}</span>
@@ -918,8 +991,16 @@ document.addEventListener("DOMContentLoaded", () => {
       return r.json();
     });
 
-  Promise.all([leaderboardPromise, attendancePromise])
-    .then(([data, attendance]) => {
+  const subscriptionPromise = fetch('subscription_days.json', { cache: 'no-store' })
+    .then(r => {
+      if (!r.ok) throw new Error("Subscription fetch error");
+      return r.json();
+    })
+    .then(payload => normalizeSubscription(payload))
+    .catch(() => EMPTY_SUBSCRIPTION);
+
+  Promise.all([leaderboardPromise, attendancePromise, subscriptionPromise])
+    .then(([data, attendance, subscription]) => {
       if (!data || !Array.isArray(data.leaderboard)) return;
 
       const sanitized = data.leaderboard
@@ -946,7 +1027,8 @@ document.addEventListener("DOMContentLoaded", () => {
       allUsers = sorted.map((u, idx) => ({
         ...u,
         rank: idx + 1,
-        attendance: buildUserAttendance(u.username, attendance)
+        attendance: buildUserAttendance(u.username, attendance),
+        daysLeft: getDaysLeft(u.username, subscription)
       }));
 
       // Populate Podium (Top 3)
@@ -1003,7 +1085,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (tbody) {
         tbody.innerHTML = `
           <tr class="empty-row">
-            <td colspan="7" class="no-results">Unable to load live leaderboard. Please refresh.</td>
+            <td colspan="8" class="no-results">Unable to load live leaderboard. Please refresh.</td>
           </tr>
         `;
       }
