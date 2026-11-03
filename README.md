@@ -142,6 +142,19 @@ insecure mode.
    every meeting date and label with P/R/A status.
 8. **EDIT DATE** and **DELETE** can be used at any time.
 
+### Subscription days
+
+The public standings and operator drawer show each student's remaining CyLab
+subscription days from `subscription_days.json`.
+
+- Values are keyed by the leaderboard username and stored under `days_left`.
+- `as_of` is the date the values were captured. The page subtracts one day for
+  every calendar date that passes, so the countdown stays current without a
+  daily edit.
+- To refresh the data after renewals, update each number and set `as_of` to the
+  date of the refresh.
+- Missing usernames simply show `—`; score updates never overwrite this file.
+
 ### Wiping or moving attendance data
 
 - The state lives in the private Blob path
@@ -196,6 +209,7 @@ On Vercel, the rotating OIDC credentials are used automatically instead.
 ├── ehax-wordmark.png            # Transparent brand wordmark
 ├── logo.png                     # Brand asset
 ├── leaderboard.json             # Live scored leaderboard data snapshot
+├── subscription_days.json       # Subscription days snapshot (auto-countdown)
 ├── Cylab Username - Sheet1.csv  # Primary participant roster & name mappings
 ├── roster.txt                   # Participant usernames roster
 ├── fetch_stats.py               # Automated stats scraper & weighted points engine
