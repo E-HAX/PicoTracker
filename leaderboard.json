@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-03T17:46:04.369864+00:00",
+  "last_updated": "2026-11-03T22:35:43.789262+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -28,10 +28,10 @@
     {
       "username": "Kartikey191108",
       "name": "Kartikey",
-      "easy": 94,
+      "easy": 97,
       "medium": 77,
       "hard": 2,
-      "total": 337
+      "total": 340
     },
     {
       "username": "Shikhar2904",
@@ -378,20 +378,20 @@
       "total": 60
     },
     {
+      "username": "Carnivalerious45",
+      "name": "Lakshit Jangid",
+      "easy": 21,
+      "medium": 13,
+      "hard": 0,
+      "total": 60
+    },
+    {
       "username": "Karasuke",
       "name": "Anshul",
       "easy": 32,
       "medium": 6,
       "hard": 1,
       "total": 56
-    },
-    {
-      "username": "Carnivalerious45",
-      "name": "Lakshit Jangid",
-      "easy": 21,
-      "medium": 11,
-      "hard": 0,
-      "total": 54
     },
     {
       "username": "hetainhack",
