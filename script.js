@@ -541,7 +541,7 @@ document.addEventListener("DOMContentLoaded", () => {
       daysEl.className = `d-val ${daysTone(daysLeft)}`;
       daysEl.title = daysLeft === null
         ? "No subscription data"
-        : `${daysLeft} day${daysLeft === 1 ? "" : "s"} left in CyLab subscription`;
+        : `${daysLeft} day${daysLeft === 1 ? "" : "s"} left in THM subscription`;
     }
 
     const avatarChar = user.username ? user.username.charAt(0).toUpperCase() : ">";
@@ -913,7 +913,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const daysText = daysLeft === null ? "\u2014" : `${daysLeft}d`;
       const daysTitle = daysLeft === null
         ? "No subscription data"
-        : `${daysLeft} day${daysLeft === 1 ? "" : "s"} left in CyLab subscription`;
+        : `${daysLeft} day${daysLeft === 1 ? "" : "s"} left in THM subscription`;
 
       html += `
         <tr class="operator-row ${rowDangerClass}" data-username="${escapeHtml(u.username)}" data-realname="${escapeHtml(u.name || '')}" title="${escapeHtml(u.name && u.name !== 'Name not given' && u.name !== 'Busy Person' ? `${u.username} (${u.name})` : u.username)}">

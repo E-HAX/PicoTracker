@@ -750,7 +750,7 @@ body:hover .cursor-glow { opacity: 1; }
 
 /* Subscription days remaining */
 .c-days {
-  width: 110px;
+  width: 175px;
   text-align: right;
   font-family: var(--font-mono);
   white-space: nowrap;
