@@ -1,405 +1,405 @@
 {
-  "last_updated": "2026-11-04T09:59:01.401043+00:00",
+  "last_updated": "2026-11-04T17:57:35.172256+00:00",
   "leaderboard": [
-    {
-      "username": "jdoe2374",
-      "name": "Aashvik",
-      "easy": 126,
-      "medium": 85,
-      "hard": 45,
-      "total": 651
-    },
-    {
-      "username": "boringxegotistical",
-      "name": "Saiyam Chaudhary",
-      "easy": 113,
-      "medium": 89,
-      "hard": 7,
-      "total": 422
-    },
-    {
-      "username": "reedhanG",
-      "name": "Reedhan Garg",
-      "easy": 100,
-      "medium": 88,
-      "hard": 7,
-      "total": 406
-    },
-    {
-      "username": "Kartikey191108",
-      "name": "Kartikey",
-      "easy": 97,
-      "medium": 87,
-      "hard": 2,
-      "total": 370
-    },
-    {
-      "username": "Shikhar2904",
-      "name": "Shikhar Singh",
-      "easy": 116,
-      "medium": 48,
-      "hard": 0,
-      "total": 260
-    },
-    {
-      "username": "saksyy69",
-      "name": "Saksham Mittal",
-      "easy": 72,
-      "medium": 61,
-      "hard": 0,
-      "total": 255
-    },
-    {
-      "username": "mayank18",
-      "name": "Mayank Panchal",
-      "easy": 98,
-      "medium": 50,
-      "hard": 0,
-      "total": 248
-    },
-    {
-      "username": "hackernull1",
-      "name": "Rishabh Sakhuja",
-      "easy": 62,
-      "medium": 34,
-      "hard": 12,
-      "total": 236
-    },
-    {
-      "username": "Pushpit1845",
-      "name": "Pushpit chhabra",
-      "easy": 28,
-      "medium": 57,
-      "hard": 3,
-      "total": 217
-    },
-    {
-      "username": "aayushk79",
-      "name": "Aayush Kumar",
-      "easy": 115,
-      "medium": 34,
-      "hard": 0,
-      "total": 217
-    },
-    {
-      "username": "vrindam667",
-      "name": "Name not given",
-      "easy": 41,
-      "medium": 35,
-      "hard": 11,
-      "total": 212
-    },
-    {
-      "username": "rushilarora",
-      "name": "Rushil Arora",
-      "easy": 86,
-      "medium": 38,
-      "hard": 0,
-      "total": 200
-    },
-    {
-      "username": "rakshaa",
-      "name": "Nirali Kushwaha",
-      "easy": 113,
-      "medium": 27,
-      "hard": 0,
-      "total": 194
-    },
-    {
-      "username": "pointbreak007",
-      "name": "Atishay Jain",
-      "easy": 77,
-      "medium": 24,
-      "hard": 7,
-      "total": 191
-    },
-    {
-      "username": "Dhruv3142",
-      "name": "Dhruv Sharma",
-      "easy": 92,
-      "medium": 30,
-      "hard": 0,
-      "total": 182
-    },
-    {
-      "username": "imightlose",
-      "name": "Shobhit Pandey",
-      "easy": 78,
-      "medium": 30,
-      "hard": 2,
-      "total": 180
-    },
     {
       "username": "SilentNinj4",
       "name": "Atharv Bansal",
-      "easy": 127,
-      "medium": 15,
+      "easy": 0,
+      "medium": 0,
       "hard": 0,
-      "total": 172
-    },
-    {
-      "username": "saarzka",
-      "name": "Saarika Parveen",
-      "easy": 60,
-      "medium": 31,
-      "hard": 0,
-      "total": 153
-    },
-    {
-      "username": "AkshatJairath",
-      "name": "Name not given",
-      "easy": 102,
-      "medium": 17,
-      "hard": 0,
-      "total": 153
-    },
-    {
-      "username": "Sakshamm",
-      "name": "Saksham Garg",
-      "easy": 54,
-      "medium": 32,
-      "hard": 0,
-      "total": 150
-    },
-    {
-      "username": "aashvi14",
-      "name": "Aashvi",
-      "easy": 81,
-      "medium": 23,
-      "hard": 0,
-      "total": 150
-    },
-    {
-      "username": "shivanshuuu67",
-      "name": "shivanshu gupta",
-      "easy": 81,
-      "medium": 20,
-      "hard": 0,
-      "total": 141
-    },
-    {
-      "username": "jak3p3ralta",
-      "name": "hardik sachdeva",
-      "easy": 81,
-      "medium": 19,
-      "hard": 0,
-      "total": 138
-    },
-    {
-      "username": "RandomBruh",
-      "name": "Rishabh Dev Malhotra",
-      "easy": 76,
-      "medium": 18,
-      "hard": 0,
-      "total": 130
-    },
-    {
-      "username": "Akshatt07",
-      "name": "Akshat Budhori",
-      "easy": 94,
-      "medium": 12,
-      "hard": 0,
-      "total": 130
-    },
-    {
-      "username": "n1flheim",
-      "name": "aarnav",
-      "easy": 60,
-      "medium": 22,
-      "hard": 0,
-      "total": 126
-    },
-    {
-      "username": "pricyhacker",
-      "name": "Name not given",
-      "easy": 80,
-      "medium": 15,
-      "hard": 0,
-      "total": 125
-    },
-    {
-      "username": "baldev1408singh",
-      "name": "Baldev Singh",
-      "easy": 66,
-      "medium": 19,
-      "hard": 0,
-      "total": 123
-    },
-    {
-      "username": "Himank",
-      "name": "Himank",
-      "easy": 84,
-      "medium": 13,
-      "hard": 0,
-      "total": 123
-    },
-    {
-      "username": "hardik1200",
-      "name": "Hardik Bansal",
-      "easy": 24,
-      "medium": 30,
-      "hard": 1,
-      "total": 120
-    },
-    {
-      "username": "Ananya0501",
-      "name": "Ananya",
-      "easy": 81,
-      "medium": 12,
-      "hard": 0,
-      "total": 117
-    },
-    {
-      "username": "Untr4ced",
-      "name": "Palak",
-      "easy": 30,
-      "medium": 19,
-      "hard": 3,
-      "total": 105
-    },
-    {
-      "username": "smlk3333",
-      "name": "Soumil Malik",
-      "easy": 39,
-      "medium": 22,
-      "hard": 0,
-      "total": 105
-    },
-    {
-      "username": "harshstayswithastick",
-      "name": "Harsh Goswami",
-      "easy": 50,
-      "medium": 16,
-      "hard": 1,
-      "total": 104
-    },
-    {
-      "username": "SampadaSnehi",
-      "name": "Sampada Snehi",
-      "easy": 69,
-      "medium": 11,
-      "hard": 0,
-      "total": 102
-    },
-    {
-      "username": "akshut",
-      "name": "Akshut Goyal",
-      "easy": 49,
-      "medium": 15,
-      "hard": 1,
-      "total": 100
-    },
-    {
-      "username": "daksh2011",
-      "name": "Daksh Bhardwaj",
-      "easy": 45,
-      "medium": 16,
-      "hard": 0,
-      "total": 93
-    },
-    {
-      "username": "Nichehacker2501",
-      "name": "Kanav gupta",
-      "easy": 55,
-      "medium": 12,
-      "hard": 0,
-      "total": 91
-    },
-    {
-      "username": "Mehulgarg23",
-      "name": "Mehul garg",
-      "easy": 71,
-      "medium": 6,
-      "hard": 0,
-      "total": 89
-    },
-    {
-      "username": "prabk55",
-      "name": "Prabhakar Kumar",
-      "easy": 32,
-      "medium": 14,
-      "hard": 1,
-      "total": 80
+      "total": 0
     },
     {
       "username": "Chowdharyji",
       "name": "Ujjawal Chowdhary",
-      "easy": 62,
-      "medium": 6,
+      "easy": 0,
+      "medium": 0,
       "hard": 0,
-      "total": 80
+      "total": 0
     },
     {
-      "username": "smoothbrain01",
-      "name": "Shraddha Abirami A",
-      "easy": 42,
-      "medium": 12,
+      "username": "Pushpit1845",
+      "name": "Pushpit chhabra",
+      "easy": 0,
+      "medium": 0,
       "hard": 0,
-      "total": 78
+      "total": 0
     },
     {
-      "username": "vjiking",
-      "name": "Vaibhav Joshi",
-      "easy": 40,
-      "medium": 10,
+      "username": "akshut",
+      "name": "Akshut Goyal",
+      "easy": 0,
+      "medium": 0,
       "hard": 0,
-      "total": 70
+      "total": 0
     },
     {
-      "username": "merrymerry",
-      "name": "Nipun Bhatia",
-      "easy": 33,
-      "medium": 12,
+      "username": "jdoe2374",
+      "name": "Aashvik",
+      "easy": 0,
+      "medium": 0,
       "hard": 0,
-      "total": 69
+      "total": 0
+    },
+    {
+      "username": "n1flheim",
+      "name": "aarnav",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "imightlose",
+      "name": "Shobhit Pandey",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "Sakshamm",
+      "name": "Saksham Garg",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "boringxegotistical",
+      "name": "Saiyam Chaudhary",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "rakshaa",
+      "name": "Nirali Kushwaha",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "Shikhar2904",
+      "name": "Shikhar Singh",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "Ananya0501",
+      "name": "Ananya",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "Akshatt07",
+      "name": "Akshat Budhori",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
     },
     {
       "username": "Nmn007",
       "name": "Naman",
-      "easy": 16,
-      "medium": 7,
-      "hard": 4,
-      "total": 61
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
     },
     {
       "username": "nineteen",
       "name": "Shashank Shekhar",
-      "easy": 43,
-      "medium": 6,
+      "easy": 0,
+      "medium": 0,
       "hard": 0,
-      "total": 61
+      "total": 0
     },
     {
       "username": "Sairese",
       "name": "Sarra Sharma",
-      "easy": 48,
-      "medium": 2,
-      "hard": 1,
-      "total": 60
-    },
-    {
-      "username": "Carnivalerious45",
-      "name": "Lakshit Jangid",
-      "easy": 21,
-      "medium": 13,
+      "easy": 0,
+      "medium": 0,
       "hard": 0,
-      "total": 60
+      "total": 0
     },
     {
-      "username": "Karasuke",
-      "name": "Anshul",
-      "easy": 32,
-      "medium": 6,
-      "hard": 1,
-      "total": 56
+      "username": "mayank18",
+      "name": "Mayank Panchal",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "hackernull1",
+      "name": "Rishabh Sakhuja",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "reedhanG",
+      "name": "Reedhan Garg",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "Mehulgarg23",
+      "name": "Mehul garg",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "Kartikey191108",
+      "name": "Kartikey",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "SampadaSnehi",
+      "name": "Sampada Snehi",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "merrymerry",
+      "name": "Nipun Bhatia",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "rushilarora",
+      "name": "Rushil Arora",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
     },
     {
       "username": "hetainhack",
       "name": "Hetain Arora",
-      "easy": 25,
-      "medium": 8,
+      "easy": 0,
+      "medium": 0,
       "hard": 0,
-      "total": 49
+      "total": 0
+    },
+    {
+      "username": "aashvi14",
+      "name": "Aashvi",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "harshstayswithastick",
+      "name": "Harsh Goswami",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "smoothbrain01",
+      "name": "Shraddha Abirami A",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "saarzka",
+      "name": "Saarika Parveen",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "RandomBruh",
+      "name": "Rishabh Dev Malhotra",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "pointbreak007",
+      "name": "Atishay Jain",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "daksh2011",
+      "name": "Daksh Bhardwaj",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "aayushk79",
+      "name": "Aayush Kumar",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "Dhruv3142",
+      "name": "Dhruv Sharma",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "vjiking",
+      "name": "Vaibhav Joshi",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "prabk55",
+      "name": "Prabhakar Kumar",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "saksyy69",
+      "name": "Saksham Mittal",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "Nichehacker2501",
+      "name": "Kanav gupta",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "smlk3333",
+      "name": "Soumil Malik",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "baldev1408singh",
+      "name": "Baldev Singh",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "Untr4ced",
+      "name": "Palak",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "shivanshuuu67",
+      "name": "shivanshu gupta",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "Karasuke",
+      "name": "Anshul",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "jak3p3ralta",
+      "name": "hardik sachdeva",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "pricyhacker",
+      "name": "Name not given",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "Himank",
+      "name": "Himank",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "AkshatJairath",
+      "name": "Name not given",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "vrindam667",
+      "name": "Name not given",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "hardik1200",
+      "name": "Hardik Bansal",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
+    },
+    {
+      "username": "Carnivalerious45",
+      "name": "Lakshit Jangid",
+      "easy": 0,
+      "medium": 0,
+      "hard": 0,
+      "total": 0
     }
   ]
 }
