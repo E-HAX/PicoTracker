@@ -80,6 +80,24 @@
       ]
     },
     {
+      "source": "/leaderboard.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, must-revalidate, max-age=0"
+        }
+      ]
+    },
+    {
+      "source": "/subscription_days.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, must-revalidate, max-age=0"
+        }
+      ]
+    },
+    {
       "source": "/console",
       "headers": [
         {
