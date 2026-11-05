@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-05T03:43:34.565256+00:00",
+  "last_updated": "2026-11-05T11:39:02.475221+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -298,6 +298,14 @@
       "total": 93
     },
     {
+      "username": "Karasuke",
+      "name": "Anshul",
+      "easy": 37,
+      "medium": 8,
+      "hard": 5,
+      "total": 91
+    },
+    {
       "username": "Nichehacker2501",
       "name": "Kanav gupta",
       "easy": 55,
@@ -384,14 +392,6 @@
       "medium": 13,
       "hard": 0,
       "total": 60
-    },
-    {
-      "username": "Karasuke",
-      "name": "Anshul",
-      "easy": 32,
-      "medium": 6,
-      "hard": 1,
-      "total": 56
     },
     {
       "username": "hetainhack",
