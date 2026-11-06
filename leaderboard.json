@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-06T00:10:06.842929+00:00",
+  "last_updated": "2026-11-06T07:01:02.406228+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -10,20 +10,20 @@
       "total": 651
     },
     {
+      "username": "reedhanG",
+      "name": "Reedhan Garg",
+      "easy": 102,
+      "medium": 91,
+      "hard": 8,
+      "total": 423
+    },
+    {
       "username": "boringxegotistical",
       "name": "Saiyam Chaudhary",
       "easy": 113,
       "medium": 89,
       "hard": 7,
       "total": 422
-    },
-    {
-      "username": "reedhanG",
-      "name": "Reedhan Garg",
-      "easy": 100,
-      "medium": 88,
-      "hard": 7,
-      "total": 406
     },
     {
       "username": "Kartikey191108",
@@ -138,6 +138,14 @@
       "total": 172
     },
     {
+      "username": "Ananya0501",
+      "name": "Ananya",
+      "easy": 82,
+      "medium": 24,
+      "hard": 0,
+      "total": 154
+    },
+    {
       "username": "saarzka",
       "name": "Saarika Parveen",
       "easy": 60,
@@ -242,12 +250,12 @@
       "total": 120
     },
     {
-      "username": "Ananya0501",
-      "name": "Ananya",
-      "easy": 81,
-      "medium": 12,
-      "hard": 0,
-      "total": 117
+      "username": "Karasuke",
+      "name": "Anshul",
+      "easy": 43,
+      "medium": 9,
+      "hard": 7,
+      "total": 112
     },
     {
       "username": "Untr4ced",
@@ -296,14 +304,6 @@
       "medium": 16,
       "hard": 0,
       "total": 93
-    },
-    {
-      "username": "Karasuke",
-      "name": "Anshul",
-      "easy": 37,
-      "medium": 8,
-      "hard": 5,
-      "total": 91
     },
     {
       "username": "Nichehacker2501",
