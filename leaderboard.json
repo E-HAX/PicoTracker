@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-06T20:50:50.663306+00:00",
+  "last_updated": "2026-11-07T00:28:52.748525+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -42,20 +42,20 @@
       "total": 260
     },
     {
+      "username": "mayank18",
+      "name": "Mayank Panchal",
+      "easy": 100,
+      "medium": 50,
+      "hard": 1,
+      "total": 256
+    },
+    {
       "username": "saksyy69",
       "name": "Saksham Mittal",
       "easy": 72,
       "medium": 61,
       "hard": 0,
       "total": 255
-    },
-    {
-      "username": "mayank18",
-      "name": "Mayank Panchal",
-      "easy": 100,
-      "medium": 50,
-      "hard": 0,
-      "total": 250
     },
     {
       "username": "hackernull1",
