@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-09T02:08:27.496219+00:00",
+  "last_updated": "2026-11-09T09:57:35.712388+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -162,6 +162,14 @@
       "total": 163
     },
     {
+      "username": "Karasuke",
+      "name": "Anshul",
+      "easy": 43,
+      "medium": 9,
+      "hard": 14,
+      "total": 154
+    },
+    {
       "username": "Ananya0501",
       "name": "Ananya",
       "easy": 82,
@@ -248,14 +256,6 @@
       "medium": 30,
       "hard": 1,
       "total": 120
-    },
-    {
-      "username": "Karasuke",
-      "name": "Anshul",
-      "easy": 43,
-      "medium": 9,
-      "hard": 8,
-      "total": 118
     },
     {
       "username": "Untr4ced",
