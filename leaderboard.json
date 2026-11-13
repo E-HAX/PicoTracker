@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-12T22:41:38.086947+00:00",
+  "last_updated": "2026-11-13T02:59:09.187258+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -298,6 +298,14 @@
       "total": 100
     },
     {
+      "username": "Nmn007",
+      "name": "Naman",
+      "easy": 16,
+      "medium": 18,
+      "hard": 4,
+      "total": 94
+    },
+    {
       "username": "daksh2011",
       "name": "Daksh Bhardwaj",
       "easy": 45,
@@ -320,14 +328,6 @@
       "medium": 6,
       "hard": 0,
       "total": 89
-    },
-    {
-      "username": "Nmn007",
-      "name": "Naman",
-      "easy": 16,
-      "medium": 14,
-      "hard": 4,
-      "total": 82
     },
     {
       "username": "prabk55",
