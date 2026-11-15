@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-15T07:56:48.831292+00:00",
+  "last_updated": "2026-11-15T15:37:00.701425+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -13,9 +13,9 @@
       "username": "boringxegotistical",
       "name": "Saiyam Chaudhary",
       "easy": 113,
-      "medium": 99,
+      "medium": 102,
       "hard": 7,
-      "total": 452
+      "total": 461
     },
     {
       "username": "reedhanG",
@@ -301,9 +301,9 @@
       "username": "Mehulgarg23",
       "name": "Mehul garg",
       "easy": 71,
-      "medium": 8,
+      "medium": 9,
       "hard": 0,
-      "total": 95
+      "total": 98
     },
     {
       "username": "Nmn007",
@@ -362,6 +362,14 @@
       "total": 78
     },
     {
+      "username": "nineteen",
+      "name": "Shashank Shekhar",
+      "easy": 50,
+      "medium": 7,
+      "hard": 0,
+      "total": 71
+    },
+    {
       "username": "vjiking",
       "name": "Vaibhav Joshi",
       "easy": 40,
@@ -384,14 +392,6 @@
       "medium": 2,
       "hard": 1,
       "total": 62
-    },
-    {
-      "username": "nineteen",
-      "name": "Shashank Shekhar",
-      "easy": 43,
-      "medium": 6,
-      "hard": 0,
-      "total": 61
     },
     {
       "username": "hetainhack",
