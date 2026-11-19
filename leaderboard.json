@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-19T13:31:34.309857+00:00",
+  "last_updated": "2026-11-19T21:46:55.049972+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -330,12 +330,20 @@
       "total": 91
     },
     {
+      "username": "nineteen",
+      "name": "Shashank Shekhar",
+      "easy": 53,
+      "medium": 11,
+      "hard": 0,
+      "total": 86
+    },
+    {
       "username": "Carnivalerious45",
       "name": "Lakshit Jangid",
-      "easy": 43,
+      "easy": 44,
       "medium": 13,
       "hard": 0,
-      "total": 82
+      "total": 83
     },
     {
       "username": "prabk55",
@@ -360,14 +368,6 @@
       "medium": 12,
       "hard": 0,
       "total": 78
-    },
-    {
-      "username": "nineteen",
-      "name": "Shashank Shekhar",
-      "easy": 50,
-      "medium": 7,
-      "hard": 0,
-      "total": 71
     },
     {
       "username": "vjiking",
