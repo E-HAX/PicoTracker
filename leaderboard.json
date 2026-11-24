@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-23T12:17:36.948970+00:00",
+  "last_updated": "2026-11-24T00:04:49.845643+00:00",
   "leaderboard": [
     {
       "username": "jdoe2374",
@@ -20,10 +20,10 @@
     {
       "username": "reedhanG",
       "name": "Reedhan Garg",
-      "easy": 102,
+      "easy": 103,
       "medium": 91,
       "hard": 8,
-      "total": 423
+      "total": 424
     },
     {
       "username": "Kartikey191108",
@@ -98,6 +98,14 @@
       "total": 217
     },
     {
+      "username": "Dhruv3142",
+      "name": "Dhruv Sharma",
+      "easy": 92,
+      "medium": 37,
+      "hard": 0,
+      "total": 203
+    },
+    {
       "username": "RandomBruh",
       "name": "Rishabh Dev Malhotra",
       "easy": 85,
@@ -120,14 +128,6 @@
       "medium": 38,
       "hard": 0,
       "total": 200
-    },
-    {
-      "username": "Dhruv3142",
-      "name": "Dhruv Sharma",
-      "easy": 92,
-      "medium": 35,
-      "hard": 0,
-      "total": 197
     },
     {
       "username": "Sakshamm",
